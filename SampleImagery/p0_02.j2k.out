@@ -1,0 +1,39 @@
+p0_02.j2k has length: 6183
+   read 6183 bytes / 6183 to go
+
+ PARSE
+ CODEC CREATED
+ STREAM CREATED
+ STREAM FUNCTIONS SET
+ BUFFER CREATED
+ BUFFER ATTACHED TO STREAM
+ - read_from_buffer(6183)
+ HEADER READ: OK
+ - buffer_set_pos(6181)
+ - read_from_buffer(6183)
+ IMAGE DECODED: OK
+        x0 = 0
+        y0 = 0
+        x1 = 127
+        y1 = 126
+  numcomps = 1
+  colspace = unspecified
+  ____COMP 1____
+        dx = 2
+        dy = 1
+         w = 64
+         h = 126
+        x0 = 0
+        y0 = 0
+      prec = 8
+       bpp = 0
+      sgnd = 0
+  resno_de = 3
+    factor = 0
+     alpha = 0
+      data = 7fe515010400
+  ______________
+  icc_prof_len = 0
+  icc_prof_buf = 0
+ DONE
+Creating p0_02.csv

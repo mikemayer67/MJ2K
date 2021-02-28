@@ -1,0 +1,84 @@
+
+MJ2K is wrapping OpenJPEG VERSION: 2.4.0
+
+p0_08.j2k has length: 3820794
+   read 3820794 bytes / 3820794 to go
+
+ DECODE
+    cp_reduce = 0
+     cp_layer = 20
+        flags = 0x0
+        DA_x0 = 0
+        DA_y0 = 0
+        DA_x1 = 0
+        DA_y1 = 0
+      verbose = FALSE
+   tile_index = 0
+   nb_tile_.. = 0
+ CODEC CREATED
+ STREAM CREATED
+ STREAM FUNCTIONS SET
+ BUFFER CREATED
+ BUFFER ATTACHED TO STREAM
+ - read_from_buffer(3820794)
+ HEADER READ: OK
+ - buffer_set_pos(3820792)
+ - read_from_buffer(3820794)
+
+ IMAGE DECODED: OK
+        x0 = 0
+        y0 = 0
+        x1 = 513
+        y1 = 3072
+  numcomps = 3
+  colspace = unspecified
+  ----COMP 1----
+        dx = 1
+        dy = 1
+         w = 513
+         h = 3072
+        x0 = 0
+        y0 = 0
+      prec = 12
+       bpp = 0
+      sgnd = 1
+  resno_de = 6
+    factor = 0
+     alpha = 0
+      data = 0x7ff9cb000000
+  ----COMP 2----
+        dx = 1
+        dy = 1
+         w = 513
+         h = 3072
+        x0 = 0
+        y0 = 0
+      prec = 12
+       bpp = 0
+      sgnd = 1
+  resno_de = 7
+    factor = 0
+     alpha = 0
+      data = 0x7ff9cb603000
+  ----COMP 3----
+        dx = 1
+        dy = 1
+         w = 513
+         h = 3072
+        x0 = 0
+        y0 = 0
+      prec = 12
+       bpp = 0
+      sgnd = 1
+  resno_de = 8
+    factor = 0
+     alpha = 0
+      data = 0x7ff9cbc06000
+  --------------
+  icc_prof_len = 0
+  icc_prof_buf = 0x0
+
+ DONE
+Creating p0_08_20_1.csv
+Creating p0_08_20_2.csv
+Creating p0_08_20_3.csv

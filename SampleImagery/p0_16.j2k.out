@@ -1,0 +1,39 @@
+p0_16.j2k has length: 7407
+   read 7407 bytes / 7407 to go
+
+ PARSE
+ CODEC CREATED
+ STREAM CREATED
+ STREAM FUNCTIONS SET
+ BUFFER CREATED
+ BUFFER ATTACHED TO STREAM
+ - read_from_buffer(7407)
+ HEADER READ: OK
+ - buffer_set_pos(7405)
+ - read_from_buffer(7407)
+ IMAGE DECODED: OK
+        x0 = 0
+        y0 = 0
+        x1 = 128
+        y1 = 128
+  numcomps = 1
+  colspace = unspecified
+  ____COMP 1____
+        dx = 1
+        dy = 1
+         w = 128
+         h = 128
+        x0 = 0
+        y0 = 0
+      prec = 8
+       bpp = 0
+      sgnd = 0
+  resno_de = 3
+    factor = 0
+     alpha = 0
+      data = 7fdc7d600000
+  ______________
+  icc_prof_len = 0
+  icc_prof_buf = 0
+ DONE
+Creating p0_16.csv

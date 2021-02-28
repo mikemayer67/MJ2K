@@ -1,0 +1,12 @@
+*~
+
+a.out
+junk.c
+*.dylib
+*.o
+.ipynb_checkpoints
+__pycache__
+openjpeg-2.4.0
+read_j2k.dSYM
+*.ntf
+ubuntu

@@ -1,0 +1,39 @@
+p0_09.j2k has length: 594
+   read 594 bytes / 594 to go
+
+ PARSE
+ CODEC CREATED
+ STREAM CREATED
+ STREAM FUNCTIONS SET
+ BUFFER CREATED
+ BUFFER ATTACHED TO STREAM
+ - read_from_buffer(594)
+ HEADER READ: OK
+ - buffer_set_pos(592)
+ - read_from_buffer(594)
+ IMAGE DECODED: OK
+        x0 = 0
+        y0 = 0
+        x1 = 17
+        y1 = 37
+  numcomps = 1
+  colspace = unspecified
+  ____COMP 1____
+        dx = 1
+        dy = 1
+         w = 17
+         h = 37
+        x0 = 0
+        y0 = 0
+      prec = 8
+       bpp = 0
+      sgnd = 0
+  resno_de = 5
+    factor = 0
+     alpha = 0
+      data = 7f8d5d80d800
+  ______________
+  icc_prof_len = 0
+  icc_prof_buf = 0
+ DONE
+Creating p0_09.csv

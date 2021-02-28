@@ -1,0 +1,69 @@
+p0_10.j2k has length: 14131
+   read 14131 bytes / 14131 to go
+
+ PARSE
+ CODEC CREATED
+ STREAM CREATED
+ STREAM FUNCTIONS SET
+ BUFFER CREATED
+ BUFFER ATTACHED TO STREAM
+ - read_from_buffer(14131)
+ HEADER READ: OK
+ - buffer_set_pos(10871)
+ - read_from_buffer(14131)
+ IMAGE DECODED: OK
+        x0 = 0
+        y0 = 0
+        x1 = 256
+        y1 = 256
+  numcomps = 3
+  colspace = unspecified
+  ____COMP 1____
+        dx = 4
+        dy = 4
+         w = 64
+         h = 64
+        x0 = 0
+        y0 = 0
+      prec = 8
+       bpp = 0
+      sgnd = 0
+  resno_de = 3
+    factor = 0
+     alpha = 0
+      data = 7f9314821800
+  ____COMP 2____
+        dx = 4
+        dy = 4
+         w = 64
+         h = 64
+        x0 = 0
+        y0 = 0
+      prec = 8
+       bpp = 0
+      sgnd = 0
+  resno_de = 3
+    factor = 0
+     alpha = 0
+      data = 7f9314825800
+  ____COMP 3____
+        dx = 4
+        dy = 4
+         w = 64
+         h = 64
+        x0 = 0
+        y0 = 0
+      prec = 8
+       bpp = 0
+      sgnd = 0
+  resno_de = 3
+    factor = 0
+     alpha = 0
+      data = 7f9314829800
+  ______________
+  icc_prof_len = 0
+  icc_prof_buf = 0
+ DONE
+Creating p0_10_1.csv
+Creating p0_10_2.csv
+Creating p0_10_3.csv
