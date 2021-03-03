@@ -10,6 +10,8 @@
 uint32_t mamj2k_cp_reduce = 0;
 uint32_t mamj2k_cp_layer = 0;
 
+/* Data Buffer */
+
 typedef struct
 {
   mj2k_byte_t *start;
@@ -76,48 +78,59 @@ OPJ_OFF_T buffer_skip_forward(OPJ_OFF_T p_skip, void *p_buffer)
   return p_skip;
 }
 
-const char *mj2k_opj_version(void)
+void mj2k_init_comp(mj2k_comp_t *m_comp, opj_image_comp_t *o_comp )
 {
-  return opj_version();
+  m_comp->x0 = o_comp->x0;
+  m_comp->y0 = o_comp->y0;
+  m_comp->w  = o_comp->w;
+  m_comp->h  = o_comp->h;
+  m_comp->dx = o_comp->dx;
+  m_comp->dy = o_comp->dy;
+
+  int bits = o_comp->prec;
+
+  int32_t dv = ( o_comp->sgnd ? (1 << (bits-1)) : 0 );
+  int     bs =  bits - 8;
+ 
+  int nrows = o_comp->h;
+  int ncols = o_comp->w;
+
+  m_comp->pixels = (mj2k_pixel_t *)malloc(nrows*ncols * sizeof(mj2k_pixel_t));
+
+  int32_t      *op = o_comp->data;
+  mj2k_pixel_t *mp = m_comp->pixels;
+
+  for(int i=0; i<nrows*ncols; ++i, ++op, ++mp)
+  {
+    uint32_t v = *op + dv;
+    if(bits > 8) { v >>= bits-8; }
+    if(bits < 8) { v <<= 8-bits; }
+    *mp = v;
+  }
+}
+
+void mj2k_init_image(mj2k_image_t *m_im, opj_image_t *o_im )
+{
+  m_im->x0 = o_im->x0;
+  m_im->y0 = o_im->y0;
+  m_im->x1 = o_im->x1;
+  m_im->y1 = o_im->y1;
+
+  int ncomp = o_im->numcomps;
+
+  m_im->ncomp = ncomp;
+  m_im->comp  = (mj2k_comp_t *)calloc(ncomp,sizeof(mj2k_comp_t)); 
+
+  mj2k_comp_t      *m_comp = m_im->comp;
+  opj_image_comp_t *o_comp = o_im->comps;
+  for(int i=0; i<ncomp; ++i, ++m_comp, ++o_comp)
+  {
+    mj2k_init_comp( m_comp, o_comp );
+  }
 }
 
 
-mj2k_image_t *mj2k_read_j2k(const char *filename)
-{
-  int fp = open(filename,0);
-  if( fp < 0 )
-  {
-    fprintf(stderr,"\nError:: Failed to open %s (%s)\n\n", filename, strerror(errno));
-    exit(1);
-  }
-
-  off_t eof = lseek(fp,0,SEEK_END);
-  lseek(fp,0,SEEK_SET);
-
-  printf("%s has length: %lld\n",filename,eof);
-
-  mj2k_bytes_t data = (mj2k_bytes_t)malloc(eof);
-
-  ssize_t to_read = eof;
-  mj2k_byte_t *pos = data;
-  while(to_read > 0)
-  {
-    ssize_t n_read = read(fp, pos, to_read);
-    if( n_read < 0 ) {
-      fprintf(stderr,"\nError:: Failed to read from %s (%s)\n\n", filename, strerror(errno));
-      exit(1);
-    }
-    printf("   read %ld bytes / %ld to go\n", n_read,to_read);
-    to_read -= n_read;
-    pos     += n_read;
-  }
-
-  mj2k_image_t *rval = mj2k_parse_j2k(data, eof);
-
-  free(data);
-
-  return rval;
-}
+/* MJ2K Internal Functions */
 
 void show_decoder_parameters(opj_dparameters_t *dp)
 {
@@ -174,6 +187,51 @@ void show_image_header(opj_image_t *image)
 
   printf("  icc_prof_len = %u\n", image->icc_profile_len);
   printf("  icc_prof_buf = 0x%lx\n", (long)image->icc_profile_buf);
+}
+
+/* MJ2K Wrapper API Functions */
+
+const char *mj2k_opj_version(void)
+{
+  return opj_version();
+}
+
+
+mj2k_image_t *mj2k_read_j2k(const char *filename)
+{
+  int fp = open(filename,0);
+  if( fp < 0 )
+  {
+    fprintf(stderr,"\nError:: Failed to open %s (%s)\n\n", filename, strerror(errno));
+    exit(1);
+  }
+
+  off_t eof = lseek(fp,0,SEEK_END);
+  lseek(fp,0,SEEK_SET);
+
+  printf("%s has length: %lld\n",filename,eof);
+
+  mj2k_bytes_t data = (mj2k_bytes_t)malloc(eof);
+
+  ssize_t to_read = eof;
+  mj2k_byte_t *pos = data;
+  while(to_read > 0)
+  {
+    ssize_t n_read = read(fp, pos, to_read);
+    if( n_read < 0 ) {
+      fprintf(stderr,"\nError:: Failed to read from %s (%s)\n\n", filename, strerror(errno));
+      exit(1);
+    }
+    printf("   read %ld bytes / %ld to go\n", n_read,to_read);
+    to_read -= n_read;
+    pos     += n_read;
+  }
+
+  mj2k_image_t *rval = mj2k_parse_j2k(data, eof);
+
+  free(data);
+
+  return rval;
 }
 
 
@@ -246,77 +304,13 @@ mj2k_image_t *mj2k_parse_j2k(const mj2k_bytes_t j2k_data, off_t length)
   return rval;
 }
 
-void mj2k_init_image(mj2k_image_t *m_im, opj_image_t *o_im )
-{
-  m_im->x0 = o_im->x0;
-  m_im->y0 = o_im->y0;
-  m_im->x1 = o_im->x1;
-  m_im->y1 = o_im->y1;
-
-  int ncomp = o_im->numcomps;
-
-  m_im->ncomp = ncomp;
-  m_im->comp  = (mj2k_comp_t *)calloc(ncomp,sizeof(mj2k_comp_t)); 
-
-  mj2k_comp_t      *m_comp = m_im->comp;
-  opj_image_comp_t *o_comp = o_im->comps;
-  for(int i=0; i<ncomp; ++i, ++m_comp, ++o_comp)
-  {
-    mj2k_init_comp( m_comp, o_comp );
-  }
-}
-
-void mj2k_init_comp(mj2k_comp_t *m_comp, opj_image_comp_t *o_comp )
-{
-  m_comp->x0 = o_comp->x0;
-  m_comp->y0 = o_comp->y0;
-  m_comp->w  = o_comp->w;
-  m_comp->h  = o_comp->h;
-  m_comp->dx = o_comp->dx;
-  m_comp->dy = o_comp->dy;
-
-  int bits = o_comp->prec;
-
-  int32_t dv = ( o_comp->sgnd ? (1 << (bits-1)) : 0 );
-  int     bs =  bits - 8;
- 
-  int32_t *p = o_comp->data;
-
-  int nrows = o_comp->h;
-  int ncols = o_comp->w;
-
-  m_comp->pixels = (mj2k_pixel_t **)malloc(nrows * sizeof(mj2k_pixel_t *));
-  for(int row=0; row<nrows; ++row)
-  {
-    m_comp->pixels[row] = (mj2k_pixel_t *)malloc(ncols * sizeof(mj2k_pixel_t));
-
-    for(int col=0; col<ncols; ++col, ++p)
-    {
-      uint32_t v = (*p) + dv;
-      if(bits > 8) { v >>= bits-8; }
-      if(bits < 8) { v <<= 8-bits; }
-
-      m_comp->pixels[row][col] = v;
-    }
-  }
-}
 
 void mj2k_free_image(mj2k_image_t *image)
 {
   if(image->comp != NULL)
   {
-    mj2k_comp_t *comp = image->comp;
-    for(int i=0; i<image->ncomp; ++i, ++comp) { mj2k_free_comp(comp); }
+    for(int i=0; i<image->ncomp; ++i) { free(image->comp[i].pixels); }
     free(image->comp);
-  }
-}
-
-void mj2k_free_comp(mj2k_comp_t *comp)
-{
-  if(comp != NULL)
-  {
-    for(int i=0; i<comp->h; ++i) { free(comp->pixels[i]); }
-    free(comp->pixels);
   }
 }
 

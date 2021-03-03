@@ -3,7 +3,7 @@ target: read_j2k
 read_j2k: libmamj2k.dylib read_j2k.c
 	gcc -o read_j2k \
 		-I/usr/local/anaconda3/include/openjpeg-2.3 \
-		-L/Users/mike/J2K \
+		-L/Users/mike/MJ2K \
 		read_j2k.c -lmamj2k
 
 libmamj2k.dylib: mamj2k.o

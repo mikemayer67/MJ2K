@@ -118,15 +118,14 @@ int main(int argc,char **argv)
 
     FILE *fp = fopen(csv_filename,"w");
 
-    const char *delim = "";
-
     int nrows = comp->h;
     int ncols = comp->w;
-    for(int row=0; row<nrows; ++row)
-    {
-      mj2k_pixel_t *p = comp->pixels[row];
-      for(int col=0; col<ncols; ++col)
-      {
+
+    mj2k_pixel_t *p = comp->pixels;
+
+    const char *delim = "";
+    for(int row=0; row<nrows; ++row) {
+      for(int col=0; col<ncols; ++col) {
         fprintf(fp,"%s%d",delim,*(p++));
         delim = ", ";
       }
@@ -134,7 +133,6 @@ int main(int argc,char **argv)
     }
 
     fclose(fp);
-
     free(csv_filename);
   }
 
