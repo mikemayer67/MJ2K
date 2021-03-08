@@ -38,6 +38,8 @@ typedef struct
 extern mj2k_image_t *mj2k_read_j2k(const char *filename);
 extern mj2k_image_t *mj2k_parse_j2k(const mj2k_bytes_t j2k, off_t length);
 
+extern int mj2k_write_j2k(mj2k_image_t *image, const char *filename);
+
 extern const char *mj2k_opj_version(void);
 
 extern void mj2k_free_image(mj2k_image_t *image);

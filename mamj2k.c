@@ -189,6 +189,130 @@ void show_image_header(opj_image_t *image)
   printf("  icc_prof_buf = 0x%lx\n", (long)image->icc_profile_buf);
 }
 
+void show_encoder_parameters(opj_cparameters_t *cp)
+{
+  const char *delim = "";
+
+  printf("     tile_size_on = %s\n", (cp->tile_size_on ? "YES" : "NO"));
+  printf("           cp_tx0 = %d\n", cp->cp_tx0);
+  printf("           cp_ty0 = %d\n", cp->cp_ty0);
+  printf("           cp_tdx = %d\n", cp->cp_tdx);
+  printf("           cp_tdy = %d\n", cp->cp_tdy);
+  printf("       cp_comment = '%s'\n", cp->cp_comment);
+  printf("             csty = %d\n", cp->csty);
+  switch(cp->prog_order)
+  {
+    case OPJ_PROG_UNKNOWN: printf("       prog_order = PJ_PROG_UNKNOWN\n"); break;
+    case OPJ_LRCP:         printf("       prog_order = PJ_LRCP\n"); break;
+    case OPJ_RLCP:         printf("       prog_order = PJ_RLCP\n"); break;
+    case OPJ_RPCL:         printf("       prog_order = PJ_RPCL\n"); break;
+    case OPJ_PCRL:         printf("       prog_order = PJ_PCRL\n"); break;
+    case OPJ_CPRL:         printf("       prog_order = PJ_CPRL\n"); break;
+  }
+  printf("          numpocs = %d\n", cp->numpocs); 
+  const char *gap = "                      ";
+  const char *prog_order[] = {"OPJ_PROG_UNKNOWN","OPJ_LRCP","OPJ_RLcP","OPJ_RPCL","OPJ_PCRL","OPJ_cPRL"};
+  for(int i=0; i<cp->numpocs; ++i) {
+    opj_poc_t *poc = &(cp->POC[i]);
+    printf("          POC[%2d] = {", i+1);
+    printf("%sresno0=%d, compno0=%d\n",gap,poc->resno0,poc->compno0);
+    printf("%slayno1=%d, resno1=%d, compon01=%d\n",gap,poc->layno1,poc->resno1,poc->compno1);
+    printf("%slayno0=%d, precno0=%d, precno1=%d\n",gap,poc->layno0,poc->precno0,poc->precno1);
+    printf("%sprg1=%s, prg=%s\n",gap,prog_order[poc->prg1+1],prog_order[poc->prg+1]);
+    printf("%sprogorder=%s\n",gap,poc->progorder);
+    printf("%stile=%d\n",gap,poc->tile);
+    printf("%stx0=%d, tx1=%d, ty0=%d, ty1=%d\n",gap,poc->tx0,poc->tx1,poc->ty0,poc->ty1);
+    printf("%slayS=%d, resS=%d, compS=%d, prcS=%d\n",gap,poc->layS,poc->resS,poc->compS,poc->prcS);
+    printf("%slayE=%d, resE=%d, compE=%d, prcE=%d\n",gap,poc->layE,poc->resE,poc->compE,poc->prcE);
+    printf("%stxS=%d, txE=%d, tyS=%d, tyE=%d, dx=%d, dy=%d\n",gap,
+        poc->txS,poc->txE,poc->tyS,poc->tyE,poc->dx, poc->dy);
+    printf("%slay_t=%d, res_t=%d, comp_t=%d, prc_t=%d, tx0_t=%d, ty0_t=%d\n",gap,
+        poc->lay_t, poc->res_t, poc->comp_t, poc->prc_t, poc->tx0_t, poc->ty0_t);
+  }
+
+  printf("        numlayers = %d\n", cp->tcp_numlayers);
+  printf("   cp_disto_alloc = %d\n", cp->cp_disto_alloc);
+  printf("        tcp_rates = [");
+  delim = "";
+  for(int i=0; i<cp->tcp_numlayers && cp->cp_fixed_quality; ++i)
+  {
+    printf("%s%f", delim,cp->tcp_rates[i]);
+    delim = ", ";
+  }
+  printf("]\n");
+  printf(" cp_fixed_quality = %d\n", cp->cp_fixed_quality);
+  printf("   tcp_distoratio = [");
+  delim = "";
+  for(int i=0; i<cp->tcp_numlayers && cp->cp_fixed_quality; ++i)
+  {
+    printf("%s%f", delim,cp->tcp_distoratio[i]);
+    delim = ", ";
+  }
+  printf("]\n");
+  printf("   cp_fixed_alloc = %d\n", cp->cp_fixed_alloc);
+  printf("       cp_matrice = 0x%x\n", (unsigned int)cp->cp_matrice);
+
+  printf("    numresolution = %d\n", cp->numresolution);
+  printf("     cblockw_init = %d\n", cp->cblockw_init);
+  printf("     cblockh_init = %d\n", cp->cblockh_init);
+  printf("             mode = %d\n", cp->mode);
+  printf("     irreversible = %d\n", cp->irreversible);
+  printf("       roi_compno = %d\n", cp->roi_compno);
+  printf("        roi_shift = %d\n", cp->roi_shift);
+
+  printf("         res_spec = %d\n", cp->res_spec);
+  printf("        prcw_init = [");
+  delim = "";
+  for(int i=0; i<cp->res_spec; ++i)
+  {
+    printf("%s%d",delim,cp->prcw_init[i]);
+    delim = ", ";
+  }
+  printf("]\n");
+  printf("        prch_init = [");
+  delim = "";
+  for(int i=0; i<cp->res_spec; ++i)
+  {
+    printf("%s%d",delim,cp->prch_init[i]);
+    delim = ", ";
+  }
+  printf("]\n");
+
+  printf("           infile = %s\n", cp->infile);
+  printf("          outfile = %s\n", cp->outfile);
+  printf("         index_on = %d\n", cp->index_on);
+  printf("            index = %s\n" ,cp->index);
+  printf("  image_offset_x0 = %d\n", cp->image_offset_x0);
+  printf("  image_offset_y0 = %d\n", cp->image_offset_y0);
+  printf("   subsampling_dx = %d\n", cp->subsampling_dx);
+  printf("   subsampling_dy = %d\n", cp->subsampling_dy);
+  printf("     decod_format = %d\n", cp->decod_format);
+  printf("       cod_format = %d\n", cp->cod_format);
+
+  switch(cp->cp_cinema)
+  {
+    case OPJ_OFF:         printf("        cp_cinema = OPJ_OFF\n"); break;
+    case OPJ_CINEMA2K_24: printf("        cp_cinema = OPJ_CINEMA2K_24\n"); break;
+    case OPJ_CINEMA2K_48: printf("        cp_cinema = OPJ_CINEMA2K_48\n"); break;
+    case OPJ_CINEMA4K_24: printf("        cp_cinema = OPJ_CINEMA4K_24\n"); break;
+  }
+  printf("    max_comp_size = %d\n", cp->max_comp_size);
+  switch(cp->cp_rsiz)
+  {
+    case OPJ_STD_RSIZ: printf("          cp_rsiz = OPJ_STD_RSIZ\n"); break;
+    case OPJ_CINEMA2K: printf("          cp_rsiz = OPJ_CINEMA2K\n"); break;
+    case OPJ_CINEMA4K: printf("          cp_rsiz = OPJ_CINEMA4K\n"); break;
+    case OPJ_MCT:      printf("          cp_rsiz = OPJ_MCT\n"); break;
+  }
+  printf("            tp_on = %d\n", cp->tp_on);
+  printf("          tp_flag = %d\n", cp->tp_flag);
+  printf("          tcp_mct = %d\n", cp->tcp_mct);
+  printf("          jpip_on = %s\n", (cp->jpip_on ? "YES" : "NO"));
+  printf("         mct_data = 0x%x\n", (unsigned int)cp->mct_data);
+  printf("      max_cs_size = %d\n", cp->max_cs_size);
+  printf("             rsiz = %u\n", cp->rsiz);
+}
+
 /* MJ2K Wrapper API Functions */
 
 const char *mj2k_opj_version(void)
@@ -312,6 +436,18 @@ void mj2k_free_image(mj2k_image_t *image)
     for(int i=0; i<image->ncomp; ++i) { free(image->comp[i].pixels); }
     free(image->comp);
   }
+}
+
+int mj2k_write_j2k(mj2k_image_t *image, const char *filename)
+{
+  printf("ENCODE\n");
+
+  opj_cparameters_t parameters;
+  opj_set_default_encoder_parameters(&parameters);
+
+  show_encoder_parameters(&parameters);
+
+  return 0;
 }
 
 

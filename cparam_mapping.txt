@@ -1,0 +1,99 @@
+cblockh_init          code block height (range = 4-1024) (default = 64)
+cblockw_init          code block width  (range = 4-1024) (default = 64) 
+                        ... product of cblockw_init and cblockh_init cannot exceepd 4096
+cod_format            J2K_CFMT or JP2_CFMT
+cp_comment            yep... just that, a comment field
+tcp_numlayers         number of layers
+cp_disto_alloc        1 = tcp_rates is populated
+tcp_rates             array of layer compression ratios, decreasing order (increasing quality), lossless = 1 
+cp_fixed_quality      1 = tcp_distoratio is populated
+cp_distoratio         array of layer PSNR values (dB), increasing order (increasing quality), lossless = 0
+cp_fixed_alloc    n/a 1 = cp_matrice is populated
+cp_matrice        n/a array of (something), 3 * numresolution * numlayers (integer triplets of something)
+tile_size_on      n/a 1 = cp_tdx,cp_dty are populated
+cp_tdx            n/a tile width
+cp_tdy            n/a tile height
+cp_tx0            n/a horizontal coordinate of the first tile
+cp_ty0            n/a vertical coordinate of the first tile
+csty                  coding style bitfield (see CSTY below for bit masks)
+decod_format      n/a indicates input file format
+image_offset_x0   n/a horizontal coordinate of the reference grid
+image_offset_y0   n/a horizontal coordinate of the reference grid
+index_on          dep 1 = create index file
+index             dep index file path/name
+infile            n/a input file path/name
+irreversable          0 = lossless, 1 = lossy (9-7 DWT)
+jpip_on           n/a JPIP enabled (write to JP2 output file)
+jpwl_{xyz}        n/a part of JPEG2000, Part 2
+max_comp_size         (see PROFILES below)
+max_cs_size           (see PROFILES below)
+rsiz                  (see PROFILES below)
+mode              n/a mode switch bitfield (see MODE below for bit masks)
+numpocs           n/a number of progression order changes (default = 0)
+numresolution         number of DWT decompositions + 1 (default = 6)
+outfile               output file path/name
+POC               n/a array of progression order changes (see POC below)
+prog_order            progression order (default = LRCP)
+res_spec          n/a number of precinct sizes populated
+prch_init         n/a array of precinct heights
+prcw_init         n/a array of precinct widths
+roi_compno        n/a component to be upshifted
+roi_shift         n/a upshift value for component during quantization
+subsampling_dx    n/a width subsampling (range = ?-2) (default = no subsampling)
+subsampling_dy    n/a width subsampling (range = ?-2) (default = no subsampling)
+tcp_mct           n/a mutliple component transform (0=none, 1=RGB->YCC, 2=custom)
+mct_data          n/a Custom MCT data (set with opj_set_MCT)
+tp_on                 1 = divide packets of every tile into tile-parts
+tp_flag               divide packets by R=resolution, L=layers, or C=components
+cp_cinema         dep OPJ_OFF(0) | OPJ_CINEMA2K_24 | OPJ_CINEMA2K_48 | OPJ_CINEMA4K_24
+cp_rsiz           dep OPJ_STD_RSIZ(0) | OPJ_CINEMA2K | OPJ_CINEMA4K | OPJ_MCT
+
+CSTY: __bit masks__
+  0x01 precinct dimensions specified
+  0x02 has SOP marker
+  0x04 has EPH marker
+
+MODE: __bit masks__
+  0x01 BYPASS(LAZY)
+  0x02 RESET
+  0x04 RESTART(TERMALL)
+  0x08 VSC
+  0x10 ERTERM(SEGTERM)
+  0x20 SEGMARK(SEGSYS)
+
+POC:
+  tile       tile index
+  resno0     resStart
+  compno0    compStart
+  layno1     layerEnd
+  resno1     resEnd
+  compono1   compEnd
+  progorder  progOrder (string)
+  prg1       progOrder (opj enum)
+
+
+PROFILES:
+  Digital Cinema 2K:
+    rsiz                OBJ_PROFILE_CINEMA_2K
+    max_comp_size       OBJ_CINEMA_{24|48}_COMP  (24 or 48 = fps)
+    max_cs_size         OBJ_CINEMA_{24|48}_CS    (24 or 48 = fps)
+  Digital Cinema 4K:
+    rsiz                OBJ_PROFILE_CINEMA_4K
+  IMF:
+    rsiz                profile | (sublevel<<4) | mainlevel
+                           profile   = OBJ_PROFILE_IMF_{2K|4K|8K|2K_R|4K_R|8K_R}
+                           mainlevel = X (range = 0-11)
+                           sublevel  = Y (range = 0-9)
+    max_cs_size         limit[sublevel] * 1000*1000/8 / framerate
+                            limit    = [0,OPJ_IMF_SUBLEVEL_{sublevel>0}_MBITSSEC]  (sublevel = 1-9)
+  
+  
+  RAW:                  __image_property__
+  rawWidth              width
+  rawHeight             height
+  rawComp               number of components
+  rawBitDepth           number of bits per pixel
+  rawSigned             signed pixel values
+  rawComps              array of component parmaeters (1 per component)
+      dx                component horizontal subsampling (1 = no subsampling)
+      dy                component vertical subsampling (1 = no subsampling)
