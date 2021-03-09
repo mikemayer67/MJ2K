@@ -9,140 +9,259 @@
 
 #include "mamj2k.h"
 
-int main(int argc,char **argv)
+typedef enum {LOSSLESS, LOSSY, NUM_DWT } dwt_t;
+typedef enum {COMPRESSION, PSNR, NUM_QUAL } qual_t;
+
+typedef const char *string;
+typedef string     *string_ptr;
+
+typedef struct {
+  dwt_t  dwt;
+  int    num_res;
+  qual_t qual_type;
+  int    num_layers;
+  float  layer_qual[100];
+
+  char infile[OPJ_PATH_LEN];
+  char outfile[OPJ_PATH_LEN];
+} options_t;
+
+
+const char *gProc = NULL;
+
+void error(const char *err)
 {
-  char *rd_filename = NULL;
-  char *j2k_filename = NULL;
+  fprintf(stderr,"\nSorry:: %s\n\n", err);
+  exit(1);
+}
 
-  int lossless   = -1;
-  int num_layers = -1;
+void usage(const char *err)
+{
+  if(strlen(err)>0) printf("\n%s\n",err);
 
-  for(int i=1; i<argc; ++i)
+  printf("\nUsage:: %s [-nl|-vl] [(-comp|-psnr) layer_values] [-r num_res] rd_file [j2k_file]\n\n",
+      (gProc ? gProc : "write_j2k" ));
+  printf("   -nl = lossless compression\n");
+  printf("   -vl = lossy compression\n");
+  printf("\n");
+  printf("   -comp [value [value [...]]] = layer compression ratio, decreasing values, 1 = lossless\n");
+  printf("   -psnr [value [value [...]]] = layer PSNR values, increasing values, 0 = lossless\n");
+  printf("\n");
+  printf("   -r num_res = Number of resolutions\n\n");
+
+  exit( strlen(err)>0 ? 1 : 0 );
+}
+
+
+int parse_dwt_arg(options_t *opts, string_ptr cur_arg, string_ptr end_arg)
+{
+  dwt_t dwt = NUM_DWT;
+  if      (strcmp(*cur_arg,"-nl")==0) { dwt = LOSSLESS; }
+  else if (strcmp(*cur_arg,"-vl")==0) { dwt = LOSSY;    }
+  else                                { return 0; }
+
+  switch(opts->dwt)
   {
-    if(strcmp(argv[i],"-nl")==0)
-    {
-      switch(lossless)
-      {
-        case -1: 
-          lossless = 1;
-          break;
-        case 1:
-          fprintf(stderr,"Note:: You specified -nl multiple times\n");
-          break;
-        case 0:
-          fprintf(stderr,"\nSorry:: You cannot specify both -nl and -vl\n");
-          return 1;
+    case NUM_DWT:
+      opts->dwt = dwt;
+      break;
+    case LOSSY:
+      switch(dwt) {
+        case LOSSLESS: error("Cannot set both -nl and -vl"); break;
+        case LOSSY:    error("Cannot set -vl twice");        break;
+        default: break;
       }
-    }
-    else if(strcmp(argv[i],"-vl")==0)
-    {
-      switch(lossless)
-      {
-        case -1: 
-          lossless = 0;
-          break;
-        case 0:
-          fprintf(stderr,"Note:: You specified -vl multiple times\n");
-          break;
-        case 1:
-          fprintf(stderr,"\nSorry:: You cannot specify both -nl and -vl\n");
-          return 1;
+      break;
+    case LOSSLESS:
+      switch(dwt) {
+        case LOSSY:    error("Cannot set both -nl and -vl"); break;
+        case LOSSLESS: error("Cannot set -nl twice");        break;
+        default: break;
       }
-    }
-    else if(strcmp(argv[i],"-l")==0)
-    {
-      if(num_layers >= 0 )
-      {
-        fprintf(stderr,"\nSorry:: You cannot specify number of layer more than once\n\n");
-        return 1;
-      }
-      ++i;
-      if( i == argc )
-      {
-        fprintf(stderr,"\nSorry:: Option -l requires an argument\n\n");
-        return 1;
-      }
+      break;
+  }
+  return 1;
+}
 
-      char *end = NULL;
-      num_layers = strtol(argv[i],&end,0);
-      if( (end < argv[i] + strlen(argv[i])) || num_layers <= 0 )
+int parse_qual_arg(options_t *opts, string_ptr cur_arg, string_ptr end_arg)
+{
+  qual_t qual = NUM_QUAL;
+  if      (strcmp(*cur_arg,"-comp")==0) { qual = COMPRESSION; }
+  else if (strcmp(*cur_arg,"-psnr")==0) { qual = PSNR; }
+  else                                { return 0; }
+
+  switch(opts->qual_type)
+  {
+    case NUM_QUAL:
+      opts->qual_type = qual;
+      break;
+    case PSNR:
+      switch(qual) {
+        case COMPRESSION: error("Cannot set both -comp and -psnr"); break;
+        case PSNR:        error("Cannot set -psnr twice");          break;
+        default: break;
+      }
+      break;
+    case COMPRESSION:
+      switch(qual) {
+        case PSNR:        error("Cannot set both -comp and -psnr"); break;
+        case COMPRESSION: error("Cannot set -comp twice");          break;
+        default: break;
+      }
+      break;
+  }
+
+  for( ++cur_arg; cur_arg<end_arg; ++cur_arg)
+  {
+    float value;
+    if( sscanf(*cur_arg,"%f",&value) != 1 ) break;
+
+    if( opts->num_layers > 99 )
+    {
+      switch(qual)
       {
-        fprintf(stderr,"\nSorry:: Argument to -l must be a postiive integer\n\n");
-        return 1;
+        case COMPRESSION: error("Cannot specify more than 100 compression values"); break;
+        case PSNR:        error("Cannot specify more than 100 PSNR values");        break;
+        default: break;
       }
     }
-    else if(rd_filename == NULL)
+
+    opts->layer_qual[opts->num_layers] = value;
+    opts->num_layers += 1;
+  }
+
+  if( opts->num_layers < 1 )
+  {
+    switch(qual)
     {
-      struct stat file_stat;
-      int rc = stat(argv[i],&file_stat);
-      if( rc != 0 )
-      {
-        fprintf(stderr,"\nSorry:: Cannot read %s (%s)\n\n",argv[i],strerror(errno));
-        return 1;
-      }
-      rd_filename = argv[i];
-    }
-    else if(j2k_filename == NULL)
-    {
-      j2k_filename = argv[i];
-    }
-    else
-    {
-      fprintf(stderr,"\nUsage argv[0]: [-nl|-vl][-l #] rd_filename [j2k_filename]\n\n");
-      return 1;
+      case COMPRESSION: error("Must specify at least one compression value"); break;
+      case PSNR:        error("Must specify at least one PSNR value");        break;
+      default: break;
     }
   }
 
-  if(num_layers < 0) num_layers = 0;
-  if(lossless   < 0) lossless   = 1;
+  return 1 + opts->num_layers;
+}
 
-  if(rd_filename == NULL)
+int parse_res_arg(options_t *opts, string_ptr cur_arg, string_ptr end_arg)
+{
+  if( strcmp(*cur_arg,"-r") != 0 ) { return 0; }
+
+  if(opts->num_res >= 0 ) error("You cannot specify number of resolutions more than once");
+
+  cur_arg += 1;
+  if( cur_arg >= end_arg ) error("Option -r requries an argument");
+
+  if( sscanf(*cur_arg,"%d",&(opts->num_res)) != 1 ) error("Argument to -r must be a postive integer");
+  if( opts->num_res < 1 ) error("Argument to -r must be a postive integer");
+
+  return 2;
+}
+
+
+void parse_args(options_t *opts, int argc, const char **argv)
+{
+  opts->dwt        = NUM_DWT;
+  opts->qual_type  = NUM_QUAL;
+  opts->num_res    = -1;
+  opts->num_layers = -1;
+
+  strcpy(opts->infile,"");
+  strcpy(opts->outfile,"");
+
+  string_ptr cur_arg = argv;
+  string_ptr end_arg = argv + argc;
+
+  gProc = *cur_arg++;
+
+  while(cur_arg < end_arg)
   {
-    fprintf(stderr,"\nUsage argv[0]: [-nl|-vl][-l #] rd_filename [j2k_filename]\n\n");
-    return 1;
+    int narg;
+
+    if( strcmp(*cur_arg,"-h")==0 ) { usage(""); }
+
+    else if ((narg = parse_dwt_arg ( opts, cur_arg, end_arg))) { cur_arg += narg; }
+    else if ((narg = parse_qual_arg( opts, cur_arg, end_arg))) { cur_arg += narg; }
+    else if ((narg = parse_res_arg ( opts, cur_arg, end_arg))) { cur_arg += narg; }
+
+    else if (strlen(opts->infile) == 0)  { strncpy(opts->infile, *cur_arg, OPJ_PATH_LEN-1); }
+    else if (strlen(opts->outfile) == 0) { strncpy(opts->outfile, *cur_arg, OPJ_PATH_LEN-1); }
+    else { usage("Unknown argument"); }
   }
 
-  if(j2k_filename == NULL)
+  if(opts->dwt == NUM_DWT)  { opts->dwt = LOSSLESS; }
+  if(opts->num_layers < 0 ) { opts->num_layers = 0; }
+  if(opts->num_res    < 0 ) { opts->num_res    = 0; }
+
+  if(strlen(opts->infile) == 0) usage("Missing rd_infile");
+
+  struct stat file_stat;
+  int rc = stat(opts->infile,&file_stat);
+  if( rc != 0 )
   {
-    const char *ext = strrchr(rd_filename,'.');
-    int n = ext-rd_filename;
-    j2k_filename = (char *)calloc(n+5, sizeof(char));
-    strncpy(j2k_filename, rd_filename, n);
-    strcat(j2k_filename,".j2k");
+    fprintf(stderr,"\nSorry:: Cannot read %s (%s)\n\n",opts->infile,strerror(errno));
+    exit(1);
   }
+
+  if(strlen(opts->outfile) == 0)
+  {
+    const char *ext = strrchr(opts->infile,'.');
+    int n = ext-opts->infile;
+    strncpy(opts->outfile, opts->infile, n);
+    if( strlen(opts->outfile) > OPJ_PATH_LEN - 5 ) error("Output file name is too long");
+    strcat( opts->outfile,".j2k");
+  }
+
+  printf("Command Line Options:\n");
+  printf("           DWT: %s\n", opts->dwt == LOSSLESS ? "Lossless" : "Lossy");
+  printf("   Resolutions: %d\n", opts->num_res);
+  printf("        Layers: %d\n", opts->num_layers);
+  if(opts->num_layers) {
+    printf("     Qual Type: %s\n", opts->qual_type == COMPRESSION ? "Compression" : "PSNR");
+    const char *delim = "";
+    printf("   Qual Values: [");
+    for(int i=0; i<opts->num_layers; ++i) {
+      printf("%s%f", delim, opts->layer_qual[i]);
+      delim = ", ";
+    }
+    printf("]\n");
+    printf("      Infile: %s\n", opts->infile);
+    printf("     Outfile: %s\n", opts->outfile);
+  }
+}
+
+int main(int argc,const char **argv)
+{
+  options_t opts;
+  parse_args(&opts, argc, argv);
 
   const char *version = mj2k_opj_version();
   printf("\nMJ2K is wrapping OpenJPEG VERSION: %s\n\n",version);
-  printf("   RD file: %s\n", rd_filename);
-  printf("  J2K file: %s\n", j2k_filename);
-  printf("    Layers: %d\n", num_layers);
-  printf("   Quality: %s\n", (lossless ? "Lossless" : "Lossy"));
-  printf("\n");
 
-  int fd = open(rd_filename,O_RDWR);
+  int fd = open(opts.infile,O_RDWR);
   if( fd < 0 )
   {
-    fprintf(stderr,"\nSorry:: Failed to open %s: %s\n\n", rd_filename, strerror(errno));
+    fprintf(stderr,"\nSorry:: Failed to open %s: %s\n\n", opts.infile, strerror(errno));
     return 1;
   }
 
   uint32_t w;
   if( read(fd, &w, sizeof(w)) != sizeof(w) )
   {
-    fprintf(stderr,"\nSorry:: Failed to read width from %s\n\n",argv[1]);
+    fprintf(stderr,"\nSorry:: Failed to read width from %s\n\n",opts.infile);
     return 1;
   }
 
   uint32_t h;
   if( read(fd, &h, sizeof(h)) != sizeof(h) )
   {
-    fprintf(stderr,"\nSorry:: Failed to read height from %s\n\n",argv[1]);
+    fprintf(stderr,"\nSorry:: Failed to read height from %s\n\n",opts.infile);
     return 1;
   }
   uint32_t n;
   if( read(fd, &n, sizeof(n)) != sizeof(n) )
   {
-    fprintf(stderr,"\nSorry:: Failed to read band count from %s\n\n",argv[1]);
+    fprintf(stderr,"\nSorry:: Failed to read band count from %s\n\n",opts.infile);
     return 1;
   }
 
@@ -196,10 +315,10 @@ int main(int argc,char **argv)
     image.comp[i].pixels = pixels + i * w * h;
   }
 
-  int rc = mj2k_write_j2k(&image, j2k_filename);
+  int rc = mj2k_write_j2k(&image, opts.outfile);
 
   if( rc != 0 ) {
-    printf("\nFailed to create %s\n\n", j2k_filename);
+    printf("\nFailed to create %s\n\n", opts.outfile);
   } else {
     printf("\nDone\n\n");
   }

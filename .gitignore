@@ -10,5 +10,6 @@ openjpeg-2.4.0
 read_j2k.dSYM
 *.ntf
 ubuntu
+read_j2k
 write_j2k
 gimp_j2k
