@@ -24,7 +24,6 @@ typedef struct {
   mj2k_pixel_t *pixels;
 } mj2k_comp_t;
 
-
 typedef struct 
 {
   uint32_t     x0;
@@ -35,10 +34,20 @@ typedef struct
   mj2k_comp_t *comp;
 } mj2k_image_t;
 
+typedef struct
+{
+  int   irreversible;
+  int   tcp_numlayers;
+  int   numresolution;
+  int   layer_qual_type; // 0 = cp_distoratio, 1 = tcp_rates
+  float layer_qual_values[100];
+} mj2k_cparam_t;
+
+
 extern mj2k_image_t *mj2k_read_j2k(const char *filename);
 extern mj2k_image_t *mj2k_parse_j2k(const mj2k_bytes_t j2k, off_t length);
 
-extern int mj2k_write_j2k(mj2k_image_t *image, const char *filename);
+extern int mj2k_write_j2k(mj2k_image_t *image, mj2k_cparam_t *cparam, const char *filename);
 
 extern const char *mj2k_opj_version(void);
 

@@ -129,6 +129,46 @@ void mj2k_init_image(mj2k_image_t *m_im, opj_image_t *o_im )
   }
 }
 
+opj_image_t *opj_init_image(mj2k_image_t *m_im)
+{
+  opj_image_t *rval = (opj_image_t *)malloc(sizeof(opj_image_t));
+
+  rval->x0 = m_im->x0;
+  rval->y0 = m_im->y0;
+  rval->x1 = m_im->x1;
+  rval->y1 = m_im->y1;
+
+  int ncomp = m_im->ncomp;
+
+  rval->numcomps = ncomp;
+  rval->color_space = (ncomp == 1 ? OPJ_CLRSPC_GRAY : OPJ_CLRSPC_SRGB); 
+
+  rval->comps = (opj_image_comp_t *)calloc(ncomp,sizeof(opj_image_comp_t));
+  for(int i=0; i<ncomp; ++i)
+  {
+    uint32_t w  = m_im->x1 - m_im->x0;
+    uint32_t h  = m_im->y1 - m_im->y0;
+
+    rval->comps[i].x0 = m_im->x0;
+    rval->comps[i].y0 = m_im->y0;
+    rval->comps[i].w  = w;
+    rval->comps[i].h  = h;
+    rval->comps[i].dx = 1;
+    rval->comps[i].dy = 1;
+    rval->comps[i].prec = 8;
+    rval->comps[i].bpp  = 8;
+    rval->comps[i].sgnd = 0;
+
+    rval->comps[i].data = (int32_t *)malloc(w*h*sizeof(int32_t)); 
+    for(uint32_t j=0; j<w*h; ++j)
+    {
+      rval->comps[i].data[j] = m_im->comp[i].pixels[j];
+    }
+  }
+
+  return rval;
+}
+
 
 /* MJ2K Internal Functions */
 
@@ -234,7 +274,7 @@ void show_encoder_parameters(opj_cparameters_t *cp)
   printf("   cp_disto_alloc = %d\n", cp->cp_disto_alloc);
   printf("        tcp_rates = [");
   delim = "";
-  for(int i=0; i<cp->tcp_numlayers && cp->cp_fixed_quality; ++i)
+  for(int i=0; i<cp->tcp_numlayers && cp->cp_disto_alloc; ++i)
   {
     printf("%s%f", delim,cp->tcp_rates[i]);
     delim = ", ";
@@ -438,16 +478,95 @@ void mj2k_free_image(mj2k_image_t *image)
   }
 }
 
-int mj2k_write_j2k(mj2k_image_t *image, const char *filename)
+void opj_free_image(opj_image_t *image)
 {
+  if(image->comps != NULL)
+  {
+    for(int i=0; i<image->numcomps; ++i) { free(image->comps[i].data); }
+    free(image->comps);
+  }
+  free(image);
+}
+
+static void error_callback(const char *msg, void *client_data)
+{
+  fprintf(stdout, "[ERROR] %s", msg);
+}
+static void warning_callback(const char *msg, void *client_data)
+{
+  fprintf(stdout, "[WARNING] %s", msg);
+}
+static void info_callback(const char *msg, void *client_data)
+{
+  fprintf(stdout, "[INFO] %s", msg);
+}
+
+
+int mj2k_write_j2k(mj2k_image_t *m_image, mj2k_cparam_t *m_param, const char *filename)
+{
+  int rval = 0;
+
   printf("ENCODE\n");
 
-  opj_cparameters_t parameters;
-  opj_set_default_encoder_parameters(&parameters);
+  opj_cparameters_t param;
+  opj_set_default_encoder_parameters(&param);
 
-  show_encoder_parameters(&parameters);
+  param.irreversible  = m_param->irreversible;
+  param.numresolution = m_param->numresolution;
+  param.tcp_numlayers = m_param->tcp_numlayers;
+  switch(m_param->layer_qual_type)
+  {
+    case 0:
+      param.cp_fixed_quality = 1;
+      for(int i=0; i<m_param->tcp_numlayers; ++i) {
+        param.tcp_distoratio[i] = m_param->layer_qual_values[i];
+      }
+      break;
+    case 1:
+      param.cp_disto_alloc = 1;
+      for(int i=0; i<m_param->tcp_numlayers; ++i) {
+        param.tcp_rates[i] = m_param->layer_qual_values[i];
+      }
+      break;
+  }
 
-  return 0;
+  show_encoder_parameters(&param);
+
+  opj_codec_t *codec = opj_create_compress(OPJ_CODEC_J2K);
+  opj_set_info_handler(codec, info_callback, NULL);
+  opj_set_warning_handler(codec, warning_callback, NULL);
+  opj_set_error_handler(codec, error_callback, NULL);
+
+  opj_image_t *image = opj_init_image(m_image);
+  
+  if(image != NULL)
+  {
+    if( opj_setup_encoder(codec, &param, image) )
+    {
+      opj_stream_t *j2k_stream = opj_stream_create_default_file_stream(filename, OPJ_FALSE);
+      if( j2k_stream == NULL )
+      {
+        fprintf(stderr, "\nFailed to create output stream\n\n");
+        rval = 1;
+      }
+      else
+      {
+        OPJ_BOOL rc = opj_start_compress(codec,image,j2k_stream);
+        if(rc) {
+          rc = opj_encode(codec,j2k_stream);
+          if(rc) {
+            rc = opj_end_compress(codec,j2k_stream);
+          }
+        }
+        if( !rc ) { rval = 1; }
+        opj_stream_destroy(j2k_stream);
+      }
+    }
+    opj_destroy_codec(codec);
+    opj_free_image(image);
+  }
+
+  return rval;
 }
 
 

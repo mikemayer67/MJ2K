@@ -7,7 +7,7 @@ tcp_numlayers         number of layers
 cp_disto_alloc        1 = tcp_rates is populated
 tcp_rates             array of layer compression ratios, decreasing order (increasing quality), lossless = 1 
 cp_fixed_quality      1 = tcp_distoratio is populated
-cp_distoratio         array of layer PSNR values (dB), increasing order (increasing quality), lossless = 0
+tcp_distoratio        array of layer PSNR values (dB), increasing order (increasing quality), lossless = 0
 cp_fixed_alloc    n/a 1 = cp_matrice is populated
 cp_matrice        n/a array of (something), 3 * numresolution * numlayers (integer triplets of something)
 tile_size_on      n/a 1 = cp_tdx,cp_dty are populated

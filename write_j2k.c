@@ -12,20 +12,20 @@
 typedef enum {LOSSLESS, LOSSY, NUM_DWT } dwt_t;
 typedef enum {COMPRESSION, PSNR, NUM_QUAL } qual_t;
 
-typedef const char *string;
-typedef string     *string_ptr;
-
-typedef struct {
+typedef struct
+{
   dwt_t  dwt;
   int    num_res;
   qual_t qual_type;
   int    num_layers;
   float  layer_qual[100];
-
-  char infile[OPJ_PATH_LEN];
-  char outfile[OPJ_PATH_LEN];
+  char  *infile;
+  char  *outfile;
 } options_t;
 
+
+typedef const char *string_t;
+typedef string_t   *string_ptr;
 
 const char *gProc = NULL;
 
@@ -111,6 +111,7 @@ int parse_qual_arg(options_t *opts, string_ptr cur_arg, string_ptr end_arg)
       break;
   }
 
+  opts->num_layers = 0;
   for( ++cur_arg; cur_arg<end_arg; ++cur_arg)
   {
     float value;
@@ -166,8 +167,8 @@ void parse_args(options_t *opts, int argc, const char **argv)
   opts->num_res    = -1;
   opts->num_layers = -1;
 
-  strcpy(opts->infile,"");
-  strcpy(opts->outfile,"");
+  opts->infile  = NULL;
+  opts->outfile = NULL;
 
   string_ptr cur_arg = argv;
   string_ptr end_arg = argv + argc;
@@ -184,16 +185,33 @@ void parse_args(options_t *opts, int argc, const char **argv)
     else if ((narg = parse_qual_arg( opts, cur_arg, end_arg))) { cur_arg += narg; }
     else if ((narg = parse_res_arg ( opts, cur_arg, end_arg))) { cur_arg += narg; }
 
-    else if (strlen(opts->infile) == 0)  { strncpy(opts->infile, *cur_arg, OPJ_PATH_LEN-1); }
-    else if (strlen(opts->outfile) == 0) { strncpy(opts->outfile, *cur_arg, OPJ_PATH_LEN-1); }
-    else { usage("Unknown argument"); }
+    else if(opts->infile == NULL)
+    {
+      opts->infile = (char *)malloc(1 + strlen(*cur_arg));
+      strcpy(opts->infile,*cur_arg);
+      cur_arg += 1;
+    }
+    else if(opts->outfile == NULL)
+    {
+      opts->outfile = (char *)malloc(1 + strlen(*cur_arg));
+      strcpy(opts->outfile,*cur_arg);
+      cur_arg += 1;
+    }
+    else
+    {
+      const char *prefix = "Unknown argument: ";
+      char *err = (char *)malloc(strlen(prefix) + strlen(*cur_arg) + 1);
+      strcpy(err,prefix);
+      strcat(err,*cur_arg);
+      error(err);
+    }
   }
 
   if(opts->dwt == NUM_DWT)  { opts->dwt = LOSSLESS; }
-  if(opts->num_layers < 0 ) { opts->num_layers = 0; }
-  if(opts->num_res    < 0 ) { opts->num_res    = 0; }
+  if(opts->num_layers < 0 ) { opts->num_layers = 1; }
+  if(opts->num_res    < 0 ) { opts->num_res    = 6; }
 
-  if(strlen(opts->infile) == 0) usage("Missing rd_infile");
+  if(opts->infile == NULL) usage("Missing rd_infile");
 
   struct stat file_stat;
   int rc = stat(opts->infile,&file_stat);
@@ -203,13 +221,13 @@ void parse_args(options_t *opts, int argc, const char **argv)
     exit(1);
   }
 
-  if(strlen(opts->outfile) == 0)
+  if(opts->outfile == NULL)
   {
     const char *ext = strrchr(opts->infile,'.');
     int n = ext-opts->infile;
+    opts->outfile = (char *)malloc(n+5);
     strncpy(opts->outfile, opts->infile, n);
-    if( strlen(opts->outfile) > OPJ_PATH_LEN - 5 ) error("Output file name is too long");
-    strcat( opts->outfile,".j2k");
+    strcat(opts->outfile,".j2k");
   }
 
   printf("Command Line Options:\n");
@@ -225,10 +243,13 @@ void parse_args(options_t *opts, int argc, const char **argv)
       delim = ", ";
     }
     printf("]\n");
-    printf("      Infile: %s\n", opts->infile);
-    printf("     Outfile: %s\n", opts->outfile);
   }
+  printf("      Infile: %s\n", opts->infile);
+  printf("     Outfile: %s\n", opts->outfile);
 }
+
+
+
 
 int main(int argc,const char **argv)
 {
@@ -295,6 +316,8 @@ int main(int argc,const char **argv)
     pos += nread;
   }
 
+  close(fd);
+
   mj2k_image_t image;
   image.x0 = 0;
   image.y0 = 0;
@@ -315,7 +338,15 @@ int main(int argc,const char **argv)
     image.comp[i].pixels = pixels + i * w * h;
   }
 
-  int rc = mj2k_write_j2k(&image, opts.outfile);
+  mj2k_cparam_t cparam;
+  cparam.irreversible    = (opts.dwt == LOSSY ? 1 : 0);
+  cparam.numresolution   = opts.num_res;
+  cparam.tcp_numlayers   = opts.num_layers;
+  cparam.layer_qual_type = (opts.qual_type == COMPRESSION ? 1 : 0);
+  memset(cparam.layer_qual_values, 0, sizeof(cparam.layer_qual_values));
+  for(int i=0; i<opts.num_layers; ++i) cparam.layer_qual_values[i] = opts.layer_qual[i];
+
+  int rc = mj2k_write_j2k(&image, &cparam, opts.outfile);
 
   if( rc != 0 ) {
     printf("\nFailed to create %s\n\n", opts.outfile);

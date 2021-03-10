@@ -13,3 +13,5 @@ ubuntu
 read_j2k
 write_j2k
 gimp_j2k
+mamj2k
+write_j2k.dSYM
