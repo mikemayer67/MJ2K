@@ -1,0 +1,22 @@
+#!/bin/bash
+
+export DYLD_LIBRARY_PATH=/Users/mike/MJ2K
+
+rm -rf cat_hat*.j2k
+rm -rf cat_hat*.csv
+
+for psnr in 15 20 25 30 35 40; do
+  for nlvl in nl vl; do
+    ../write_j2k cat_hat.rd -${nlvl} -psnr $psnr   cat_hat_c1_psnr${psnr}_${nlvl}.j2k
+    ../write_j2k cat_hat.rd -${nlvl} -psnr $psnr 0 cat_hat_c2_psnr${psnr}_${nlvl}.j2k
+  done
+done
+
+for psnr in 15 20 25 30 35 40; do
+  for nlvl in nl vl; do
+    ../read_j2k cat_hat_c1_psnr${psnr}_${nlvl}.j2k -l 1 cat_hat_c1_d1_psnr${psnr}_${nlvl}
+    ../read_j2k cat_hat_c2_psnr${psnr}_${nlvl}.j2k -l 1 cat_hat_c2_d1_psnr${psnr}_${nlvl}
+    ../read_j2k cat_hat_c2_psnr${psnr}_${nlvl}.j2k -l 2 cat_hat_c2_d2_psnr${psnr}_${nlvl}
+  done
+done
+
