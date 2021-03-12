@@ -36,11 +36,11 @@ typedef struct
 
 typedef struct
 {
-  int   irreversible;
-  int   tcp_numlayers;
-  int   numresolution;
-  int   layer_qual_type; // 0 = cp_distoratio, 1 = tcp_rates
-  float layer_qual_values[100];
+  uint8_t irreversible;
+  uint8_t tcp_numlayers;
+  uint8_t numresolution;
+  uint8_t layer_qual_type; // 0 = cp_distoratio, 1 = tcp_rates
+  float   layer_qual_values[100];
 } mj2k_cparam_t;
 
 
