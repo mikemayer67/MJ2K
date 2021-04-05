@@ -10,6 +10,7 @@
 using std::string;
 using std::stringstream;
 using std::cout;
+using std::cerr;
 using std::endl;
 using std::setw;
 using std::setfill;
@@ -29,6 +30,9 @@ using std::vector;
 #endif
 #endif
 
+#define LINE_INDENT  2
+#define GAP_WIDTH    2
+#define KEY_WIDTH   10
 #define VALUE_WIDTH 12
 
 //------------------------------------------------------------------------------
@@ -41,9 +45,9 @@ typedef uint16_t MarkerCode_t;
 // R = required, O = optional, N = not allowed, L = last marker
 // Deliminting markers
 //const MarkerCode_t SOC = 0xff4f ; //  R N  Start of codestream
-const MarkerCode_t SOT = 0xff90 ; //  N R  Start of tile part
-const MarkerCode_t SOD = 0xff93 ; //  N L  Start of data
-const MarkerCode_t EOC = 0xffd9 ; //  N N  End of codestream
+//const MarkerCode_t SOT = 0xff90 ; //  N R  Start of tile part
+//const MarkerCode_t SOD = 0xff93 ; //  N L  Start of data
+//const MarkerCode_t EOC = 0xffd9 ; //  N N  End of codestream
 // Fixed info markers
 //const MarkerCode_t SIZ = 0xff51 ; //  R N  Image and tile size
 // Functional markers
@@ -77,7 +81,8 @@ class StringValue
   protected:
     string indent() const { 
       stringstream rval;
-      rval << setw(4+VALUE_WIDTH) << "---->    ";
+      rval << setw(VALUE_WIDTH) << "---->";
+      rval << string(GAP_WIDTH,' ');
       return rval.str();
     }
 };
@@ -118,14 +123,17 @@ uint32_t parse_marker_field(int fd, int N, string parameter, int index, string d
     p << parameter << "." << 1+index;
     parameter = p.str();
 
-    if(index>0) description="";
+    if(index>0) description="\"";
   }
 
   cout 
-    << "  " << setw(10) << parameter << ": "
+    << string(LINE_INDENT,' ')
+    << setw(KEY_WIDTH) << parameter
+    << ":" << string(GAP_WIDTH-1,' ')
     << string(8-2*N,'.')
     << setw(2*N) << setfill('0') << std::hex << uint32_t(value) << setfill(' ')
-    << setw(VALUE_WIDTH) << cvt(value) << "    "
+    << setw(VALUE_WIDTH) << cvt(value) 
+    << string(GAP_WIDTH,' ')
     << description
     <<endl;
 
@@ -186,6 +194,93 @@ class SOC : public Marker
     SOC(int fd) : Marker()
   {
     cout << "SOC" << endl;
+  }
+};
+
+//------------------------------------------------------------------------------
+// EOC - End of codestream
+//   Delimiting marker
+//   File Header: required (very first marker)
+//   Tile Header: not allowed
+//------------------------------------------------------------------------------
+class EOC : public Marker
+{
+  public:
+    static const MarkerCode_t Code = 0xffd9;
+
+  public:
+    EOC(int fd) : Marker()
+  {
+    cout << "EOC" << endl;
+  }
+};
+
+//------------------------------------------------------------------------------
+// SOT - Start of tile part
+//   Delimiting marker
+//   File Header: not allowed
+//   Tile Header: required (first marker in tile)
+//------------------------------------------------------------------------------
+class SOT : public Marker
+{
+  public:
+    static const MarkerCode_t Code = 0xff90;
+
+  public:
+    SOT(int fd) : Marker() {
+      cout << "SOT" << endl;
+
+      start  = lseek(fd,0,SEEK_CUR) - 2;
+
+      size   = parse_marker_field(fd, 2, "Lsot");
+
+      Isot   = parse_marker_field(fd, 2, "Isot",   "tile index");
+      Psot   = parse_marker_field(fd, 4, "Psot",   "tile length");
+      TPsot  = parse_marker_field(fd, 1, "TPsot",  "tile part index");
+      TNsot  = parse_marker_field(fd, 1, "TNsot",  "tile part count");
+
+      end    = start + Psot;
+    }
+
+    void jump_to_end(int fd) const {
+      lseek(fd,end,SEEK_SET);
+    }
+
+  public:
+    uint16_t Isot;
+    uint32_t Psot;
+    uint16_t TPsot;
+    uint16_t TNsot;
+
+    off_t start;
+    off_t end;
+};
+
+//------------------------------------------------------------------------------
+// SOD - Start of data
+//   Delimiting marker
+//   File Header: not allowed
+//   Tile Header: last marker
+//------------------------------------------------------------------------------
+class SOD : public Marker
+{
+  public:
+    static const MarkerCode_t Code = 0xff93;
+
+  public:
+    SOD(int fd, SOT *sot) : Marker()
+  {
+    if(!sot) {
+      cerr << "SOD encountered before SOT" << endl;
+      exit(1);
+    }
+    cout << "SOD" << endl;
+    off_t cur = lseek(fd, 0, SEEK_CUR);
+    uint32_t len = sot->end - cur;
+    lseek(fd,sot->end,SEEK_SET);
+    cout << string(LINE_INDENT,' ') 
+      << std::dec << setw(KEY_WIDTH) << len 
+      << " bytes of bitstream" << endl;
   }
 };
 
@@ -334,7 +429,7 @@ class SqcdConverter : public StringValue {
           rval << "scalar expounded";
           break;
         default:
-          std::cerr << "Unknown Sqcd value (" << std::hex << uint16_t(type) << ")";
+          cerr << "Unknown Sqcd value (" << std::hex << uint16_t(type) << ")";
           exit(1);
           break;
       }
@@ -443,7 +538,7 @@ class QCC : public Marker
       {
         SPqcdConverter_noq spqcc_cvt;
 
-        int n = size-3;
+        int n = size-4;
         SPqcc = new uint16_t[n];
         for (int i=0; i<n; ++i) {
           SPqcc[i] = parse_marker_field(fd, 1, "SPqcc", i, "Exponent (epsilon_b)", spqcc_cvt); 
@@ -452,7 +547,7 @@ class QCC : public Marker
       else
       {
         SPqcdConverter_q spqcc_cvt;
-        int n = (size-3)/2;
+        int n = (size-4)/2;
         SPqcc = new uint16_t[n];
         for (int i=0; i<n; ++i) {
           SPqcc[i] = parse_marker_field(fd, 2, "SPqcc", i, "Exponent (epsilon_b), Mantissa (mu_b)", spqcc_cvt); 
@@ -564,7 +659,7 @@ class SGcodPOConverter : public StringValue {
         case 3: rval << "PCRL"; break;
         case 4: rval << "CPRL"; break;
         default:
-          std::cerr << "Unknown progression order: " << value << endl;
+          cerr << "Unknown progression order: " << value << endl;
           exit(1);
           break;
       }
@@ -582,7 +677,7 @@ class SGcodMCXConverter : public StringValue {
         case 0: rval << "no multi component transform"; break;
         case 1: rval << "xform used on components 0-2"; break;
         default:
-          std::cerr << endl << "Unknown multi component transform: " << value << endl;
+          cerr << endl << "Unknown multi component transform: " << value << endl;
           exit(1);
           break;
       }
@@ -596,7 +691,7 @@ class SPcodCBXConverter : public StringValue {
     {
       uint32_t exp = 2 + (value & 0x0f);
       if( exp > 10 ) {
-        std::cerr << endl << "Max codeblock width/height exponent is 10" << endl;
+        cerr << endl << "Max codeblock width/height exponent is 10" << endl;
         exit(1);
       }
       return std::to_string(1 << exp);
@@ -671,9 +766,11 @@ class COD : public Marker
 
       int n = size - 12;
       SPcod_psz = new uint16_t[n];
+      string description = "precinct size (PPx,PPy)";
       for(int i=0; i<n; ++i)
       {
-        SPcod_psz[i] = parse_marker_field(fd, 1, "SPcod-I", spcod_psz_cvt, "precinct size (PPx,PPy)");
+        SPcod_psz[i] = parse_marker_field(fd, 1, "SPcod-I", spcod_psz_cvt, description);
+        description = "\"";
       }
     }
 
@@ -691,6 +788,70 @@ class COD : public Marker
     uint32_t SPcod_xfm;
 
     uint16_t *SPcod_psz;
+};
+
+
+//------------------------------------------------------------------------------
+// COM - Coding Style Default
+//   Information marker
+//   File Header: requried
+//   Tile Header: optional
+//------------------------------------------------------------------------------
+//----------------------------------------
+// Table A-44 Rcom parameter
+//----------------------------------------
+// 0 : binary
+// 1 : latin (IS 8859-15:1999)
+//----------------------------------------
+
+class RcomConverter : public StringValue {
+  public:
+    string operator()(uint32_t value) const
+    {
+      return (value ? "latin" : "binary");
+    }
+};
+
+class COM : public Marker
+{
+  public:
+    static const MarkerCode_t Code = 0xff64;
+
+  public:
+    COM(int fd) : Marker(), Ccom(NULL)
+    {
+      RcomConverter rcom_cvt;
+
+      cout << "COM" << endl;
+
+      size      = parse_marker_field(fd, 2, "Lcom");
+      Rcom      = parse_marker_field(fd, 2, "Rcom", rcom_cvt);
+
+      cout << string(LINE_INDENT,' ')
+        << setw(KEY_WIDTH) << "Ccom"
+        << ":" << string(GAP_WIDTH-1,' ');
+
+      uint16_t n = size-4;
+      if(Rcom) // latin
+      { 
+        Ccom = new unsigned char[n+1];
+        read(fd, Ccom, n);
+        Ccom[n] = '\0';
+        cout << Ccom << endl;
+      } 
+      else // binary 
+      {
+        Ccom = new unsigned char[n];
+        read(fd, Ccom, n);
+        cout << "(binary data)" << endl;
+      }
+    }
+
+    ~COM() { delete[] Ccom; }
+
+  private:
+    uint16_t Rcom;
+    unsigned char *Ccom;
 };
 
 //------------------------------------------------------------------------------
@@ -739,6 +900,9 @@ int main(int argc,char **argv)
   markers.push_back(siz);
 
   // Loop over marker codes until EOC
+
+  SOT *sot(NULL);
+
   bool done = false;
   while(!done)
   {
@@ -750,20 +914,27 @@ int main(int argc,char **argv)
         cout << "Errant SIZ marker. There should only be one at the start of the codestream." << endl;
         exit(1);
 
-      case EOC: 
+      case EOC::Code: 
+        markers.push_back(new EOC(src));
         done = true; 
         break;
 
+      case SOT::Code: 
+        sot = new SOT(src);
+        markers.push_back(sot);
+        break;
+
+      case SOD::Code: markers.push_back(new SOD(src,sot)  ); break;
       case QCD::Code: markers.push_back( new QCD(src)     ); break;
       case QCC::Code: markers.push_back( new QCC(src,siz) ); break;
       case COD::Code: markers.push_back( new COD(src)     ); break;
+      case COM::Code: markers.push_back( new COM(src)     ); break;
 
       default:
-        cout << "Unknown code: " << std::hex << marker << endl;
+        cerr << "Unknown code: " << std::hex << marker << endl;
         exit(1);
         break;
     }
   }
-
-  cout << endl << "DONE" << endl << endl;
+  cout << endl;
 }
