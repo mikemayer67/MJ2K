@@ -2,13 +2,12 @@
 #include "formatter.h"
 #include "xfrm_coc.h"
 
-#include <iostream>
-
 void COC::init(int fd, const SIZ &siz)
 {
+  MarkerSegment::init(fd, Marker::COC );
+
   _lenC = (siz.Csiz() < 257 ? 1 : 2);
 
-  _size                 = get_field(fd, 2,     "Lcoc");
   _C                    = get_field(fd, _lenC, "Ccoc");
   _S                    = get_field(fd, 1,     "Scoc");
   _SP.num_decomp_levels = get_field(fd, 1,     "SGcoc.num_decomp_levels");
@@ -26,8 +25,6 @@ void COC::init(int fd, const SIZ &siz)
 
 void COC::display(std::ostream &s) const
 {
-  s << "COC" << std::endl;
-
   Xfrm_Scoc  scoc;
 
   // the following are not a mistake, SPcod and Spcoc have same format

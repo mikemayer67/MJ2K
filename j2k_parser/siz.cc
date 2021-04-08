@@ -2,11 +2,9 @@
 #include "formatter.h"
 #include "xfrm_siz.h"
 
-#include <iostream>
-
 void SIZ::init(int fd)
 {
-  _size   = get_field(fd, 2, "Lsiz");
+  MarkerSegment::init(fd, Marker::SIZ );
 
   _R   = get_field(fd, 2, "Rsiz");
   _X   = get_field(fd, 4, "Xsiz");
@@ -32,8 +30,6 @@ void SIZ::init(int fd)
 
 void SIZ::display(std::ostream &s) const
 {
-  s << "SIZ" << std::endl;
-
   Formatter out(s);
   out.display(_size,   2, "Lsiz");
   out.display(_R,   2, "Rsiz",   "codestream capabilities");

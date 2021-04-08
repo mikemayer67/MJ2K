@@ -1,6 +1,7 @@
 #ifndef _MARKER_H_
 #define _MARKER_H_
 
+#include <string>
 #include <stdint.h>
 
 //------------------------------------------------------------------------------
@@ -49,19 +50,34 @@ class Marker
       EMPTY = 0x0000
     };
 
+    static std::string code_to_str(Code_t);
+
+    std::string str(void) const { return code_to_str(_code); }
+    
   public:
-    Marker(void) : _code(EMPTY) {}
+    Marker(Code_t code=EMPTY) : _code(code) {}
 
-    Marker(int fd);
+    // If the expected code is not found, this will throw an exception
+    Marker(int fd, Code_t expected);
 
-    Code_t code(void) const { return _code; }
+    // Note that if advance is false, this is a look ahead operation (file pointer is not advanced)
+    Marker(int fd, bool advance=false);
 
-    bool is(Code_t code) const { 
-      return code == _code; 
-    }
+    void display(std::ostream &s) const;
 
-  protected:
-    Code_t _code;
+    Code_t   code   (void) const { return _code; }
+    uint64_t offset (void) const { return _offset; }
+
+    bool is(Code_t code) const { return code == _code; }
+
+  private:
+
+    void _read(int fd);
+
+    Code_t   _code;
+    uint64_t _offset;
 };
+
+static std::ostream &operator<<(std::ostream &s, const Marker &x) {x.display(s); return s;}
 
 #endif // _MARKER_H_

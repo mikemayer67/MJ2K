@@ -16,8 +16,8 @@
 class POC : public MarkerSegment
 {
   public:
-    POC(void)                   : MarkerSegment(Marker::POC) {}
-    POC(int fd, const SIZ &siz) : MarkerSegment(Marker::POC) { init(fd,siz); }
+    POC(void)                   {}
+    POC(int fd, const SIZ &siz) { init(fd,siz); }
 
     void init(int fd, const SIZ &siz);
     void display(std::ostream &s) const;
@@ -37,36 +37,12 @@ class POC : public MarkerSegment
 
     uint16_t Lrgn   (void) const { return _size; }
 
-    uint8_t RSpoc(uint16_t i) const { 
-      try { return _progOrderChange.at(i).RS; }
-      catch(std::out_of_range e) { throw_range_error("RSpoc",i,_progOrderChange.size()); }
-    }
-
-    uint16_t CSpoc(uint16_t i) const { 
-      try { return _progOrderChange.at(i).CS; }
-      catch(std::out_of_range e) { throw_range_error("CSpoc",i,_progOrderChange.size()); }
-    }
-
-    uint16_t LYEpoc(uint16_t i) const { 
-      try { return _progOrderChange.at(i).LYE; }
-      catch(std::out_of_range e) { throw_range_error("LYEpoc",i,_progOrderChange.size()); }
-    }
-
-    uint8_t REpoc(uint16_t i) const { 
-      try { return _progOrderChange.at(i).RE; }
-      catch(std::out_of_range e) { throw_range_error("REpoc",i,_progOrderChange.size()); }
-    }
-
-    uint16_t CEpoc(uint16_t i) const { 
-      try { return _progOrderChange.at(i).CE; }
-      catch(std::out_of_range e) { throw_range_error("CEpoc",i,_progOrderChange.size()); }
-    }
-
-    uint8_t Ppoc(uint16_t i) const { 
-      try { return _progOrderChange.at(i).P; }
-      catch(std::out_of_range e) { throw_range_error("Ppoc",i,_progOrderChange.size()); }
-    }
-
+    uint8_t  RSpoc  (uint16_t i) const { return _progOrderChange.at(i).RS; }
+    uint16_t CSpoc  (uint16_t i) const { return _progOrderChange.at(i).CS; }
+    uint16_t LYEpoc (uint16_t i) const { return _progOrderChange.at(i).LYE; }
+    uint8_t  REpoc  (uint16_t i) const { return _progOrderChange.at(i).RE; }
+    uint16_t CEpoc  (uint16_t i) const { return _progOrderChange.at(i).CE; }
+    uint8_t  Ppoc   (uint16_t i) const { return _progOrderChange.at(i).P; }
   private:
     uint8_t  _lenC;
 

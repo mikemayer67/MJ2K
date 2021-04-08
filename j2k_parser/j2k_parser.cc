@@ -1,57 +1,58 @@
 #include <iostream>
 #include <fcntl.h>
 #include <string.h>
+#include <stdexcept>
 
 #include "codestream.h"
-
-using std::string;
-using std::cout;
-using std::cerr;
-using std::endl;
 
 int main(int argc, char **argv)
 {
   if( argc != 2 )
   {
-    cerr << "Usage:: " << argv[0] << " j2k_filename" << endl;
+    std::cerr << "Usage:: " << argv[0] << " j2k_filename" << std::endl;
     exit(1);
   }
 
-  string filename = argv[1];
+  std::string filename = argv[1];
 
   int src = open(argv[1],O_RDONLY);
   if( src < 0 )
   {
-    cerr << "Sorry:: Failed to open " << filename << ": " << strerror(errno) << endl;
+    std::cerr 
+      << "Sorry:: Failed to open " << filename << ": " << strerror(errno) << std::endl;
     exit(1);
   }
 
   try
   {
     J2KCodestream j2k(src);
-
     std::cout << j2k;
   }
-  catch(string err)
+  catch(std::out_of_range e)
   {
-    cerr 
-      << endl 
-      << "Failed to parse " << filename << ": " << endl
-      << err << endl
-      << endl;
+    std::cerr << std::endl
+      << "Internal error, attempted to index out of range" << std::endl
+      << std::endl;
+    exit(1);
+  }
+  catch(std::string err)
+  {
+    std::cerr << std::endl 
+      << "Failed to parse " << filename << ": " << std::endl
+      << err << std::endl
+      << std::endl;
     exit(1);
   }
   catch(const char *err)
   {
-    cerr 
-      << endl 
-      << "Failed to parse " << filename << ": " << endl
-      << err << endl
-      << endl;
+    std::cerr 
+      << std::endl << "Failed to parse " << filename << ": " << std::endl
+      << err << std::endl
+      << std::endl;
     exit(1);
   }
 
-  cout << endl << "DONE" << endl << endl;
+  std::cout << std::endl;
 
   return 0;
 }

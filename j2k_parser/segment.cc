@@ -2,13 +2,34 @@
 #include "endian.h"
 
 #include <sstream>
+#include <iomanip>
+#include <algorithm>
 #include <unistd.h>
 
-using std::string;
-using std::stringstream;
+void MarkerSegment::init(int fd, Marker::Code_t code)
+{
+  _marker = Marker(fd,true);  // consume the marker
+
+  if( ! _marker.is(code) )
+  {
+    std::stringstream err;
+    err << "Expected to find " << Marker(code).str() << " marker, but found " << _marker.str();
+    throw err;
+  }
+
+  std::string key = std::string("L") + _marker.str();
+  std::transform(key.begin()+1, key.end(), key.begin()+1, (int(*)(int))std::tolower);
+
+  _size = get_field(fd, 2, key);
+}
+
+void MarkerSegment::head(std::ostream &s) const
+{
+  _marker.display(s);
+}
 
 uint32_t MarkerSegment::
-get_field(int fd, int nbytes,string field) const
+get_field(int fd, int nbytes,std::string field) const
 {
   uint8_t byte;
   uint32_t rval(0);
@@ -22,7 +43,7 @@ get_field(int fd, int nbytes,string field) const
     int nread = read(fd, &byte, 1);
     if( nread != 1 )
     {
-      stringstream err;
+      std::stringstream err;
       err << "Failed to read data for " << field << " field (file offset: "
         << lseek(fd,0,SEEK_CUR) << ")";
       throw err.str();
@@ -41,9 +62,9 @@ get_field(int fd, int nbytes,string field) const
 }
 
 void MarkerSegment::
-throw_range_error(string field, uint16_t index, uint16_t array_size) const
+throw_range_error(std::string field, uint16_t index, uint16_t array_size) const
 {
-  stringstream err;
+  std::stringstream err;
   err << "Invalid index (" << index << ") for " << field
     << " (limit= " << array_size-1 << ")";
   throw err.str();

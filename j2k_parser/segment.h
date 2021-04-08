@@ -3,9 +3,11 @@
 
 #include "marker.h"
 
+#include <iostream>
+#include <iomanip>
 #include <string>
 #include <stdint.h>
-#include <stdexcept>
+#include <cassert>
 
 // Abstract base class for all marker segments
 
@@ -13,14 +15,15 @@ class MarkerSegment
 {
   public:
 
-    MarkerSegment(Marker::Code_t code) : _code(code), _size(0) {}
+    MarkerSegment(void) : _size(0) {}
 
+    virtual void init(int fd, Marker::Code_t);
     virtual void display(std::ostream &s) const {}
 
-    Marker::Code_t code(void) const { return _code; }
-    uint16_t       size(void) const { return _size; }
+    const Marker &code(void) const { return _marker; }
+    uint16_t      size(void) const { return _size; }
 
-    bool initialized(void) const { return _size > 0; }
+    void head(std::ostream &s) const;
 
   protected:
 
@@ -29,12 +32,13 @@ class MarkerSegment
     void throw_range_error(std::string field, uint16_t index, uint16_t array_size) const;
 
   protected:
-    Marker::Code_t _code;
-    uint16_t       _size;
+    Marker   _marker;
+    uint16_t _size;
 };
 
 static std::ostream &operator<<(std::ostream &s, const MarkerSegment &x) 
 { 
+  x.head(s);
   x.display(s); 
   return s; 
 }

@@ -28,8 +28,8 @@
 class COC : public MarkerSegment
 {
   public:
-    COC(void)                   : MarkerSegment(Marker::COC) {}
-    COC(int fd, const SIZ &siz) : MarkerSegment(Marker::COC) { init(fd,siz); }
+    COC(void)                   {}
+    COC(int fd, const SIZ &siz) { init(fd,siz); }
 
     void init(int fd, const SIZ &siz);
     void display(std::ostream &s) const;
@@ -50,10 +50,7 @@ class COC : public MarkerSegment
     uint8_t  code_block_style  (void) const { return _SP.code_block_style; } 
     uint8_t  wavelet           (void) const { return _SP.wavelet; } 
 
-    uint8_t precint_width(uint16_t i) const {
-      try { return _SP.precinct_width.at(i); }
-      catch(std::out_of_range e) { throw_range_error("SPcoc.precinct_width",i,_SP.precinct_width.size()); }
-    }
+    uint8_t precint_width(uint16_t i) const { return _SP.precinct_width.at(i); }
 
   private:
     uint8_t  _lenC;

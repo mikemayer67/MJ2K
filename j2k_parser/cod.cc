@@ -2,11 +2,9 @@
 #include "formatter.h"
 #include "xfrm_cod.h"
 
-#include <iostream>
-
 void COD::init(int fd)
 {
-  _size = get_field(fd, 2, "Lcod");
+  MarkerSegment::init(fd, Marker::COD );
 
   _S                    = get_field(fd, 1, "Scod");
   _SG.prog_order        = get_field(fd, 1, "SGcod.prog_order");
@@ -27,8 +25,6 @@ void COD::init(int fd)
 
 void COD::display(std::ostream &s) const
 {
-  s << "COD" << std::endl;
-
   Xfrm_Scod  scod;
   Xfrm_SGcod sgcod_po(Xfrm_SGcod::ProgOrder);
   Xfrm_SGcod sgcod_mcx(Xfrm_SGcod::McompXform);

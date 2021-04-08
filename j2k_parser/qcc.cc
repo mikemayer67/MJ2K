@@ -2,8 +2,6 @@
 #include "formatter.h"
 #include "xfrm_qcd.h"  // not a mistake, QCC uses same transformers as QCD
 
-#include <iostream>
-
 //----------------------------------------
 // Table A-31  Quantization component parameters
 //----------------------------------------
@@ -19,9 +17,9 @@
 
 void QCC::init(int fd,const SIZ &siz)
 {
-  _lenC = (siz.Csiz() < 257 ? 1 : 2);
+  MarkerSegment::init(fd, Marker::QCC );
 
-  _size = get_field(fd, 2, "Lqcc");
+  _lenC = (siz.Csiz() < 257 ? 1 : 2);
 
   _C    = get_field(fd, _lenC, "Cqcc");
   _S    = get_field(fd, 1,     "Sqcc");
@@ -39,8 +37,6 @@ void QCC::init(int fd,const SIZ &siz)
 void QCC::display(std::ostream &s) const
 {
   Xfrm_Sqcd sqcc_xfrm;  // Sqcd and Sqcc use same format
-
-  s << "QCC" << std::endl;
 
   Formatter out(s);
   out.display(_size, 2,     "Lqcc");

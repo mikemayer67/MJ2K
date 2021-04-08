@@ -15,8 +15,8 @@
 class SIZ : public MarkerSegment
 {
   public:
-    SIZ(void)   : MarkerSegment(Marker::SIZ) {}
-    SIZ(int fd) : MarkerSegment(Marker::SIZ) { init(fd); }
+    SIZ(void)   {}
+    SIZ(int fd) { init(fd); }
 
     void init(int fd);
     void display(std::ostream &s) const;
@@ -33,21 +33,9 @@ class SIZ : public MarkerSegment
     uint32_t YTOsiz (void) const { return _YTO; }
     uint16_t Csiz   (void) const { return _C;   }
 
-    uint8_t Ssiz(uint16_t i) const { 
-      try { return _compData.at(i).S; }
-      catch(std::out_of_range e) { throw_range_error("Ssiz",i,_compData.size()); }
-    }
-
-    uint8_t XRSiz(uint16_t i) const { 
-      try { return _compData.at(i).XR; }
-      catch(std::out_of_range e) { throw_range_error("XRsiz",i,_compData.size()); }
-    }
-
-    uint8_t YRsiz(uint16_t i) const { 
-      try { return _compData.at(i).YR; }
-      catch(std::out_of_range e) { throw_range_error("YRsiz",i,_compData.size()); }
-    }
-
+    uint8_t Ssiz  (uint16_t i) const { return _compData.at(i).S; }
+    uint8_t XRSiz (uint16_t i) const { return _compData.at(i).XR; }
+    uint8_t YRsiz (uint16_t i) const { return _compData.at(i).YR; }
   private:
     uint16_t _R;
     uint32_t _X;

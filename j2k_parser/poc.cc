@@ -3,13 +3,11 @@
 #include "formatter.h"
 #include "xfrm_cod.h"
 
-#include <iostream>
-
 void POC::init(int fd, const SIZ &siz)
 {
-  _lenC = (siz.Csiz() < 257 ? 1 : 2);
+  MarkerSegment::init(fd, Marker::POC );
 
-  _size = get_field(fd, 2,     "Lpoc");
+  _lenC = (siz.Csiz() < 257 ? 1 : 2);
 
   int n = (_size-2)/(5+2*_lenC);
 
@@ -32,8 +30,6 @@ void POC::display(std::ostream &s) const
 {
   // yes, this is hackish, but the progression order format is same as for SGcod
   Xfrm_SGcod ppoc_xfrm(Xfrm_SGcod::ProgOrder);
-
-  s << "POC" << std::endl;
 
   Formatter out(s);
   out.display(_size,                 2, "Lpoc");

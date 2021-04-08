@@ -34,8 +34,8 @@
 class COD : public MarkerSegment
 {
   public:
-    COD(void)   : MarkerSegment(Marker::COD) {}
-    COD(int fd) : MarkerSegment(Marker::COD) { init(fd); }
+    COD(void)   {}
+    COD(int fd) { init(fd); }
 
     void init(int fd);
     void display(std::ostream &s) const;
@@ -74,10 +74,7 @@ class COD : public MarkerSegment
     uint8_t  code_block_style  (void) const { return _SP.code_block_style; } 
     uint8_t  wavelet           (void) const { return _SP.wavelet; } 
 
-    uint8_t precint_width(uint16_t i) const {
-      try { return _SP.precinct_width.at(i); }
-      catch(std::out_of_range e) { throw_range_error("SPcod.precinct_width",i,_SP.precinct_width.size()); }
-    }
+    uint8_t precint_width(uint16_t i) const { return _SP.precinct_width.at(i); }
 
   private:
     uint8_t _S;

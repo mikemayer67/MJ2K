@@ -1,5 +1,5 @@
-#ifndef _XFRM_COD_H
-#define _XFRM_COD_H
+#ifndef _XFRM_COD_H_
+#define _XFRM_COD_H_
 
 #include "transformer.h"
 
@@ -213,5 +213,5 @@ class Xfrm_SPcod : public Transformer
     Field _field;
 };
 
-#endif // _XFRM_COD_H
+#endif // _XFRM_COD_H_
 

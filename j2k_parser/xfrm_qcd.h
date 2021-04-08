@@ -1,5 +1,5 @@
-#ifndef _XFRM_QCD_H
-#define _XFRM_QCD_H
+#ifndef _XFRM_QCD_H_
+#define _XFRM_QCD_H_
 
 #include "transformer.h"
 
@@ -89,5 +89,5 @@ class Xfrm_SPqcd : public Transformer
     bool _quantitized;
 };
 
-#endif // _XFRM_QCD_H
+#endif // _XFRM_QCD_H_
 

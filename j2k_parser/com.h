@@ -2,8 +2,7 @@
 #define _COM_H_
 
 #include "segment.h"
-
-#include <vector>
+#include "rawdata.h"
 
 //------------------------------------------------------------------------------
 // COM - Image and tile come
@@ -15,8 +14,8 @@
 class COM : public MarkerSegment
 {
   public:
-    COM(void)   : MarkerSegment(Marker::COM) {}
-    COM(int fd) : MarkerSegment(Marker::COM) { init(fd); }
+    COM(void)   {}
+    COM(int fd) { init(fd); }
 
     void init(int fd);
     void display(std::ostream &s) const;
@@ -24,13 +23,13 @@ class COM : public MarkerSegment
     uint16_t Lcom (void) const { return _size; }
     uint16_t Rcom (void) const { return _R;   }
 
-    std::vector<uint8_t> Ccom (void) const { return _C;  }
+    const RawData &Ccom (void) const { return _C;  }
 
     bool binary(void) const { return _R == 0x00; }
 
   private:
-    uint16_t             _R;
-    std::vector<uint8_t> _C;
+    uint16_t _R;
+    RawData  _C;
 };
 
 #endif // _COM_H_ 

@@ -2,11 +2,10 @@
 #include "formatter.h"
 #include "xfrm_qcd.h"
 
-#include <iostream>
-
 void QCD::init(int fd)
 {
-  _size = get_field(fd, 2, "Lqcd");
+  MarkerSegment::init(fd, Marker::QCD );
+
   _S    = get_field(fd, 1, "Sqcd");
 
   int nbytes(0);
@@ -23,8 +22,6 @@ void QCD::init(int fd)
 void QCD::display(std::ostream &s) const
 {
   Xfrm_Sqcd sqcd_xfrm;
-
-  s << "QCD" << std::endl;
 
   Formatter out(s);
   out.display(_size,   2, "Lqcd");

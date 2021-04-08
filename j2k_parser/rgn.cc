@@ -2,13 +2,12 @@
 
 #include "formatter.h"
 
-#include <iostream>
-
 void RGN::init(int fd, const SIZ &siz)
 {
+  MarkerSegment::init(fd, Marker::RGN );
+
   _lenC = (siz.Csiz() < 257 ? 1 : 2);
 
-  _size = get_field(fd, 2,     "Lrgn");
   _C    = get_field(fd, _lenC, "Crgn");
   _S    = get_field(fd, 1,     "Srgn");
   _SP   = get_field(fd, 1,     "SPrgn");
@@ -16,8 +15,6 @@ void RGN::init(int fd, const SIZ &siz)
 
 void RGN::display(std::ostream &s) const
 {
-  s << "RGN" << std::endl;
-
   Formatter out(s);
   out.display(_size,                 2, "Lrgn");
   out.display(_C,                _lenC, "Crgn",  "component index");

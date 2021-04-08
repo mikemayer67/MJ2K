@@ -1,5 +1,5 @@
-#ifndef _XFRM_COC_H
-#define _XFRM_COC_H
+#ifndef _XFRM_COC_H_
+#define _XFRM_COC_H_
 
 #include "transformer.h"
 #include "xfrm_cod.h"
@@ -26,4 +26,4 @@ class Xfrm_Scoc : public Transformer
     }
 };
 
-#endif // _XFRM_COC_H
+#endif // _XFRM_COC_H_

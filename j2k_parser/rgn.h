@@ -14,8 +14,8 @@
 class RGN : public MarkerSegment
 {
   public:
-    RGN(void)                   : MarkerSegment(Marker::RGN) {}
-    RGN(int fd, const SIZ &siz) : MarkerSegment(Marker::RGN) { init(fd,siz); }
+    RGN(void)                   {}
+    RGN(int fd, const SIZ &siz) { init(fd,siz); }
 
     void init(int fd, const SIZ &siz);
     void display(std::ostream &s) const;

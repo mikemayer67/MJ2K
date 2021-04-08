@@ -1,5 +1,5 @@
-#ifndef _XFRM_SIZ_H
-#define _XFRM_SIZ_H
+#ifndef _XFRM_SIZ_H_
+#define _XFRM_SIZ_H_
 
 #include "transformer.h"
 
@@ -42,4 +42,4 @@ class Xfrm_Ssiz : public Transformer
 };
 
 
-#endif // _XFRM_SIZ_H
+#endif // _XFRM_SIZ_H_

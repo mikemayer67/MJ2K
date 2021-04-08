@@ -19,6 +19,8 @@ Transformer Formatter::default_xform;
 void Formatter::
 display(uint32_t value, int nbytes, string key, int index, Transformer &xform, string info)
 {
+  if( nbytes == 0 ) return;
+
   if( index >= 0 )
   {
     stringstream ss;

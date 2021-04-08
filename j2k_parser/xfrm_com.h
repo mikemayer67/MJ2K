@@ -1,5 +1,5 @@
-#ifndef _XFRM_COM_H
-#define _XFRM_COM_H
+#ifndef _XFRM_COM_H_
+#define _XFRM_COM_H_
 
 #include "transformer.h"
 
@@ -21,4 +21,4 @@ class Xfrm_Rcom : public Transformer
     }
 };
 
-#endif // _XFRM_COM_H
+#endif // _XFRM_COM_H_
