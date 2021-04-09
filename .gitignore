@@ -4,6 +4,7 @@ a.out
 junk.c
 *.dylib
 *.o
+*.d
 .ipynb_checkpoints
 __pycache__
 openjpeg-2.4.0

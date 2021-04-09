@@ -46,7 +46,26 @@ class Marker
       // Information markers
       CRG = 0xff63, //  O N  component registration
       COM = 0xff64, //  O O  comment and extension
+
+      // Valid but ignored markers
+      IGN30 = 0xff30,
+      IGN31 = 0xff31,
+      IGN32 = 0xff32,
+      IGN33 = 0xff33,
+      IGN34 = 0xff34,
+      IGN35 = 0xff35,
+      IGN36 = 0xff36,
+      IGN37 = 0xff37,
+      IGN38 = 0xff38,
+      IGN39 = 0xff39,
+      IGN3A = 0xff3a,
+      IGN3B = 0xff3b,
+      IGN3C = 0xff3c,
+      IGN3D = 0xff3d,
+      IGN3E = 0xff3e,
+      IGN3F = 0xff3f,
       
+      // Defaut value indicating uninitialized marker
       EMPTY = 0x0000
     };
 

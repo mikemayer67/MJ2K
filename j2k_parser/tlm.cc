@@ -10,7 +10,7 @@ void TLM::init(int fd)
   _S    = get_field(fd, 1, "Stlm");
 
   _ST = (_S & 0x30) >> 4;
-  _SP = 4*(1 + (_S & 0x40) >> 6);
+  _SP = 4*((1 + (_S & 0x40)) >> 6);
 
   uint8_t rec_length = _ST + _SP;
   uint16_t nrec = (_size - 4)/rec_length;

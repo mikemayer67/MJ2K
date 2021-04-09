@@ -1,0 +1,74 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....0029            41  
+        Rsiz: ....0000             0  codestream capabilities
+        Xsiz: 00000011            17  width of reference grid
+        Ysiz: 00000025            37  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000011            17  width of one tile wrt ref. grid
+       YTsiz: 00000025            37  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0001             1  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+COD: [0x0000002d]
+        Lcod: ....000c            12  
+        Scod: ......00        ---->   Entry coder, precints=(15,15), SOP not used, EPH not used
+     SGcod-A: ......00          LRCP  progression order
+     SGcod-B: ....0001             1  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......05             5  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......00        9-7 VL  Wavelet
+QCD: [0x0000003b]
+        Lqcd: ....0023            35  
+        Sqcd: ......22        ---->   scalar expounded  (1 guard bits)
+     SPqcd.1: ....877b     (16,1915)  Exponent (epsilon_b), Mantissa (mu_b)
+     SPqcd.2: ....875c     (16,1884)  "
+     SPqcd.3: ....875c     (16,1884)  "
+     SPqcd.4: ....873d     (16,1853)  "
+     SPqcd.5: ....7f5c     (15,1884)  "
+     SPqcd.6: ....7f5c     (15,1884)  "
+     SPqcd.7: ....7f3d     (15,1853)  "
+     SPqcd.8: ....77aa     (14,1962)  "
+     SPqcd.9: ....77aa     (14,1962)  "
+    SPqcd.10: ....77c2     (14,1986)  "
+    SPqcd.11: ....6035       (12,53)  "
+    SPqcd.12: ....6035       (12,53)  "
+    SPqcd.13: ....6078      (12,120)  "
+    SPqcd.14: ....581a       (11,26)  "
+    SPqcd.15: ....581a       (11,26)  "
+    SPqcd.16: ....67bf     (12,1983)  "
+COM: [0x00000060]
+        Lcom: ....0010            16  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Kakadu-3.0.7
+     ----------- 
+
+=========== File Part 1 ===========
+
+SOT: [0x00000072]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 000001de           478  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x0000007e]
+----------- 
+478 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x00000250]
+
+

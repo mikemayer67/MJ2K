@@ -1,0 +1,78 @@
+Skipping marker: ff30
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....0029            41  
+        Rsiz: ....0001             1  codestream capabilities
+        Xsiz: 0000007f           127  width of reference grid
+        Ysiz: 0000007e           126  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 0000007f           127  width of one tile wrt ref. grid
+       YTsiz: 0000007e           126  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0001             1  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......02             2  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+COD: [0x0000002d]
+        Lcod: ....000c            12  
+        Scod: ......06        ---->   Entry coder, precints=(15,15), SOP may be used, EPH may be used
+     SGcod-A: ......00          LRCP  progression order
+     SGcod-B: ....0006             6  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......03             3  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......34        ---->   no sel arthm/no cntxt prob reset/coding pass term/no term vert csl/pred term/seg sym
+     SPcod-H: ......00        9-7 VL  Wavelet
+COC: [0x0000003b]
+        Lcoc: ....0009             9  
+        Ccoc: ......00             0  component index
+        Scoc: ......00        ---->   Entry coder, precints=(15,15)
+     SPcoc-A: ......03             3  number of decomp levels
+     SPcoc-B: ......03            32  code block width
+     SPcoc-C: ......03            32  code block height
+     SPcoc-D: ......34        ---->   no sel arthm/no cntxt prob reset/coding pass term/no term vert csl/pred term/seg sym
+     SPcoc-E: ......01        5-3 NL  Wavelet
+QCD: [0x00000046]
+        Lqcd: ....000d            13  
+        Sqcd: ......60        ---->   no quantization  (3 guard bits)
+     SPqcd.1: ......40             8  Exponent (epsilon_b)
+     SPqcd.2: ......48             9  "
+     SPqcd.3: ......48             9  "
+     SPqcd.4: ......50            10  "
+     SPqcd.5: ......48             9  "
+     SPqcd.6: ......48             9  "
+     SPqcd.7: ......50            10  "
+     SPqcd.8: ......48             9  "
+     SPqcd.9: ......48             9  "
+    SPqcd.10: ......50            10  "
+COM: [0x00000055]
+        Lcom: ....002d            45  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Creator: AV-J2K (c) 2000,2001 Algo Vision
+     ----------- 
+
+=========== File Part 1 ===========
+
+SOT: [0x00000086]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 0000179f          6047  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x00000092]
+----------- 
+6047 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x00001825]
+
+

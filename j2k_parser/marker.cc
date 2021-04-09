@@ -25,7 +25,7 @@ Marker::Marker(int fd, Marker::Code_t expected)
     std::stringstream err;
     err << "Expected to find " << code_to_str(expected)
       << " marker, but found " << code_to_str(_code);
-    throw err;
+    throw err.str();
   }
 }
 
@@ -51,7 +51,7 @@ void Marker::_read(int fd)
 
 std::string Marker::code_to_str(Marker::Code_t code)
 {
-  std::string rval = "???";
+  std::string rval;
   switch(code)
   {
     case SOC: rval = "SOC"; break; 
@@ -74,6 +74,8 @@ std::string Marker::code_to_str(Marker::Code_t code)
     case EPH: rval = "EPH"; break; 
     case CRG: rval = "CRG"; break; 
     case COM: rval = "COM"; break; 
+    default:  rval = "???"; break;
+
   }
   return rval;
 }

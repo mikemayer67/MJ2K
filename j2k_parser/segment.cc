@@ -14,7 +14,7 @@ void MarkerSegment::init(int fd, Marker::Code_t code)
   {
     std::stringstream err;
     err << "Expected to find " << Marker(code).str() << " marker, but found " << _marker.str();
-    throw err;
+    throw err.str();
   }
 
   std::string key = std::string("L") + _marker.str();

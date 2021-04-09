@@ -1,0 +1,165 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....002f            47  
+        Rsiz: ....0001             1  codestream capabilities
+        Xsiz: 00000201           513  width of reference grid
+        Ysiz: 00000c00          3072  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000201           513  width of one tile wrt ref. grid
+       YTsiz: 00000c00          3072  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0003             3  number of components in the field
+      Ssiz.1: ......8b        ---->   precision (-1024 - 1023)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+      Ssiz.2: ......8b        ---->   precision (-1024 - 1023)
+     XRsiz.2: ......01             1  "
+     YRsiz.2: ......01             1  "
+      Ssiz.3: ......8b        ---->   precision (-1024 - 1023)
+     XRsiz.3: ......01             1  "
+     YRsiz.3: ......01             1  "
+COD: [0x00000033]
+        Lcod: ....000c            12  
+        Scod: ......06        ---->   Entry coder, precints=(15,15), SOP may be used, EPH may be used
+     SGcod-A: ......04          CPRL  progression order
+     SGcod-B: ....001e            30  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......07             7  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......01        5-3 NL  Wavelet
+COC: [0x00000041]
+        Lcoc: ....0009             9  
+        Ccoc: ......00             0  component index
+        Scoc: ......00        ---->   Entry coder, precints=(15,15)
+     SPcoc-A: ......06             6  number of decomp levels
+     SPcoc-B: ......04            64  code block width
+     SPcoc-C: ......04            64  code block height
+     SPcoc-D: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcoc-E: ......01        5-3 NL  Wavelet
+COC: [0x0000004c]
+        Lcoc: ....0009             9  
+        Ccoc: ......01             1  component index
+        Scoc: ......00        ---->   Entry coder, precints=(15,15)
+     SPcoc-A: ......07             7  number of decomp levels
+     SPcoc-B: ......03            32  code block width
+     SPcoc-C: ......03            32  code block height
+     SPcoc-D: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcoc-E: ......01        5-3 NL  Wavelet
+COC: [0x00000057]
+        Lcoc: ....0009             9  
+        Ccoc: ......02             2  component index
+        Scoc: ......00        ---->   Entry coder, precints=(15,15)
+     SPcoc-A: ......08             8  number of decomp levels
+     SPcoc-B: ......04            64  code block width
+     SPcoc-C: ......04            64  code block height
+     SPcoc-D: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcoc-E: ......01        5-3 NL  Wavelet
+QCD: [0x00000062]
+        Lqcd: ....0019            25  
+        Sqcd: ......80        ---->   no quantization  (4 guard bits)
+     SPqcd.1: ......58            11  Exponent (epsilon_b)
+     SPqcd.2: ......60            12  "
+     SPqcd.3: ......60            12  "
+     SPqcd.4: ......68            13  "
+     SPqcd.5: ......60            12  "
+     SPqcd.6: ......60            12  "
+     SPqcd.7: ......68            13  "
+     SPqcd.8: ......60            12  "
+     SPqcd.9: ......60            12  "
+    SPqcd.10: ......68            13  "
+    SPqcd.11: ......60            12  "
+    SPqcd.12: ......60            12  "
+    SPqcd.13: ......68            13  "
+    SPqcd.14: ......60            12  "
+    SPqcd.15: ......60            12  "
+    SPqcd.16: ......68            13  "
+    SPqcd.17: ......60            12  "
+    SPqcd.18: ......60            12  "
+    SPqcd.19: ......68            13  "
+    SPqcd.20: ......60            12  "
+    SPqcd.21: ......60            12  "
+    SPqcd.22: ......68            13  "
+QCC: [0x0000007d]
+        Lqcc: ....0017            23  
+        Cqcc: ......00             0  component index
+        Sqcc: ......80        ---->   no quantization  (4 guard bits)
+     SPqcc.1: ......58            11  Exponent (epsilon_b)
+     SPqcc.2: ......60            12  "
+     SPqcc.3: ......60            12  "
+     SPqcc.4: ......68            13  "
+     SPqcc.5: ......60            12  "
+     SPqcc.6: ......60            12  "
+     SPqcc.7: ......68            13  "
+     SPqcc.8: ......60            12  "
+     SPqcc.9: ......60            12  "
+    SPqcc.10: ......68            13  "
+    SPqcc.11: ......60            12  "
+    SPqcc.12: ......60            12  "
+    SPqcc.13: ......68            13  "
+    SPqcc.14: ......60            12  "
+    SPqcc.15: ......60            12  "
+    SPqcc.16: ......68            13  "
+    SPqcc.17: ......60            12  "
+    SPqcc.18: ......60            12  "
+    SPqcc.19: ......68            13  "
+QCC: [0x00000096]
+        Lqcc: ....001d            29  
+        Cqcc: ......02             2  component index
+        Sqcc: ......80        ---->   no quantization  (4 guard bits)
+     SPqcc.1: ......58            11  Exponent (epsilon_b)
+     SPqcc.2: ......60            12  "
+     SPqcc.3: ......60            12  "
+     SPqcc.4: ......68            13  "
+     SPqcc.5: ......60            12  "
+     SPqcc.6: ......60            12  "
+     SPqcc.7: ......68            13  "
+     SPqcc.8: ......60            12  "
+     SPqcc.9: ......60            12  "
+    SPqcc.10: ......68            13  "
+    SPqcc.11: ......60            12  "
+    SPqcc.12: ......60            12  "
+    SPqcc.13: ......68            13  "
+    SPqcc.14: ......60            12  "
+    SPqcc.15: ......60            12  "
+    SPqcc.16: ......68            13  "
+    SPqcc.17: ......60            12  "
+    SPqcc.18: ......60            12  "
+    SPqcc.19: ......68            13  "
+    SPqcc.20: ......60            12  "
+    SPqcc.21: ......60            12  "
+    SPqcc.22: ......68            13  "
+    SPqcc.23: ......60            12  "
+    SPqcc.24: ......60            12  "
+    SPqcc.25: ......68            13  "
+COM: [0x000000b5]
+        Lcom: ....0010            16  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Kakadu-3.0.7
+     ----------- 
+
+=========== File Part 1 ===========
+
+SOT: [0x000000c7]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 003a4c31       3820593  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x000000d3]
+----------- 
+3820593 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x003a4cf8]
+
+

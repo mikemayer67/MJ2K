@@ -1,0 +1,80 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....002f            47  
+        Rsiz: ....0000             0  codestream capabilities
+        Xsiz: 00000031            49  width of reference grid
+        Ysiz: 00000031            49  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000031            49  width of one tile wrt ref. grid
+       YTsiz: 00000031            49  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0003             3  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+      Ssiz.2: ......07        ---->   precision (0 - 127)
+     XRsiz.2: ......01             1  "
+     YRsiz.2: ......01             1  "
+      Ssiz.3: ......07        ---->   precision (0 - 127)
+     XRsiz.3: ......01             1  "
+     YRsiz.3: ......01             1  "
+COD: [0x00000033]
+        Lcod: ....000c            12  
+        Scod: ......00        ---->   Entry coder, precints=(15,15), SOP not used, EPH not used
+     SGcod-A: ......00          LRCP  progression order
+     SGcod-B: ....0001             1  number of layers
+     SGcod-C: ......01        ---->   xform used on components 0-2
+     SPcod-D: ......05             5  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......01        5-3 NL  Wavelet
+QCD: [0x00000041]
+        Lqcd: ....0013            19  
+        Sqcd: ......20        ---->   no quantization  (1 guard bits)
+     SPqcd.1: ......50            10  Exponent (epsilon_b)
+     SPqcd.2: ......58            11  "
+     SPqcd.3: ......58            11  "
+     SPqcd.4: ......60            12  "
+     SPqcd.5: ......58            11  "
+     SPqcd.6: ......58            11  "
+     SPqcd.7: ......60            12  "
+     SPqcd.8: ......58            11  "
+     SPqcd.9: ......58            11  "
+    SPqcd.10: ......60            12  "
+    SPqcd.11: ......58            11  "
+    SPqcd.12: ......58            11  "
+    SPqcd.13: ......60            12  "
+    SPqcd.14: ......58            11  "
+    SPqcd.15: ......58            11  "
+    SPqcd.16: ......60            12  "
+COM: [0x00000056]
+        Lcom: ....0010            16  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Kakadu-3.0.7
+     ----------- 
+
+=========== File Part 1 ===========
+
+SOT: [0x00000068]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 000005f8          1528  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x00000074]
+----------- 
+1528 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x00000660]
+
+

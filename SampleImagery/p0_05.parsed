@@ -1,0 +1,138 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....0032            50  
+        Rsiz: ....0001             1  codestream capabilities
+        Xsiz: 00000400          1024  width of reference grid
+        Ysiz: 00000400          1024  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000400          1024  width of one tile wrt ref. grid
+       YTsiz: 00000400          1024  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0004             4  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+      Ssiz.2: ......07        ---->   precision (0 - 127)
+     XRsiz.2: ......01             1  "
+     YRsiz.2: ......01             1  "
+      Ssiz.3: ......07        ---->   precision (0 - 127)
+     XRsiz.3: ......02             2  "
+     YRsiz.3: ......02             2  "
+      Ssiz.4: ......07        ---->   precision (0 - 127)
+     XRsiz.4: ......02             2  "
+     YRsiz.4: ......02             2  "
+COD: [0x00000036]
+        Lcod: ....000c            12  
+        Scod: ......00        ---->   Entry coder, precints=(15,15), SOP not used, EPH not used
+     SGcod-A: ......03          PCRL  progression order
+     SGcod-B: ....0007             7  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......06             6  number of decomp levels
+     SPcod-E: ......03            32  code block width
+     SPcod-F: ......03            32  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......00        9-7 VL  Wavelet
+COC: [0x00000044]
+        Lcoc: ....0009             9  
+        Ccoc: ......01             1  component index
+        Scoc: ......00        ---->   Entry coder, precints=(15,15)
+     SPcoc-A: ......03             3  number of decomp levels
+     SPcoc-B: ......03            32  code block width
+     SPcoc-C: ......03            32  code block height
+     SPcoc-D: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcoc-E: ......00        9-7 VL  Wavelet
+COC: [0x0000004f]
+        Lcoc: ....0009             9  
+        Ccoc: ......03             3  component index
+        Scoc: ......00        ---->   Entry coder, precints=(15,15)
+     SPcoc-A: ......06             6  number of decomp levels
+     SPcoc-B: ......03            32  code block width
+     SPcoc-C: ......03            32  code block height
+     SPcoc-D: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcoc-E: ......01        5-3 NL  Wavelet
+QCD: [0x0000005a]
+        Lqcd: ....0029            41  
+        Sqcd: ......62        ---->   scalar expounded  (3 guard bits)
+     SPqcd.1: ....8716     (16,1814)  Exponent (epsilon_b), Mantissa (mu_b)
+     SPqcd.2: ....8717     (16,1815)  "
+     SPqcd.3: ....8717     (16,1815)  "
+     SPqcd.4: ....8719     (16,1817)  "
+     SPqcd.5: ....7f1d     (15,1821)  "
+     SPqcd.6: ....7f1d     (15,1821)  "
+     SPqcd.7: ....7f23     (15,1827)  "
+     SPqcd.8: ....7735     (14,1845)  "
+     SPqcd.9: ....7735     (14,1845)  "
+    SPqcd.10: ....774c     (14,1868)  "
+    SPqcd.11: ....6f85     (13,1925)  "
+    SPqcd.12: ....6f85     (13,1925)  "
+    SPqcd.13: ....6fd7     (13,2007)  "
+    SPqcd.14: ....5820       (11,32)  "
+    SPqcd.15: ....5820       (11,32)  "
+    SPqcd.16: ....5883      (11,131)  "
+    SPqcd.17: ....5fd2     (11,2002)  "
+    SPqcd.18: ....5fd2     (11,2002)  "
+    SPqcd.19: ....5f60     (11,1888)  "
+QCC: [0x00000085]
+        Lqcc: ....0006             6  
+        Cqcc: ......00             0  component index
+        Sqcc: ......61        ---->   scalar derived. Use Equation E.5  (3 guard bits)
+     SPqcc.1: ....7000        (14,0)  Exponent (epsilon_b), Mantissa (mu_b)
+QCC: [0x0000008d]
+        Lqcc: ....0017            23  
+        Cqcc: ......03             3  component index
+        Sqcc: ......60        ---->   no quantization  (3 guard bits)
+     SPqcc.1: ......40             8  Exponent (epsilon_b)
+     SPqcc.2: ......48             9  "
+     SPqcc.3: ......48             9  "
+     SPqcc.4: ......50            10  "
+     SPqcc.5: ......48             9  "
+     SPqcc.6: ......48             9  "
+     SPqcc.7: ......50            10  "
+     SPqcc.8: ......48             9  "
+     SPqcc.9: ......48             9  "
+    SPqcc.10: ......50            10  "
+    SPqcc.11: ......48             9  "
+    SPqcc.12: ......48             9  "
+    SPqcc.13: ......50            10  "
+    SPqcc.14: ......48             9  "
+    SPqcc.15: ......48             9  "
+    SPqcc.16: ......50            10  "
+    SPqcc.17: ......48             9  "
+    SPqcc.18: ......48             9  "
+    SPqcc.19: ......50            10  "
+COM: [0x000000a6]
+        Lcom: ....002d            45  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Creator: AV-J2K (c) 2000,2001 Algo Vision
+     ----------- 
+TLM: [0x000000d5]
+        Ltlm: ....000a            10  
+        Ztlm: ......00             0  TLM index
+        Stlm: ......60        ---->   ST=2 Ttlm is 16 bits / SP=1 Ptlm is 32 bits
+      Ttlm.1: ....0000             0  tile index of tile-part
+      Ptlm.1: 0013ff4c       1310540  offset from start of SOT to tile-part
+
+=========== File Part 1 ===========
+
+SOT: [0x000000e1]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 0013ff4c       1310540  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x000000ed]
+----------- 
+1310540 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x0014002d]
+
+

@@ -1,0 +1,136 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....002f            47  
+        Rsiz: ....0001             1  codestream capabilities
+        Xsiz: 00000280           640  width of reference grid
+        Ysiz: 000001e0           480  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000280           640  width of one tile wrt ref. grid
+       YTsiz: 000001e0           480  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0003             3  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+      Ssiz.2: ......07        ---->   precision (0 - 127)
+     XRsiz.2: ......01             1  "
+     YRsiz.2: ......01             1  "
+      Ssiz.3: ......07        ---->   precision (0 - 127)
+     XRsiz.3: ......01             1  "
+     YRsiz.3: ......01             1  "
+COD: [0x00000033]
+        Lcod: ....0013            19  
+        Scod: ......01        ---->   Entry coder, precints defined below, SOP not used, EPH not used
+     SGcod-A: ......01          RLCP  progression order
+     SGcod-B: ....0014            20  number of layers
+     SGcod-C: ......01        ---->   xform used on components 0-2
+     SPcod-D: ......06             6  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......04        ---->   no sel arthm/no cntxt prob reset/coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......00        9-7 VL  Wavelet
+   SPcod-I.1: ......77         (7,7)  precinct size (PPx,PPy)
+   SPcod-I.2: ......77         (7,7)  "
+   SPcod-I.3: ......77         (7,7)  "
+   SPcod-I.4: ......77         (7,7)  "
+   SPcod-I.5: ......77         (7,7)  "
+   SPcod-I.6: ......77         (7,7)  "
+   SPcod-I.7: ......77         (7,7)  "
+QCD: [0x00000048]
+        Lqcd: ....0029            41  
+        Sqcd: ......62        ---->   scalar expounded  (3 guard bits)
+     SPqcd.1: ....8716     (16,1814)  Exponent (epsilon_b), Mantissa (mu_b)
+     SPqcd.2: ....8717     (16,1815)  "
+     SPqcd.3: ....8717     (16,1815)  "
+     SPqcd.4: ....8719     (16,1817)  "
+     SPqcd.5: ....7f1d     (15,1821)  "
+     SPqcd.6: ....7f1d     (15,1821)  "
+     SPqcd.7: ....7f23     (15,1827)  "
+     SPqcd.8: ....7735     (14,1845)  "
+     SPqcd.9: ....7735     (14,1845)  "
+    SPqcd.10: ....774c     (14,1868)  "
+    SPqcd.11: ....6f85     (13,1925)  "
+    SPqcd.12: ....6f85     (13,1925)  "
+    SPqcd.13: ....6fd7     (13,2007)  "
+    SPqcd.14: ....5820       (11,32)  "
+    SPqcd.15: ....5820       (11,32)  "
+    SPqcd.16: ....5883      (11,131)  "
+    SPqcd.17: ....5fd2     (11,2002)  "
+    SPqcd.18: ....5fd2     (11,2002)  "
+    SPqcd.19: ....5f60     (11,1888)  "
+QCC: [0x00000073]
+        Lqcc: ....002a            42  
+        Cqcc: ......01             1  component index
+        Sqcc: ......62        ---->   scalar expounded  (3 guard bits)
+     SPqcc.1: ....7716     (14,1814)  Exponent (epsilon_b), Mantissa (mu_b)
+     SPqcc.2: ....7717     (14,1815)  "
+     SPqcc.3: ....7717     (14,1815)  "
+     SPqcc.4: ....7719     (14,1817)  "
+     SPqcc.5: ....6f1d     (13,1821)  "
+     SPqcc.6: ....6f1d     (13,1821)  "
+     SPqcc.7: ....6f23     (13,1827)  "
+     SPqcc.8: ....6735     (12,1845)  "
+     SPqcc.9: ....6735     (12,1845)  "
+    SPqcc.10: ....674c     (12,1868)  "
+    SPqcc.11: ....5f85     (11,1925)  "
+    SPqcc.12: ....5f85     (11,1925)  "
+    SPqcc.13: ....5fd7     (11,2007)  "
+    SPqcc.14: ....4820        (9,32)  "
+    SPqcc.15: ....4820        (9,32)  "
+    SPqcc.16: ....4883       (9,131)  "
+    SPqcc.17: ....4fd2      (9,2002)  "
+    SPqcc.18: ....4fd2      (9,2002)  "
+    SPqcc.19: ....4f60      (9,1888)  "
+QCC: [0x0000009f]
+        Lqcc: ....002a            42  
+        Cqcc: ......02             2  component index
+        Sqcc: ......62        ---->   scalar expounded  (3 guard bits)
+     SPqcc.1: ....7716     (14,1814)  Exponent (epsilon_b), Mantissa (mu_b)
+     SPqcc.2: ....7717     (14,1815)  "
+     SPqcc.3: ....7717     (14,1815)  "
+     SPqcc.4: ....7719     (14,1817)  "
+     SPqcc.5: ....6f1d     (13,1821)  "
+     SPqcc.6: ....6f1d     (13,1821)  "
+     SPqcc.7: ....6f23     (13,1827)  "
+     SPqcc.8: ....6735     (12,1845)  "
+     SPqcc.9: ....6735     (12,1845)  "
+    SPqcc.10: ....674c     (12,1868)  "
+    SPqcc.11: ....5f85     (11,1925)  "
+    SPqcc.12: ....5f85     (11,1925)  "
+    SPqcc.13: ....5fd7     (11,2007)  "
+    SPqcc.14: ....4820        (9,32)  "
+    SPqcc.15: ....4820        (9,32)  "
+    SPqcc.16: ....4883       (9,131)  "
+    SPqcc.17: ....4fd2      (9,2002)  "
+    SPqcc.18: ....4fd2      (9,2002)  "
+    SPqcc.19: ....4f60      (9,1888)  "
+COM: [0x000000cb]
+        Lcom: ....002d            45  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Creator: AV-J2K (c) 2000,2001 Algo Vision
+     ----------- 
+
+=========== File Part 1 ===========
+
+SOT: [0x000000fa]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 000408bf        264383  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x00000106]
+----------- 
+264383 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x000409b9]
+
+

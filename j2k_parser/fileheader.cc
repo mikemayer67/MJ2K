@@ -60,10 +60,10 @@ void J2KFileHeader::init(int fd)
         }
 
 
-      case 0xff30: case 0xff31: case 0xff32: case 0xff33:
-      case 0xff34: case 0xff35: case 0xff36: case 0xff37:
-      case 0xff38: case 0xff39: case 0xff3a: case 0xff3b:
-      case 0xff3c: case 0xff3d: case 0xff3e: case 0xff3f: 
+      case Marker::IGN30: case Marker::IGN31: case Marker::IGN32: case Marker::IGN33:
+      case Marker::IGN34: case Marker::IGN35: case Marker::IGN36: case Marker::IGN37:
+      case Marker::IGN38: case Marker::IGN39: case Marker::IGN3A: case Marker::IGN3B:
+      case Marker::IGN3C: case Marker::IGN3D: case Marker::IGN3E: case Marker::IGN3F: 
         std::cout << "Skipping marker: " << std::hex << marker.code() << std::endl;
         marker = Marker(fd,true);  // consume the skipped marker
         break;

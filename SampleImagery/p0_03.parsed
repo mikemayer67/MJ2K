@@ -1,0 +1,148 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....0029            41  
+        Rsiz: ....0001             1  codestream capabilities
+        Xsiz: 00000100           256  width of reference grid
+        Ysiz: 00000100           256  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000080           128  width of one tile wrt ref. grid
+       YTsiz: 00000080           128  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0001             1  number of components in the field
+      Ssiz.1: ......83        ---->   precision (-4 - 3)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+COD: [0x0000002d]
+        Lcod: ....000c            12  
+        Scod: ......02        ---->   Entry coder, precints=(15,15), SOP may be used, EPH not used
+     SGcod-A: ......03          PCRL  progression order
+     SGcod-B: ....0008             8  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......01             1  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......01        5-3 NL  Wavelet
+QCD: [0x0000003b]
+        Lqcd: ....0005             5  
+        Sqcd: ......41        ---->   scalar derived. Use Equation E.5  (2 guard bits)
+     SPqcd.1: ....0000         (0,0)  Exponent (epsilon_b), Mantissa (mu_b)
+QCC: [0x00000042]
+        Lqcc: ....0008             8  
+        Cqcc: ......00             0  component index
+        Sqcc: ......40        ---->   no quantization  (2 guard bits)
+     SPqcc.1: ......20             4  Exponent (epsilon_b)
+     SPqcc.2: ......28             5  "
+     SPqcc.3: ......28             5  "
+     SPqcc.4: ......30             6  "
+POC: [0x0000004c]
+        Lpoc: ....0009             9  
+     RSpoc.1: ......00             0  resolution level index at start of progression
+     CSpoc.1: ......00             0  component index at start of progression
+    LYEpoc.1: ....0008             8  layer index after end of progression
+     REpoc.1: ......21            33  resolution level index after end of progression
+     CEpoc.1: ......ff           255  component index after end of progression
+      Ppoc.1: ......00          LRCP  progression order
+CRG: [0x00000057]
+        Lcrg: ....0006             6  
+      Xcrg.1: ....7f2e      0.496796  horizontal offset (XRsiz/65536)
+      Ycrg.1: ....0949     0.0362701   vertical  offset (YRsiz/65536)
+COM: [0x0000005f]
+        Lcom: ....002d            45  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Creator: AV-J2K (c) 2000,2001 Algo Vision
+     ----------- 
+COM: [0x0000008e]
+        Lcom: ....0038            56  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Creator: AV-J2K (c) 2000,2001 Algo Vision Technology
+     ----------- 
+COM: [0x000000c8]
+        Lcom: ....0042            66  
+        Rcom: ....0000        binary  Comment content
+     -----------
+     ff 90 28 63 29 20 32 30   30 30 2c 32 30 30 31 20   41 6c 67 6f ff 93 20 56   69 73 69 6f 6e ff d9 ff
+     92 00 00 0a ff 92 0a 00   08 08 08 ff 64 ff ff 00   00 00 09 ff d9 ff ff 4a   fc 00 00 ff 4f 00 
+     -----------
+TLM: [0x0000010c]
+        Ltlm: ....001c            28  
+        Ztlm: ......00             0  TLM index
+        Stlm: ......60        ---->   ST=2 Ttlm is 16 bits / SP=1 Ptlm is 32 bits
+      Ttlm.1: ....0000             0  tile index of tile-part
+      Ptlm.1: 000010ab          4267  offset from start of SOT to tile-part
+      Ttlm.2: ....0001             1  "
+      Ptlm.2: 00000845          2117  "
+      Ttlm.3: ....0002             2  "
+      Ptlm.3: 00000ff0          4080  "
+      Ttlm.4: ....0003             3  "
+      Ptlm.4: 00000821          2081  "
+
+=========== File Part 1 ===========
+
+SOT: [0x0000012a]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 000010ab          4267  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+RGN: [0x00000136]
+        Lrgn: ....0005             5  
+        Crgn: ......00             0  component index
+        Srgn: ......00             0  0=implicit ROI
+       SPrgn: ......07             7  binary shift of ROI coefficients
+SOD: [0x0000013d]
+----------- 
+4267 bytes of tile-part data
+----------- 
+
+=========== File Part 2 ===========
+
+SOT: [0x000011d5]
+        Lsot: ....000a            10  
+        Isot: ....0001             1  tile index
+        Psot: 00000845          2117  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x000011e1]
+----------- 
+2117 bytes of tile-part data
+----------- 
+
+=========== File Part 3 ===========
+
+SOT: [0x00001a1a]
+        Lsot: ....000a            10  
+        Isot: ....0002             2  tile index
+        Psot: 00000ff0          4080  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x00001a26]
+----------- 
+4080 bytes of tile-part data
+----------- 
+
+=========== File Part 4 ===========
+
+SOT: [0x00002a0a]
+        Lsot: ....000a            10  
+        Isot: ....0003             3  tile index
+        Psot: 00000821          2081  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x00002a16]
+----------- 
+2081 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x0000322b]
+
+

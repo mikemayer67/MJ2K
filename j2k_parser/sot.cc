@@ -18,5 +18,5 @@ void SOT::display(std::ostream &s) const
   out.display(_I,     2, "Isot",  "tile index");
   out.display(_P,     4, "Psot",  "length of tile-part");
   out.display(_TP,    1, "TPsot", "tile part index");
-  out.display(_TN,    1, "TNsot", "number of tile parts");
+  out.display(_TN,    1, "TNsot", "number of tile parts (0=not specified)");
 }

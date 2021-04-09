@@ -1,0 +1,168 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....0032            50  
+        Rsiz: ....0002             2  codestream capabilities
+        Xsiz: 00000201           513  width of reference grid
+        Ysiz: 00000081           129  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000201           513  width of one tile wrt ref. grid
+       YTsiz: 00000081           129  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0004             4  number of components in the field
+      Ssiz.1: ......0b        ---->   precision (0 - 2047)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+      Ssiz.2: ......0b        ---->   precision (0 - 2047)
+     XRsiz.2: ......02             2  "
+     YRsiz.2: ......01             1  "
+      Ssiz.3: ......0b        ---->   precision (0 - 2047)
+     XRsiz.3: ......01             1  "
+     YRsiz.3: ......02             2  "
+      Ssiz.4: ......0b        ---->   precision (0 - 2047)
+     XRsiz.4: ......02             2  "
+     YRsiz.4: ......02             2  "
+COD: [0x00000036]
+        Lcod: ....000c            12  
+        Scod: ......00        ---->   Entry coder, precints=(15,15), SOP not used, EPH not used
+     SGcod-A: ......02          RPCL  progression order
+     SGcod-B: ....0004             4  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......06             6  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......00        9-7 VL  Wavelet
+QCD: [0x00000044]
+        Lqcd: ....0029            41  
+        Sqcd: ......62        ---->   scalar expounded  (3 guard bits)
+     SPqcd.1: ....3a00       (7,512)  Exponent (epsilon_b), Mantissa (mu_b)
+     SPqcd.2: ....3a06       (7,518)  "
+     SPqcd.3: ....3a0a       (7,522)  "
+     SPqcd.4: ....3a0c       (7,524)  "
+     SPqcd.5: ....3204       (6,516)  "
+     SPqcd.6: ....320c       (6,524)  "
+     SPqcd.7: ....320a       (6,522)  "
+     SPqcd.8: ....2a0f       (5,527)  "
+     SPqcd.9: ....2a0b       (5,523)  "
+    SPqcd.10: ....2a25       (5,549)  "
+    SPqcd.11: ....222d       (4,557)  "
+    SPqcd.12: ....2231       (4,561)  "
+    SPqcd.13: ....2355       (4,853)  "
+    SPqcd.14: ....1b54       (3,852)  "
+    SPqcd.15: ....1abc       (3,700)  "
+    SPqcd.16: ....10a3       (2,163)  "
+    SPqcd.17: ....084e        (1,78)  "
+    SPqcd.18: ....15e4      (2,1508)  "
+    SPqcd.19: ....0f27      (1,1831)  "
+QCC: [0x0000006f]
+        Lqcc: ....002a            42  
+        Cqcc: ......01             1  component index
+        Sqcc: ......82        ---->   scalar expounded  (4 guard bits)
+     SPqcc.1: ....55f7     (10,1527)  Exponent (epsilon_b), Mantissa (mu_b)
+     SPqcc.2: ....51e9      (10,489)  "
+     SPqcc.3: ....5299      (10,665)  "
+     SPqcc.4: ....51fa      (10,506)  "
+     SPqcc.5: ....49e7       (9,487)  "
+     SPqcc.6: ....49f6       (9,502)  "
+     SPqcc.7: ....49ed       (9,493)  "
+     SPqcc.8: ....41ed       (8,493)  "
+     SPqcc.9: ....41f4       (8,500)  "
+    SPqcc.10: ....41e5       (8,485)  "
+    SPqcc.11: ....39f9       (7,505)  "
+    SPqcc.12: ....39eb       (7,491)  "
+    SPqcc.13: ....39ea       (7,490)  "
+    SPqcc.14: ....31eb       (6,491)  "
+    SPqcc.15: ....31f3       (6,499)  "
+    SPqcc.16: ....31fd       (6,509)  "
+    SPqcc.17: ....29f7       (5,503)  "
+    SPqcc.18: ....29f0       (5,496)  "
+    SPqcc.19: ....2a2e       (5,558)  "
+QCC: [0x0000009b]
+        Lqcc: ....002a            42  
+        Cqcc: ......02             2  component index
+        Sqcc: ......a2        ---->   scalar expounded  (5 guard bits)
+     SPqcc.1: ....5539     (10,1337)  Exponent (epsilon_b), Mantissa (mu_b)
+     SPqcc.2: ....52d8      (10,728)  "
+     SPqcc.3: ....537a      (10,890)  "
+     SPqcc.4: ....52cf      (10,719)  "
+     SPqcc.5: ....4acc       (9,716)  "
+     SPqcc.6: ....4ad6       (9,726)  "
+     SPqcc.7: ....4abc       (9,700)  "
+     SPqcc.8: ....42ce       (8,718)  "
+     SPqcc.9: ....42c0       (8,704)  "
+    SPqcc.10: ....42c0       (8,704)  "
+    SPqcc.11: ....3ac8       (7,712)  "
+    SPqcc.12: ....3ac8       (7,712)  "
+    SPqcc.13: ....3acd       (7,717)  "
+    SPqcc.14: ....32cf       (6,719)  "
+    SPqcc.15: ....32bd       (6,701)  "
+    SPqcc.16: ....32ed       (6,749)  "
+    SPqcc.17: ....2af1       (5,753)  "
+    SPqcc.18: ....2ace       (5,718)  "
+    SPqcc.19: ....2b49       (5,841)  "
+QCC: [0x000000c7]
+        Lqcc: ....0017            23  
+        Cqcc: ......03             3  component index
+        Sqcc: ......c0        ---->   no quantization  (6 guard bits)
+     SPqcc.1: ......60            12  Exponent (epsilon_b)
+     SPqcc.2: ......68            13  "
+     SPqcc.3: ......68            13  "
+     SPqcc.4: ......70            14  "
+     SPqcc.5: ......68            13  "
+     SPqcc.6: ......68            13  "
+     SPqcc.7: ......70            14  "
+     SPqcc.8: ......68            13  "
+     SPqcc.9: ......68            13  "
+    SPqcc.10: ......70            14  "
+    SPqcc.11: ......68            13  "
+    SPqcc.12: ......68            13  "
+    SPqcc.13: ......70            14  "
+    SPqcc.14: ......68            13  "
+    SPqcc.15: ......68            13  "
+    SPqcc.16: ......70            14  "
+    SPqcc.17: ......68            13  "
+    SPqcc.18: ......68            13  "
+    SPqcc.19: ......70            14  "
+COC: [0x000000e0]
+        Lcoc: ....0009             9  
+        Ccoc: ......03             3  component index
+        Scoc: ......00        ---->   Entry coder, precints=(15,15)
+     SPcoc-A: ......06             6  number of decomp levels
+     SPcoc-B: ......04            64  code block width
+     SPcoc-C: ......04            64  code block height
+     SPcoc-D: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcoc-E: ......01        5-3 NL  Wavelet
+RGN: [0x000000eb]
+        Lrgn: ....0005             5  
+        Crgn: ......00             0  component index
+        Srgn: ......00             0  0=implicit ROI
+       SPrgn: ......0b            11  binary shift of ROI coefficients
+
+=========== File Part 1 ===========
+
+SOT: [0x000000f2]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 0000832e         33582  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+RGN: [0x000000fe]
+        Lrgn: ....0005             5  
+        Crgn: ......00             0  component index
+        Srgn: ......00             0  0=implicit ROI
+       SPrgn: ......09             9  binary shift of ROI coefficients
+SOD: [0x00000105]
+----------- 
+33582 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x00008420]
+
+

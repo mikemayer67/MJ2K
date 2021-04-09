@@ -1,0 +1,80 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....002f            47  
+        Rsiz: ....0000             0  codestream capabilities
+        Xsiz: 000004b0          1200  width of reference grid
+        Ysiz: 00000343           835  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 000004b0          1200  width of one tile wrt ref. grid
+       YTsiz: 00000343           835  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0003             3  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+      Ssiz.2: ......07        ---->   precision (0 - 127)
+     XRsiz.2: ......01             1  "
+     YRsiz.2: ......01             1  "
+      Ssiz.3: ......07        ---->   precision (0 - 127)
+     XRsiz.3: ......01             1  "
+     YRsiz.3: ......01             1  "
+COD: [0x00000033]
+        Lcod: ....000c            12  
+        Scod: ......00        ---->   Entry coder, precints=(15,15), SOP not used, EPH not used
+     SGcod-A: ......00          LRCP  progression order
+     SGcod-B: ....0002             2  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......05             5  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......00        9-7 VL  Wavelet
+QCD: [0x00000041]
+        Lqcd: ....0023            35  
+        Sqcd: ......42        ---->   scalar expounded  (2 guard bits)
+     SPqcd.1: ....7720     (14,1824)  Exponent (epsilon_b), Mantissa (mu_b)
+     SPqcd.2: ....76f0     (14,1776)  "
+     SPqcd.3: ....76f0     (14,1776)  "
+     SPqcd.4: ....76c0     (14,1728)  "
+     SPqcd.5: ....6f00     (13,1792)  "
+     SPqcd.6: ....6f00     (13,1792)  "
+     SPqcd.7: ....6ee0     (13,1760)  "
+     SPqcd.8: ....6750     (12,1872)  "
+     SPqcd.9: ....6750     (12,1872)  "
+    SPqcd.10: ....6768     (12,1896)  "
+    SPqcd.11: ....5005        (10,5)  "
+    SPqcd.12: ....5005        (10,5)  "
+    SPqcd.13: ....5047       (10,71)  "
+    SPqcd.14: ....57d3     (10,2003)  "
+    SPqcd.15: ....57d3     (10,2003)  "
+    SPqcd.16: ....5762     (10,1890)  "
+COM: [0x00000066]
+        Lcom: ....0025            37  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Created by OpenJPEG version 2.3.0
+     ----------- 
+
+=========== File Part 1 ===========
+
+SOT: [0x0000008d]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 00125398       1201048  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+SOD: [0x00000099]
+----------- 
+1201048 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x00125425]
+
+

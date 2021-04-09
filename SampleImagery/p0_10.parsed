@@ -1,0 +1,172 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....002f            47  
+        Rsiz: ....0001             1  codestream capabilities
+        Xsiz: 00000100           256  width of reference grid
+        Ysiz: 00000100           256  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000080           128  width of one tile wrt ref. grid
+       YTsiz: 00000080           128  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0003             3  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......04             4  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......04             4  vert. sample separation in ith comp wrt the ref.grid
+      Ssiz.2: ......07        ---->   precision (0 - 127)
+     XRsiz.2: ......04             4  "
+     YRsiz.2: ......04             4  "
+      Ssiz.3: ......07        ---->   precision (0 - 127)
+     XRsiz.3: ......04             4  "
+     YRsiz.3: ......04             4  "
+COD: [0x00000033]
+        Lcod: ....000c            12  
+        Scod: ......00        ---->   Entry coder, precints=(15,15), SOP not used, EPH not used
+     SGcod-A: ......00          LRCP  progression order
+     SGcod-B: ....0002             2  number of layers
+     SGcod-C: ......01        ---->   xform used on components 0-2
+     SPcod-D: ......03             3  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......01        5-3 NL  Wavelet
+QCD: [0x00000041]
+        Lqcd: ....000d            13  
+        Sqcd: ......00        ---->   no quantization  (0 guard bits)
+     SPqcd.1: ......58            11  Exponent (epsilon_b)
+     SPqcd.2: ......60            12  "
+     SPqcd.3: ......60            12  "
+     SPqcd.4: ......68            13  "
+     SPqcd.5: ......60            12  "
+     SPqcd.6: ......60            12  "
+     SPqcd.7: ......68            13  "
+     SPqcd.8: ......60            12  "
+     SPqcd.9: ......60            12  "
+    SPqcd.10: ......68            13  "
+
+=========== File Part 1 ===========
+
+SOT: [0x00000050]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 00000995          2453  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......00             0  number of tile parts (0=not specified)
+SOD: [0x0000005c]
+----------- 
+2453 bytes of tile-part data
+----------- 
+
+=========== File Part 2 ===========
+
+SOT: [0x000009e5]
+        Lsot: ....000a            10  
+        Isot: ....0001             1  tile index
+        Psot: 00000963          2403  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......00             0  number of tile parts (0=not specified)
+SOD: [0x000009f1]
+----------- 
+2403 bytes of tile-part data
+----------- 
+
+=========== File Part 3 ===========
+
+SOT: [0x00001348]
+        Lsot: ....000a            10  
+        Isot: ....0002             2  tile index
+        Psot: 00000974          2420  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......00             0  number of tile parts (0=not specified)
+SOD: [0x00001354]
+----------- 
+2420 bytes of tile-part data
+----------- 
+
+=========== File Part 4 ===========
+
+SOT: [0x00001cbc]
+        Lsot: ....000a            10  
+        Isot: ....0003             3  tile index
+        Psot: 000009a8          2472  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......00             0  number of tile parts (0=not specified)
+SOD: [0x00001cc8]
+----------- 
+2472 bytes of tile-part data
+----------- 
+
+=========== File Part 5 ===========
+
+SOT: [0x00002664]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 00000413          1043  length of tile-part
+       TPsot: ......01             1  tile part index
+       TNsot: ......02             2  number of tile parts (0=not specified)
+SOD: [0x00002670]
+----------- 
+1043 bytes of tile-part data
+----------- 
+
+=========== File Part 6 ===========
+
+SOT: [0x00002a77]
+        Lsot: ....000a            10  
+        Isot: ....0001             1  tile index
+        Psot: 0000044d          1101  length of tile-part
+       TPsot: ......01             1  tile part index
+       TNsot: ......02             2  number of tile parts (0=not specified)
+SOD: [0x00002a83]
+----------- 
+1101 bytes of tile-part data
+----------- 
+
+=========== File Part 7 ===========
+
+SOT: [0x00002ec4]
+        Lsot: ....000a            10  
+        Isot: ....0003             3  tile index
+        Psot: 0000041e          1054  length of tile-part
+       TPsot: ......01             1  tile part index
+       TNsot: ......02             2  number of tile parts (0=not specified)
+SOD: [0x00002ed0]
+----------- 
+1054 bytes of tile-part data
+----------- 
+
+=========== File Part 8 ===========
+
+SOT: [0x000032e2]
+        Lsot: ....000a            10  
+        Isot: ....0002             2  tile index
+        Psot: 0000000e            14  length of tile-part
+       TPsot: ......01             1  tile part index
+       TNsot: ......00             0  number of tile parts (0=not specified)
+SOD: [0x000032ee]
+----------- 
+14 bytes of tile-part data
+----------- 
+
+=========== File Part 9 ===========
+
+SOT: [0x000032f0]
+        Lsot: ....000a            10  
+        Isot: ....0002             2  tile index
+        Psot: 00000441          1089  length of tile-part
+       TPsot: ......02             2  tile part index
+       TNsot: ......00             0  number of tile parts (0=not specified)
+SOD: [0x000032fc]
+----------- 
+1089 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x00003731]
+
+

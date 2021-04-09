@@ -44,10 +44,10 @@ void COD::display(std::ostream &s) const
   out.display(_SP.code_block_width,  1, "SPcod-E", spcod_cbw, "code block width");
   out.display(_SP.code_block_height, 1, "SPcod-F", spcod_cbh, "code block height");
   out.display(_SP.code_block_style,  1, "SPcod-G", spcod_cbs);
-  out.display(_SP.wavelet,           1, "SPcod-H", spcod_wav);
+  out.display(_SP.wavelet,           1, "SPcod-H", spcod_wav, "Wavelet");
 
   for(int i=0; i<_SP.precinct_width.size(); ++i)
   {
-    out.display(_SP.precinct_width.at(i), 1, "SPCOD-I", i, spcod_psz, "precinct size (PPx,PPy)");
+    out.display(_SP.precinct_width.at(i), 1, "SPcod-I", i, spcod_psz, "precinct size (PPx,PPy)");
   }
 }

@@ -42,10 +42,10 @@ void COC::display(std::ostream &s) const
   out.display(_SP.code_block_width,  1, "SPcoc-B", spcoc_cbw, "code block width");
   out.display(_SP.code_block_height, 1, "SPcoc-C", spcoc_cbh, "code block height");
   out.display(_SP.code_block_style,  1, "SPcoc-D", spcoc_cbs);
-  out.display(_SP.wavelet,           1, "SPcoc-E", spcoc_wav);
+  out.display(_SP.wavelet,           1, "SPcoc-E", spcoc_wav, "Wavelet");
 
   for(int i=0; i<_SP.precinct_width.size(); ++i)
   {
-    out.display(_SP.precinct_width.at(i), 1, "SPCOC-F", i, spcoc_psz, "precinct size (PPx,PPy)");
+    out.display(_SP.precinct_width.at(i), 1, "SPcoc-F", i, spcoc_psz, "precinct size (PPx,PPy)");
   }
 }
