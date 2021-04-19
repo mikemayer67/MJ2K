@@ -8,6 +8,7 @@ uint64_t nhands = 0;
 uint64_t ngin   = 0;
 uint64_t ngin_sets_only = 0;
 uint64_t ngin_runs_only = 0;
+uint64_t ngin_one_one   = 0;
 
 uint64_t nugly = 0;
 
@@ -15,6 +16,12 @@ struct Run
 {
   int suit;
   int rank;   // end of run
+  int length;
+};
+
+struct Set
+{
+  int rank;
   int length;
 };
 
@@ -35,51 +42,64 @@ class show_hand
 };
 ostream &operator<<(ostream &s, const show_hand &x) { x.dump(s); return s; }
 
-//class show_runs
-//{
-//  public:
-//    show_runs(int nruns, Run *runs) 
-//    {
-//      int t=0;
-//      memset(this,0,sizeof(show_runs));
-//      for(int i=0; i<nruns; ++i)
-//      {
-//        int suit = runs[i].suit; 
-//        lengths[suit][count[suit]] = runs[i].length;
-//        count[suit] += 1;
-//      }
-//      for(int i=0; i<3; ++i) {
-//        for(int j=i+1; j<4; ++j) {
-//          if(count[j] > count[i]) {
-//            t=count[i]; count[i]=count[j]; count[j]=t;
-//            for(int k=0; k<3; ++k) { t=lengths[i][k]; lengths[i][k]=lengths[j][k]; lengths[j][k]=t; }
-//          }
-//        }
-//      }
-//      for(int i=0; i<4; ++i) {
-//        for(int j=0; j<count[i]-1; ++j) {
-//          for(int k=j+1; j<count[i]; ++k) {
-//            if(lengths[i][k]>lengths[i][j]) { t=lengths[i][k]; lengths[i][k]=lengths[i][j]; lengths[i][j]=t; }
-//          }
-//        }
-//      }
-//    }
-//    void dump(ostream &s) const
-//    {
-//      s << "dump";
-////      for(int i=0; i<4; ++i) {
-////        for(int j=0; j<count[i]; ++j ) {
-////          if( i>0 && j==0 ) s << " - ";
-////          if( j>0 ) s << " ";
-////          s << "R" << lengths[i][j];
-////        }
-////      }
-//    }
-//  private:
-//    int count[4];
-//    int lengths[4][3];
-//};
-//ostream &operator<<(ostream &s, const show_runs &x) { x.dump(s); return s; }
+class show_runs
+{
+  public:
+    show_runs(int nruns, Run *runs) 
+    {
+      memset(this,0,sizeof(show_runs));
+
+      int t;
+
+      for(int i=0; i<nruns; ++i)
+      {
+        int suit = runs[i].suit; 
+        int j = run_count[suit];
+        int length = runs[i].length;
+
+        run_count[suit]  += 1;
+        card_count[suit] += length;
+        lengths[suit][j]  = length;
+      }
+
+      for(int i=0; i<4; ++i) {
+        for(int j=0; j<run_count[i]-1; ++j) {
+          for(int k=j+1; k<run_count[i]; ++k) {
+            if( lengths[i][k] > lengths[i][j] ) {
+              t=lengths[i][k]; lengths[i][k]=lengths[i][j]; lengths[i][j]=t;
+            }
+          }
+        }
+      }
+
+      for(int i=0; i<3; ++i) {
+        for(int j=i+1; j<4; ++j) {
+          if( card_count[j] > card_count[i] )
+          {
+            t=run_count[i];  run_count[i] =run_count[j];  run_count[j] =t;
+            t=card_count[i]; card_count[i]=card_count[j]; card_count[j]=t;
+            for(int k=0; k<3; ++k) {
+              t=lengths[i][k]; lengths[i][k]=lengths[j][k]; lengths[j][k]=t;
+            }
+          }
+        }
+      }
+    }
+    void dump(ostream &s) const
+    {
+      for(int i=0; i<4; ++i) {
+        for(int j=0; j<run_count[i]; ++j) {
+          if( j==0 && i>0 ) s << "| ";
+          s << "R" << lengths[i][j] << " ";
+        }
+      }
+    }
+  private:
+    int run_count[4];
+    int card_count[4];
+    int lengths[4][3];
+};
+ostream &operator<<(ostream &s, const show_runs &x) { x.dump(s); return s; }
 
 
 void evaluate(uint64_t hand)
@@ -100,15 +120,27 @@ void evaluate(uint64_t hand)
   {
     for(int rank=0; rank<13; ++rank, mask <<= 1)
     {
-      if(hand&mask) nrank[rank] += 1;
+      if(hand&mask) {
+        nrank[rank] += 1;
+      }
     }
   }
+
+  int nsets = 0;
+  Set sets[3];
 
   int cards_in_sets = 0;
   for(int rank=0; rank<13; ++rank)
   {
     if( nrank[rank] < 3 ) { nrank[rank] = 0; }
-    else                  { cards_in_sets += nrank[rank]; }
+    else 
+    { 
+      cards_in_sets += nrank[rank]; 
+      assert(nsets<3);
+      sets[nsets].rank = rank;
+      sets[nsets].length = nrank[rank];
+      nsets += 1;
+    }
   }
 
   if(cards_in_sets == 10)
@@ -155,7 +187,7 @@ void evaluate(uint64_t hand)
           assert(nruns<3); // cannot create 4 runs with only 10 cards
 
           runs[nruns].suit   = suit;
-          runs[nruns].rank   = rank;
+          runs[nruns].rank   = (in_run ? rank : rank-1);
           runs[nruns].length = run_length;
           nruns += 1;
           cards_in_runs += run_length;
@@ -174,59 +206,31 @@ void evaluate(uint64_t hand)
     ngin_runs_only += 1;
     ngin += 1;
 
-    cout << "   " << ngin_runs_only << ":  " << show_hand(hand) << " : ";
-
-    int t;
-    int run_count[4] = {0,0,0,0};
-    int card_count[4] = {0,0,0,0};
-    int lengths[4][3];
-
-    for(int i=0; i<nruns; ++i)
-    {
-      int suit = runs[i].suit; 
-      int j = run_count[suit];
-      int length = runs[i].length;
-
-      run_count[suit]  += 1;
-      card_count[suit] += length;
-      lengths[suit][j]  = length;
-    }
-
-    for(int i=0; i<4; ++i) {
-      for(int j=0; j<run_count[i]-1; ++j) {
-        for(int k=j+1; k<run_count[i]; ++k) {
-          if( lengths[i][k] > lengths[i][j] ) {
-            t=lengths[i][k]; lengths[i][k]=lengths[i][j]; lengths[i][j]=t;
-          }
-        }
-      }
-    }
-
-    for(int i=0; i<3; ++i) {
-      for(int j=i+1; j<4; ++j) {
-        if( card_count[j] > card_count[i] )
-        {
-          t=run_count[i];  run_count[i] =run_count[j];  run_count[j] =t;
-          t=card_count[i]; card_count[i]=card_count[j]; card_count[j]=t;
-          for(int k=0; k<3; ++k) {
-            t=lengths[i][k]; lengths[i][k]=lengths[j][k]; lengths[j][k]=t;
-          }
-        }
-      }
-    }
-
-    for(int i=0; i<4; ++i) {
-      for(int j=0; j<run_count[i]; ++j) {
-        if( j==0 && i>0 ) cout << "| ";
-        cout << "R" << lengths[i][j] << " ";
-      }
-    }
-    cout << endl;
-
     return;
   }
 
   // start examining cases:
+
+  // 4. 1 Run/1Set
+  if( nruns == 1 && nsets == 1 )
+  {
+    if( cards_in_runs + cards_in_sets - cards_in_both == 10 )
+    {
+      if( cards_in_both == 0
+          || sets[0].length == 4
+          || sets[0].rank == runs[0].rank
+          || sets[0].rank == runs[0].rank - (runs[0].length-1) )
+      {
+        ngin_one_one += 1;
+        ngin += 1;
+
+        cout << ngin_one_one << ": " << show_hand(hand) 
+          << " : R" << runs[0].length << " S" << sets[0].length
+          << " : " << sets[0].rank << " (" << runs[0].rank - runs[0].length + 1 << "-" << runs[0].rank << ")"
+          << endl;
+      }
+    }
+  }
 
   // no cards in both sets and runs
 
@@ -284,6 +288,7 @@ int main(int argc,char **argv)
     << endl
     << "       sets only: " << ngin_sets_only << endl
     << "       runs only: " << ngin_runs_only << endl
+    << "   1 run / 1 set: " << ngin_one_one << endl
     << "to be worked out: " << nugly << endl
     << endl;
 
