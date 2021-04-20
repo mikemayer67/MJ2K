@@ -1,6 +1,8 @@
 #include <iostream>
 #include <iomanip>
 #include <bitset>
+#include <string.h>
+#include <assert.h>
 
 using namespace std;
 
