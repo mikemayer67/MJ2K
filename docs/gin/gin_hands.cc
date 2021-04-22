@@ -1,298 +1,301 @@
 #include <iostream>
 #include <iomanip>
 #include <bitset>
-#include <string.h>
-#include <assert.h>
 
 using namespace std;
 
-uint64_t nhands = 0;
-uint64_t ngin   = 0;
-uint64_t ngin_sets_only = 0;
-uint64_t ngin_runs_only = 0;
-uint64_t ngin_one_one   = 0;
-
-uint64_t nugly = 0;
-
-struct Run
-{
-  int suit;
-  int rank;   // end of run
-  int length;
-};
-
-struct Set
-{
-  int rank;
-  int length;
-};
-
-class show_hand
+class Counts
 {
   public:
-    show_hand(uint64_t _hand) : hand(_hand) {}
-    void dump(ostream &s) const
-    {
-      uint64_t mask = 0x1fff;
-      s << bitset<13>((hand & (mask << 39)) >> 39) << " "
-        << bitset<13>((hand & (mask << 26)) >> 26) << " "
-        << bitset<13>((hand & (mask << 13)) >> 13) << " "
-        << bitset<13>(hand & 0x1fff);
+    Counts(void) { memset(this,0,sizeof(Counts)); }
+
+    void hand       (void)  { _hands++;                 }
+    void three_sets (void)  { _gin++; _scenario[6]++;   }
+    void runs       (int n) { _gin++; _scenario[n-1]++; }
+
+    void dump(ostream &s) const {
+      s << _gin << ": " << _scenario[0];
+      for(int i=1; i<7; ++i) { s << " " << _scenario[i]; }
     }
-  private:
-    uint64_t hand;
-};
-ostream &operator<<(ostream &s, const show_hand &x) { x.dump(s); return s; }
 
-class show_runs
+    void summary(ostream &s) const { 
+      s << "----------------------------------" << endl
+        << "    hands       : " << _hands << endl
+        << "      gin       : " << _gin << endl
+        << " 1) 1 Run       : " << _scenario[0] << endl
+        << " 2) 2 Runs      : " << _scenario[1] << endl
+        << " 3) 3 Sets      : " << _scenario[2] << endl
+        << " 4) 1 Run/1Set  : " << _scenario[3] << endl
+        << " 5) 2 Runs/1Set : " << _scenario[4] << endl
+        << " 6) 1 Run/2Sets : " << _scenario[5] << endl
+        << " 7) 3 Sets      : " << _scenario[6] << endl
+        << "----------------------------------" << endl
+        ;
+    }
+
+    uint64_t hands(void) const { return _hands; }
+
+  private:
+    uint64_t _hands;
+    uint64_t _gin;
+    uint64_t _scenario[7];
+};
+ostream &operator<<(ostream &s, const Counts &x) { x.dump(s); return s; }
+
+typedef bitset<52> Cards_t;
+typedef bitset<4>  Suits_t;
+
+class Set
 {
   public:
-    show_runs(int nruns, Run *runs) 
+    Set(void) { _suits.reset(); }
+
+    void set(int rank, Suits_t suits)
     {
-      memset(this,0,sizeof(show_runs));
+      _rank   = rank;
+      _suits  = suits;
+    }
 
-      int t;
+    int length(void) const { return _suits.count(); }
+    int rank(void)   const { return _rank; }
 
-      for(int i=0; i<nruns; ++i)
+    bool contains(int suit) const { return _suits[suit]; }
+
+  private:
+    int     _rank;
+    Suits_t _suits;
+};
+
+class Sets
+{
+  public:
+    Sets(Cards_t cards) : _nsets(0), _ncards(0)
+    {
+      Suits_t suits;
+      for(int rank=0; rank<13; ++rank)
       {
-        int suit = runs[i].suit; 
-        int j = run_count[suit];
-        int length = runs[i].length;
-
-        run_count[suit]  += 1;
-        card_count[suit] += length;
-        lengths[suit][j]  = length;
-      }
-
-      for(int i=0; i<4; ++i) {
-        for(int j=0; j<run_count[i]-1; ++j) {
-          for(int k=j+1; k<run_count[i]; ++k) {
-            if( lengths[i][k] > lengths[i][j] ) {
-              t=lengths[i][k]; lengths[i][k]=lengths[i][j]; lengths[i][j]=t;
-            }
-          }
+        suits.reset();
+        for(int suit=0; suit<4; ++suit)
+        {
+          if( cards[13*suit+rank] ) suits.flip(suit);
         }
-      }
-
-      for(int i=0; i<3; ++i) {
-        for(int j=i+1; j<4; ++j) {
-          if( card_count[j] > card_count[i] )
-          {
-            t=run_count[i];  run_count[i] =run_count[j];  run_count[j] =t;
-            t=card_count[i]; card_count[i]=card_count[j]; card_count[j]=t;
-            for(int k=0; k<3; ++k) {
-              t=lengths[i][k]; lengths[i][k]=lengths[j][k]; lengths[j][k]=t;
-            }
-          }
+        int n = suits.count();
+        if(n >= 3)
+        {
+          assert(_nsets < 3);
+          _ncards += n;
+          _sets[_nsets++].set(rank,suits);
         }
       }
     }
-    void dump(ostream &s) const
-    {
-      for(int i=0; i<4; ++i) {
-        for(int j=0; j<run_count[i]; ++j) {
-          if( j==0 && i>0 ) s << "| ";
-          s << "R" << lengths[i][j] << " ";
-        }
-      }
+
+    int count  (void) const { return _nsets;  }
+    int ncards (void) const { return _ncards; }
+
+    const Set &operator[](int i) const { 
+      assert(i < _nsets);
+      return _sets[i];
     }
+
+
   private:
-    int run_count[4];
-    int card_count[4];
-    int lengths[4][3];
+    int _ncards;
+    int _nsets;
+    Set _sets[3];
 };
-ostream &operator<<(ostream &s, const show_runs &x) { x.dump(s); return s; }
 
-
-void evaluate(uint64_t hand)
+class Run
 {
-  nhands += 1;
+  public:
+    Run(void) : _suit(0), _start(0), _end(0) {}
 
-  if(nhands%100000000 == 0) 
-    cout << show_hand(hand) << "  " << ngin << "(" << ngin_sets_only << "/" << ngin_runs_only << ")  " << nugly << endl;
-  
-  // check sets first.
-  //   if we can make three sets, runs are irrelevant.
-
-  int nrank[13];
-  memset(nrank,0,13*sizeof(int));
-
-  uint64_t mask = 0x1;
-  for(int suit=0; suit<4; ++suit)
-  {
-    for(int rank=0; rank<13; ++rank, mask <<= 1)
+    void set(int suit, int start, int end)
     {
-      if(hand&mask) {
-        nrank[rank] += 1;
+      _suit   = suit;
+      _start  = start;
+      _end    = end;
+    }
+
+    int suit  (void) const { return _suit; }
+    int length(void) const { return _end - _start; }
+
+  private:
+    int _suit;
+    int _start;
+    int _end;
+};
+
+class Runs
+{
+  public:
+    Runs(Cards_t cards) : _nruns(0), _ncards(0)
+    {
+      int card = 0 ;
+      for(int suit=0; suit<4; ++suit)
+      {
+        int start = 0;
+        for(int rank=0; rank<13; ++rank, ++card)
+        {
+          if( ! cards[card] )
+          {
+            // outside run
+            if( start < rank - 2 )
+            {
+              assert(_nruns<3);
+              _ncards += rank-start;
+              _runs[_nruns++].set(suit,start,rank);
+            }
+            start = rank + 1;
+          }
+        }
+        if( start < 11 )
+        {
+          assert(_nruns<3);
+          _ncards += 13-start;
+          _runs[_nruns++].set(suit,start,13);
+        }
       }
     }
-  }
 
-  int nsets = 0;
-  Set sets[3];
+    int count  (void) const { return _nruns;  }
+    int ncards (void) const { return _ncards; }
 
-  int cards_in_sets = 0;
-  for(int rank=0; rank<13; ++rank)
-  {
-    if( nrank[rank] < 3 ) { nrank[rank] = 0; }
-    else 
-    { 
-      cards_in_sets += nrank[rank]; 
-      assert(nsets<3);
-      sets[nsets].rank = rank;
-      sets[nsets].length = nrank[rank];
-      nsets += 1;
+    const Run &operator[](int i) const { 
+      assert(i < _nruns);
+      return _runs[i];
     }
-  }
 
-  if(cards_in_sets == 10)
+  private:
+    int _ncards;
+    int _nruns;
+    Run _runs[3];
+};
+
+class Overlap
+{
+  public:
+    Overlap(Runs &runs, Sets &sets) : _ncards(0)
+    {
+      for(int i=0; i<runs.count(); ++i)
+      {
+        int suit = runs[i].suit();
+        for(int j=0; j<sets.count(); ++j)
+        {
+          if( sets[j].contains(suit) )
+          {
+            _ranks[_ncards] = sets[j].rank();
+            _suits[_ncards] = suit;
+            ++_ncards;
+          }
+        }
+      }
+    }
+
+    int ncards (void) const { return _ncards; }
+
+  private:
+    int _ncards;
+    int _ranks[9];
+    int _suits[9];
+};
+
+
+class Hand
+{
+  public:
+    Hand(void) : done(false)
+    {
+      cards.reset();
+      for(int i=0; i<10; ++i) {
+        deal[i] = i;
+        cards.flip(i);
+      }
+    }
+
+    operator bool() const { return !done; }
+
+    Hand &operator++() 
+    {
+      if(deal[0] < 42) { incr(); }
+      else             { done = true; }
+      return *this;
+    }
+
+    void write(ostream &s) const {
+      for(int bit=0; bit<52; ++bit) {
+        if(bit % 13 == 0) s << ' ';
+        s << cards[bit];
+      }
+    }
+
+    void evaluate(Counts &counts) const;
+
+  private:
+
+    uint8_t incr(int pos=9)
+    {
+      assert(pos>=0);
+
+      uint8_t card = deal[pos];
+      cards.flip(card);
+
+      if( card > 41+pos ) { card = 1 + incr(pos-1); }
+      else                { card = 1 + card;        }
+
+      deal[pos] = card;
+      cards.flip(card);
+
+      return card;
+    }
+
+
+    bool    done;
+    uint8_t deal[10];
+    Cards_t cards;
+};
+ostream &operator<<(ostream &s, const Hand &x) { x.write(s); return s; }
+
+
+
+int main(int argc, char **argv)
+{
+  Counts counts;
+  for(Hand hand; hand; ++hand) hand.evaluate(counts);
+  counts.summary(cout);
+  return 0;
+}
+
+
+
+void Hand::evaluate(Counts &counts) const
+{
+  counts.hand();
+  if(counts.hands() % 100000000 == 0) { write(cout); cout << endl; }
+
+  Sets sets(cards);
+  if( sets.ncards() == 10 )
   {
     // all cards are in a set
-    ngin_sets_only += 1;
-    ngin += 1;
+    counts.three_sets();
     return;
   }
 
-  //  look for runs.
-
-  int cards_in_runs = 0;
-  int cards_in_both = 0;
-
-  int nruns = 0;
-  Run runs[3];
-
-  int  run_length  = 0;
-  int  dups_in_run = 0;
-  bool in_run      = false;
-
-  mask = 0x01;
-  for(int suit=0; suit<4; ++suit)
-  {
-    for(int rank=0; rank<13; ++rank, mask <<= 1)
-    {
-      if(hand&mask) 
-      {
-        in_run = true;
-        run_length += 1;
-
-        if(nrank[rank]) dups_in_run += 1;
-      }
-      else
-      {
-        in_run = false;
-      }
-
-      if( !in_run || rank==12 )
-      { 
-        if( run_length > 2 )
-        {
-          assert(nruns<3); // cannot create 4 runs with only 10 cards
-
-          runs[nruns].suit   = suit;
-          runs[nruns].rank   = (in_run ? rank : rank-1);
-          runs[nruns].length = run_length;
-          nruns += 1;
-          cards_in_runs += run_length;
-          cards_in_both += dups_in_run;
-        }
-        in_run      = false;
-        run_length  = 0;
-        dups_in_run = 0;
-      }
-    }
-  }
-  
-  if(cards_in_runs == 10)
+  Runs runs(cards);
+  if( runs.ncards() == 10 )
   {
     // all cards are in a run
-    ngin_runs_only += 1;
-    ngin += 1;
-
+    counts.runs(runs.count());
+    cout << *this << "  " << counts << endl;
     return;
   }
 
-  // start examining cases:
+  Overlap overlap(runs,sets);
 
-  // 4. 1 Run/1Set
-  if( nruns == 1 && nsets == 1 )
-  {
-    if( cards_in_runs + cards_in_sets - cards_in_both == 10 )
-    {
-      if( cards_in_both == 0
-          || sets[0].length == 4
-          || sets[0].rank == runs[0].rank
-          || sets[0].rank == runs[0].rank - (runs[0].length-1) )
-      {
-        ngin_one_one += 1;
-        ngin += 1;
-
-        cout << ngin_one_one << ": " << show_hand(hand) 
-          << " : R" << runs[0].length << " S" << sets[0].length
-          << " : " << sets[0].rank << " (" << runs[0].rank - runs[0].length + 1 << "-" << runs[0].rank << ")"
-          << endl;
-      }
-    }
-  }
-
-  // no cards in both sets and runs
-
-  if(cards_in_both == 0)
-  {
-    if(cards_in_runs + cards_in_sets == 10)
-    {
-      // all cards are in a set or a run and no cards are in both... we're good
-      ngin += 1;
-      return;
-    }
-    else
-    {
-      // at least one card is not in a run or a set... no gin
-      return;
-    }
-  }
-  
-  // ... starts getting tricky, there is at least one card that is in both a run and a set
-
-  if( cards_in_runs + cards_in_sets - cards_in_both < 10 )
+  if( sets.ncards() + runs.ncards() - overlap.ncards() )
   {
     // at least one card is not in a run or a set... no gin
     return;
   }
 
-  // ... and now the real fun, all cards are in a run or a set and at least one is in both
-
-  // for now, just count it as ugly... TODO:: we need to resolve all of these
-  nugly += 1;
-  return;
 }
 
-void deal(int firstcard, int ncards, uint64_t hand)
-{
-  uint64_t mask = 1;
-
-  if(ncards == 10) { 
-    evaluate(hand);
-  }
-  else
-  {
-    for(int card=firstcard; card<=ncards+42; ++card)
-    {
-      deal(card+1, ncards+1, hand|(mask<<card));
-    }
-  }
-}
-
-int main(int argc,char **argv)
-{
-  deal(0,0,0);
-
-  cout << ngin << " / " << nhands << endl
-    << endl
-    << "       sets only: " << ngin_sets_only << endl
-    << "       runs only: " << ngin_runs_only << endl
-    << "   1 run / 1 set: " << ngin_one_one << endl
-    << "to be worked out: " << nugly << endl
-    << endl;
-
-  return 0;
-}
