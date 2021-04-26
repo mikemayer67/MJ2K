@@ -1,7 +1,8 @@
 #include <iostream>
 #include <iomanip>
-#include <chrono>
+#include <cassert>
 #include <bitset>
+#include <chrono>
 
 using namespace std;
 
@@ -52,7 +53,7 @@ class Hand : public Writable
     CardHash_t setHash(void) const { return _setHash; }
 
     void write(ostream &s) const {
-      s << hex << setfill('0') << setw(16) << _runHash << "   ";
+      s << hex << setfill('0') << setw(16) << _runHash << "   " << dec;
       CardHash_t cards = _runHash;
       for(int suit=0; suit<4; ++suit) {
         if(suit>0) s << ' ';

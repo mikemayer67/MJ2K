@@ -1,17 +1,24 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <iomanip>
-#include <bitset>
-
+#include <vector>
 #include <stdlib.h>
+#include <bitset>
+#include <cassert>
 #include <cstring>
 
 using namespace std;
 
+bool trace = false;
+
 typedef bitset<52> Hand_t;
+typedef bitset<4>  Suits_t;
+
+const string rankChar = "A23456789TJQK";
+const string suitChar = "SHCD";
 
 istream &operator>>(istream &s,string &str) { return getline(s,str); }
-
 
 class Writable 
 {
@@ -19,6 +26,27 @@ class Writable
     virtual void write(ostream &s) const = 0;
 };
 ostream &operator<<(ostream &s, const Writable &x) { x.write(s); return s; }
+
+class Hand : public Writable
+{
+  public:
+    Hand(uint64_t hand) : _hand(hand) 
+    {
+//      trace = hand == ( 0x7fUL | (0x01UL<<13) | (0x01UL<<26) | (0x01UL<<39) );
+    }
+
+    bool test(int rank,int suit) const { return _hand.test(13*suit + rank); }
+
+    void write(ostream &s) const {
+      for(int suit=0; suit<4; ++suit) {
+        if(suit > 0) s << " ";
+        for(int rank=0; rank<13; ++rank) s << (test(rank,suit) ? rankChar[rank] : '.');
+      }
+    }
+
+  private:
+    Hand_t _hand;
+};
 
 class Set : public Writable
 {
@@ -33,8 +61,18 @@ class Set : public Writable
 
     int rank(void) const { return _rank; }
     int ncards(void) const { return int(_suits.count()); }
-    bool contains(int suit) const { return _suits[suit]; }
+    bool contains(int suit) const { return _suits.test(suit); }
     void write(ostream &s) const { s << "S" << ncards(); }
+
+    string details(void) const {
+      stringstream s;
+      s << "(" << _rank << "|";
+      for(int suit=0; suit<4; ++suit) {
+        if(_suits.test(suit)) s << suitChar[suit];
+      }
+      s << ")";
+      return s.str();
+    }
 
   private:
     int     _rank;
@@ -44,33 +82,22 @@ class Set : public Writable
 class Sets : public Writable
 {
   public:
-    Sets(const Hand_t &hand) : _nsets(0)
+    Sets(const Hand &hand) : _nsets(0)
     {
-      static const CardHash_t setMask = 0x0f;
-
-      Hand_t 
-      CardHash_t setHash = hand.setHash();
-
       for(int rank=0; rank<13; ++rank)
       {
-        Suits_t suits = uint8_t(setHash & setMask);
+        Suits_t suits = 0;
+        for(int suit=0; suit<4; ++suit) {
+          if( hand.test(rank,suit) ) suits.flip(suit);
+        }
         if( suits.count() > 2 )
         {
           _sets[_nsets].set(rank,suits);
           ++_nsets;
         }
-        setHash >>= 4;
       }
-    }
 
-    Sets(const Sets &ref) : _nsets(ref._nsets)
-    {
-      for(int i=0; i<_nsets; ++i) _sets[i].set(ref._sets[i]);
-    }
-
-    bool remove(int i, int suit)
-    {
-      return _sets[i].remove(suit);
+      if(trace) cout << "Sets: " << details() << endl;
     }
 
     const Set &operator[](int n) const
@@ -97,66 +124,48 @@ class Sets : public Writable
       }
     }
 
+    string details(void) const
+    {
+      string rval;
+      for(int i=0; i<_nsets; ++i) {
+        rval += _sets[i].details();
+      }
+      return rval;
+    }
+
   private:
     int _nsets;
     Set _sets[3];
 };
 
 
+
 class Run : public Writable
 {
   public:
-  Run(void) : _suit(0), _start(0), _end(0) {}
+    Run(void) : _suit(0), _start(0), _end(0) {}
 
-  void set(int suit, int start, int end) {
-    _suit  = suit;
-    _start = start;
-    _end   = end;
-  }
-
-  void set(const Run &ref)
-  {
-    _suit  = ref._suit;
-    _start = ref._start;
-    _end   = ref._end;
-  }
-
-  bool remove(int rank)
-  {
-    if( _end < _start + 4 ) return false;
-    if( rank == _start ) {
-      _start += 1;
-      return true;
+    void set(int suit, int start, int end) {
+      _suit  = suit;
+      _start = start;
+      _end   = end;
     }
-    if( rank == _end - 1 ) {
-      _end -= 1;
-      return true;
+
+    int suit(void) const { return _suit; }
+    int ncards(void) const { return _end - _start; }
+    bool contains(int rank) const { return ((rank >= _start) && (rank < _end)); }
+    void write(ostream &s) const { s << "R" << ncards(); }
+
+    string details(void) const {
+      stringstream rval;
+      rval << "(" << _suit << "|" << _start << "-" << _end << ")"; 
+      return rval.str();
     }
-    return false;
-  }
-
-  bool split(int rank, Run &into)
-  {
-    if( _end < _start + 7 ) return false;
-    if( rank < _start + 3 ) return false;
-    if( rank > _end   - 4 ) return false;
-    into.set(_suit, rank+1, _end);
-    _end = rank;
-    return true;
-  }
-
-  int suit(void) const { return _suit; }
-
-  int ncards(void) const { return _end - _start; }
-
-  bool contains(int rank) const { return ((rank >= _start) && (rank < _end)); }
-
-  void write(ostream &s) const { s << "R" << ncards(); }
 
   private:
-  int _suit;
-  int _start;
-  int _end;
+    int _suit;
+    int _start;
+    int _end;
 };
 
 class Runs : public Writable
@@ -164,55 +173,30 @@ class Runs : public Writable
   public:
     Runs(const Hand &hand) : _nruns(0)
     {
-      static const CardHash_t runMask = 0x07;
-
-      CardHash_t runHash = hand.runHash();
-
-      for(int suit=0; suit<4 && runHash != 0; ++suit)
+      for(int suit=0; suit<4; ++suit)
       {
         int start = -1;
-        for(int rank=0; rank<11 && runHash != 0; ++rank) // tail of last possible run is JQK (aka 10,11,12)
+        for(int rank=0; rank<11; ++rank)
         {
-          if( (runHash & runMask) == runMask ) { // in a run
+          if( hand.test(rank,suit) && hand.test(rank+1,suit) && hand.test(rank+2,suit) )
+          {
             if( start < 0 ) start = rank;
           }
-          else if( start >= 0 ) { // found end of run
-            // ....xxxxx....
-            //    ^ ^  ^
-            //    | |  start
-            //    | rank
-            //    end
+          else if( start >= 0 ) {
             _runs[_nruns].set(suit,start,rank+2);
             ++_nruns;
 
             start = -1;
           }
-          runHash >>= 1;
         }
-        if( start >= 0 ) { // run ran to end of suit
+        if( start >= 0 ) {
           _runs[_nruns].set(suit,start,13);
           ++_nruns;
         }
-        runHash >>= 2; // remember, we skipped ranks 11 and 12
       }
-    }
 
-    Runs(const Runs &ref) : _nruns(ref._nruns)
-    {
-      for(int i=0; i<_nruns; ++i)  _runs[i].set(ref._runs[i]);
+      if(trace) cout << "Runs: " << details() << endl;
     }
-
-    bool remove(int i, int rank)
-    {
-      if( _runs[i].remove(rank) ) return true;
-      if( _nruns == 3 ) return false;
-      if( _runs[i].split(rank, _runs[_nruns]) ) {
-        ++_nruns;
-        return true;
-      }
-      return false;
-    }
-
 
     const Run &operator[](int n) const
     {
@@ -226,6 +210,21 @@ class Runs : public Writable
     int ncards(void) const { 
       int rval = 0;
       for(int i=0; i<_nruns; ++i) { rval += _runs[i].ncards(); }
+      return rval;
+    }
+
+    int nsuits(void) const {
+      Suits_t suits = 0;
+      for(int i=0; i<_nruns; ++i) suits.set(_runs[i].suit());
+      return suits.count();
+    }
+
+    string details(void) const
+    {
+      string rval;
+      for(int i=0; i<_nruns; ++i) {
+        rval += _runs[i].details();
+      }
       return rval;
     }
 
@@ -243,6 +242,117 @@ class Runs : public Writable
     Run _runs[3];
 };
 
+typedef pair<string,string> Label_t;
+
+class Scenario : public Writable
+{
+  public:
+    static vector<Label_t>  __labels;
+    static vector<uint64_t> __counts;
+
+  public:
+
+    static void init(void) {
+      __labels.push_back( Label_t("1.0","1 Run") );                          // 0
+      __labels.push_back( Label_t("2.1","2 Runs (1 suit)") );                // 1
+      __labels.push_back( Label_t("2.2","2 Runs (2 suits)") );               // 2
+      __labels.push_back( Label_t("3.1","3 Runs (1 suit)") );                // 3
+      __labels.push_back( Label_t("3.2","3 Runs (2 suits)") );               // 4
+      __labels.push_back( Label_t("3.3","3 Runs (3 suits)") );               // 5
+      __labels.push_back( Label_t("4.1","1 Run 1 Set (exclusive suits)") );  // 6
+      __labels.push_back( Label_t("4.2","1 Run 1 Set (suits overlap)") );    // 7
+      __labels.push_back( Label_t("???","Something else") );
+      for(int i=0; i<__labels.size(); ++i) __counts.push_back(0);
+    }
+
+    static void summary(ostream &s)
+    {
+      uint64_t total = 0;
+      s << endl;
+      for(int i=0; i<__labels.size(); ++i)
+      {
+        s << __labels[i].first << " " << setw(20) << left << __labels[i].second << ": " << __counts[i] << endl;
+        total += __counts[i];
+      }
+      s <<  endl << "Total: " << total << endl << endl;
+    }
+
+    Scenario(const Runs &runs, const Sets &sets)
+    {
+      _id = __labels.size() - 1;
+      switch(runs.count())
+      {
+        case 0:
+          switch(sets.count()) 
+          {
+            case 0: break;
+            case 1: break;
+            case 2: break;
+            case 3: break;
+          }
+          break;
+        case 1:
+          switch(sets.count()) 
+          {
+            case 0: _id = 0; break;
+            case 1:  
+              if( sets[0].ncards() == 4 )
+              {
+                _id = ( runs[0].contains(sets[0].rank()) ? 6 : 7 );
+              }
+              else // set contains 3 cards
+              {
+                _id = ( runs[0].contains(sets[0].rank() && sets[0].contains(runs[0].suit())) ? 7 : 6 );
+              }
+              break;
+            case 2: break;
+            case 3: break;
+          }
+          break;
+        case 2:
+          switch(sets.count()) 
+          {
+            case 0: _id = runs.nsuits(); break;
+            case 1: break;
+            case 2: break;
+            case 3: break;
+          }
+          break;
+        case 3:
+          if( runs.ncards() == 10 )
+          {
+            _id = 2+runs.nsuits();
+          }
+          else
+          {
+            switch(sets.count()) 
+            {
+              case 0: break;
+              case 1: break;
+              case 2: break;
+              case 3: break;
+            }
+          }
+          break;
+      }
+
+      if(trace) {
+        cout << "Scenario: " << _id << endl;
+        exit(1);
+      }
+      __counts[_id] += 1;
+    }
+
+    void write(ostream &s) const { s << __labels[_id].first; }
+
+  private:
+    int _id;
+};
+
+vector<Label_t>  Scenario::__labels;
+vector<uint64_t> Scenario::__counts;
+
+
 int main(int argc,const char **argv)
 {
   if(argc!=2) {
@@ -255,6 +365,9 @@ int main(int argc,const char **argv)
     cerr << "Sorry:: Failed to open: " << argv[1] << ": " << strerror(errno) << endl;
     exit(1);
   }
+
+  Scenario::init();
+
   
   string line;
   bitset<52> hand = 0;
@@ -268,10 +381,19 @@ int main(int argc,const char **argv)
     if(line.length() < 16) continue;
     if(line.find_first_not_of("0123456789abcdef",0)<16) continue;
     line = line.substr(0,16);
+    
+    Hand hand(stoul(line,0,16));
 
-    hand = stoul(line,0,16);
+    if(trace) cout << hand << endl;
 
-    cout << hand << endl;
+    Runs runs(hand);
+    Sets sets(hand);
+
+    Scenario scenario(runs,sets);
+
+    cout << hand << "  " << setw(5) << scenario << "   " << runs << " " << sets << endl;
   }
 
+  Scenario::summary(cout);
 }
+
