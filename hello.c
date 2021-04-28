@@ -5,6 +5,8 @@
 
 static STATS gStats = {0,0,NULL};
 
+static uint32_t *gData = NULL;
+
 void setup_stats()
 {
   gStats.length = 0;
@@ -47,3 +49,12 @@ const char *hello_world(void)
   return "hello, world";
 }
 
+uint32_t *gen_data(uint16_t length)
+{
+  free(gData);
+  gData = malloc(length*sizeof(uint32_t));
+  if(gData) {
+    for(uint16_t i=0; i<length; ++i) { gData[i] = i; }
+  }
+  return gData;
+}
