@@ -139,11 +139,12 @@ class Set : public Writable
 class Sets : public Writable
 {
   public:
-    Sets(const Hand &hand) : _nsets(0)
+    Sets(CardHash_t setHash) : _nsets(0) { init(setHash); }
+    Sets(const Hand &hand)   : _nsets(0) { init(hand.setHash()); }
+
+    void init(CardHash_t setHash)
     {
       static const CardHash_t setMask = 0x0f;
-
-      CardHash_t setHash = hand.setHash();
 
       for(int rank=0; rank<13; ++rank)
       {
@@ -268,11 +269,13 @@ class Run : public Writable
 class Runs : public Writable
 {
   public:
-    Runs(const Hand &hand) : _nruns(0)
+
+    Runs(CardHash_t runHash) : _nruns(0) { init(runHash); }
+    Runs(const Hand &hand)   : _nruns(0) { init(hand.runHash()); }
+
+    void init(CardHash_t runHash)
     {
       static const CardHash_t runMask = 0x07;
-
-      CardHash_t runHash = hand.runHash();
 
       for(int suit=0; suit<4 && runHash != 0; ++suit)
       {
@@ -404,29 +407,77 @@ class Overlaps : public Writable
       }
     }
 
-    bool is_gin(const Runs &runs, const Sets &sets, int index=0) const
+//    bool is_gin(const Runs &runs, const Sets &sets, int index=0) const
+//    {
+//      int rank = _overlap[index].rank;
+//      int suit = _overlap[index].suit;
+//
+//      if(trace) {
+//        if(index == 0) cout << runs.details() << " " << sets.details() << endl;
+//        cout << index << " " << rankChar[rank] << suitChar[suit] << endl;
+//      }
+//
+//      for(int i=0; i<runs.count(); ++i) {
+//        Runs newRuns(runs);
+//        if( newRuns.remove(i,rank) ) {
+//          if( index == _count-1 ) return true;
+//          if( is_gin( newRuns, sets, index+1) ) return true;
+//        }
+//      }
+//
+//      for(int i=0; i<sets.count(); ++i) {
+//        Sets newSets(sets);
+//        if( newSets.remove(i,suit) ) {
+//          if( index == _count-1 ) return true;
+//          if( is_gin( runs, newSets, index+1) ) return true;
+//        }
+//      }
+//
+//      return false;
+//    }
+
+    bool is_gin(const Hand &hand) const
     {
-      int rank = _overlap[index].rank;
-      int suit = _overlap[index].suit;
+      CardHash_t runHash = hand.runHash();
+      CardHash_t setHash = hand.setHash();
+      
+      Runs runs(runHash);
+      Sets sets(setHash);
 
       if(trace) {
-        if(index == 0) cout << runs.details() << " " << sets.details() << endl;
-        cout << index << " " << rankChar[rank] << suitChar[suit] << endl;
+        cout << runs.details() << " " << sets.details() << endl;
+        write(cout);
+        cout << endl;
       }
 
-      for(int i=0; i<runs.count(); ++i) {
-        Runs newRuns(runs);
-        if( newRuns.remove(i,rank) ) {
-          if( index == _count-1 ) return true;
-          if( is_gin( newRuns, sets, index+1) ) return true;
+      uint16_t ntests = 1<<_count;
+      for(uint16_t test=0; test < ntests; ++test)
+      {
+        CardHash_t runTestHash = runHash;
+        CardHash_t setTestHash = setHash;
+
+        if(trace) cout << test << ": " << endl;
+        for(int i=0; i<_count; ++i) {
+          int rank = _overlap[i].rank;
+          int suit = _overlap[i].suit;
+          bool drop_from_run = test & (0x1<<i);
+
+          if(drop_from_run) { runTestHash &= ~( 0x1UL << (13*suit+rank)); }
+          else              { setTestHash &= ~( 0x1UL << (4*rank+suit)); }
+
+          if(trace) 
+            cout << rankChar[rank] << suitChar[suit] << "-" << (drop_from_run ? "R" : "S") << " "
+              << hex << setw(32) << runHash << ' ' << setw(32) << runTestHash << " " 
+              << setw(32) << setHash << " " << setw(32) << setTestHash << dec << endl;
+
         }
-      }
-
-      for(int i=0; i<sets.count(); ++i) {
-        Sets newSets(sets);
-        if( newSets.remove(i,suit) ) {
-          if( index == _count-1 ) return true;
-          if( is_gin( runs, newSets, index+1) ) return true;
+        Runs runTest(runTestHash);
+        Sets setTest(setTestHash);
+        if(trace)
+          cout << runTest.details() << " " << setTest.details() << "  " << runTest.ncards() << " " << setTest.ncards() <<  endl;
+        if( runTest.ncards() + setTest.ncards() == 10 ) {
+          if(trace) cout << "OK" << endl;
+          return true;
         }
       }
 
@@ -454,9 +505,9 @@ int main(int argc, char **argv)
   do {
     ++nhands;
 
-    uint64_t traceHash = (0x3fUL | (0x30UL<<13) | (0x30UL<<26)) ;
-
-    trace = traceHash == hand.runHash();
+//    uint64_t traceHash = (0x3fUL | (0x30UL<<13) | (0x30UL<<26)) ;
+//
+//    trace = traceHash == hand.runHash();
 
 //    if( nhands % 100000000 == 0) {
 //      TimePoint now = Clock::now();
@@ -500,14 +551,15 @@ int main(int argc, char **argv)
     }
 
     if( overlaps.ncards() == 0 )  {
-      cout << hex << setw(32) << hand.runHash() << dec << " " << hand << "   : " << runs << "  " << sets << endl;
+      cout << hand << "   : " << runs << "  " << sets << endl;
       ++ngin;
       if(trace) { cout << "gin: no overlap.." << endl; exit(1); }
       continue;
     }
     
-    if( overlaps.is_gin(runs, sets) ) {
-      cout << hex << setw(32) << hand.runHash() << dec << " " << hand << "   : " << runs << "  " << sets << endl;
+//    if( overlaps.is_gin(runs, sets) ) {
+    if( overlaps.is_gin(hand) ) {
+      cout << hand << "   : " << runs << "  " << sets << endl;
       ++ngin;
       if(trace) { cout << "gin: with overlap.." << endl; exit(1); }
       continue;
