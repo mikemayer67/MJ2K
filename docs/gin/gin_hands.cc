@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <cassert>
 #include <bitset>
@@ -120,6 +121,16 @@ class Set : public Writable
 
     void write(ostream &s) const { s << "S" << ncards(); }
 
+    string details(void) const {
+      stringstream rval;
+      rval << "[" << rankChar[_rank] << " ";
+      for(int suit=0; suit<4; ++suit ) {
+        if(_suits[suit]) rval << suitChar[suit];
+      }
+      rval << "]";
+      return rval.str();
+    }
+
   private:
     int     _rank;
     Suits_t _suits;
@@ -180,6 +191,12 @@ class Sets : public Writable
       }
     }
 
+    string details(void) const {
+      stringstream rval;
+      for(int i=0; i<_nsets; ++i) rval << _sets[i].details();
+      return rval.str();
+    }
+
   private:
     int _nsets;
     Set _sets[3];
@@ -235,6 +252,12 @@ class Run : public Writable
   bool contains(int rank) const { return ((rank >= _start) && (rank < _end)); }
 
   void write(ostream &s) const { s << "R" << ncards(); }
+
+  string details(void) const { 
+    stringstream rval;
+    rval << "[" << rankChar[_start] << "-" << rankChar[_end-1] << " " << suitChar[_suit] << "]";
+    return rval.str();
+  }
 
   private:
   int _suit;
@@ -321,6 +344,13 @@ class Runs : public Writable
       }
     }
 
+    string details(void) const
+    {
+      stringstream rval;
+      for(int i=0; i<_nruns; ++i) rval << _runs[i].details();
+      return rval.str();
+    }
+
   private:
     int _nruns;
     Run _runs[3];
@@ -379,6 +409,11 @@ class Overlaps : public Writable
       int rank = _overlap[index].rank;
       int suit = _overlap[index].suit;
 
+      if(trace) {
+        if(index == 0) cout << runs.details() << " " << sets.details() << endl;
+        cout << index << " " << rankChar[rank] << suitChar[suit] << endl;
+      }
+
       for(int i=0; i<runs.count(); ++i) {
         Runs newRuns(runs);
         if( newRuns.remove(i,rank) ) {
@@ -419,6 +454,10 @@ int main(int argc, char **argv)
   do {
     ++nhands;
 
+    uint64_t traceHash = (0x3fUL | (0x30UL<<13) | (0x30UL<<26)) ;
+
+    trace = traceHash == hand.runHash();
+
 //    if( nhands % 100000000 == 0) {
 //      TimePoint now = Clock::now();
 //
@@ -448,22 +487,32 @@ int main(int argc, char **argv)
 
     Overlaps overlaps(runs,sets);
 
+    if( trace )
+    {
+      cout << hand << "  : " << runs << " " << sets << endl;
+      cout << runs.ncards() << " " << sets.ncards() << " " << overlaps.ncards() << endl;
+    }
+
     if( (runs.ncards() + sets.ncards() - overlaps.ncards() < 10)) 
     {
+      if(trace) { cout << "nope..." << endl; exit(1); }
       continue;
     }
 
     if( overlaps.ncards() == 0 )  {
-      cout << hand << "   : " << runs << "  " << sets << endl;
+      cout << hex << setw(32) << hand.runHash() << dec << " " << hand << "   : " << runs << "  " << sets << endl;
       ++ngin;
+      if(trace) { cout << "gin: no overlap.." << endl; exit(1); }
       continue;
     }
     
     if( overlaps.is_gin(runs, sets) ) {
-      cout << hand << "   : " << runs << " " << sets << "  " << overlaps << endl;
+      cout << hex << setw(32) << hand.runHash() << dec << " " << hand << "   : " << runs << "  " << sets << endl;
       ++ngin;
+      if(trace) { cout << "gin: with overlap.." << endl; exit(1); }
       continue;
     }
+    if(trace) { cout << "no gin: " << endl; exit(1); }
 
   } while (hand.next());
 

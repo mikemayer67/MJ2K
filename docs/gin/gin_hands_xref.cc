@@ -2,7 +2,9 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <map>
 #include <vector>
+#include <algorithm>
 #include <stdlib.h>
 #include <bitset>
 #include <cassert>
@@ -156,6 +158,16 @@ class Run : public Writable
     bool contains(int rank) const { return ((rank >= _start) && (rank < _end)); }
     void write(ostream &s) const { s << "R" << ncards(); }
 
+    bool can_drop(int rank) const
+    {
+      return ( ncards() > 3 ) && ends_with(rank) ;
+    }
+
+    bool ends_with(int rank) const
+    {
+      return ( rank == _start || rank == _end - 1 );
+    }
+
     string details(void) const {
       stringstream rval;
       rval << "(" << _suit << "|" << _start << "-" << _end << ")"; 
@@ -219,6 +231,22 @@ class Runs : public Writable
       return suits.count();
     }
 
+    bool contains(int rank) const
+    {
+      for(int i=0; i<_nruns; ++i) {
+        if( _runs[i].contains(rank) ) return true;
+      }
+      return false;
+    }
+
+    bool can_drop(int rank) const
+    {
+      for(int i=0; i<_nruns; ++i) {
+        if( _runs[i].can_drop(rank) ) return true;
+      }
+      return false;
+    }
+
     string details(void) const
     {
       string rval;
@@ -242,115 +270,152 @@ class Runs : public Writable
     Run _runs[3];
 };
 
-typedef pair<string,string> Label_t;
 
-class Scenario : public Writable
+
+string evaluate_scenario(const Runs &runs, const Sets &sets)
 {
-  public:
-    static vector<Label_t>  __labels;
-    static vector<uint64_t> __counts;
+  int nrun = runs.count();
+  int nset = sets.count();
+  int overlap = runs.ncards() + sets.ncards() - 10;
 
-  public:
-
-    static void init(void) {
-      __labels.push_back( Label_t("1.0","1 Run") );                          // 0
-      __labels.push_back( Label_t("2.1","2 Runs (1 suit)") );                // 1
-      __labels.push_back( Label_t("2.2","2 Runs (2 suits)") );               // 2
-      __labels.push_back( Label_t("3.1","3 Runs (1 suit)") );                // 3
-      __labels.push_back( Label_t("3.2","3 Runs (2 suits)") );               // 4
-      __labels.push_back( Label_t("3.3","3 Runs (3 suits)") );               // 5
-      __labels.push_back( Label_t("4.1","1 Run 1 Set (exclusive suits)") );  // 6
-      __labels.push_back( Label_t("4.2","1 Run 1 Set (suits overlap)") );    // 7
-      __labels.push_back( Label_t("???","Something else") );
-      for(int i=0; i<__labels.size(); ++i) __counts.push_back(0);
-    }
-
-    static void summary(ostream &s)
+  if( nrun == 1 && nset == 0 && runs.ncards() == 10 ) {
+    return "1.1";
+  }
+  else if (nrun == 2 && nset == 0 && runs.ncards() == 10 ) {
+    switch(runs.nsuits())
     {
-      uint64_t total = 0;
-      s << endl;
-      for(int i=0; i<__labels.size(); ++i)
-      {
-        s << __labels[i].first << " " << setw(20) << left << __labels[i].second << ": " << __counts[i] << endl;
-        total += __counts[i];
+      case 1: return "2.1"; break;
+      case 2: return "2.2"; break;
+    }
+  }
+  else if (nrun == 3 and runs.ncards() == 10)
+  {
+    switch(runs.nsuits())
+    {
+      case 1: return "3.1"; break;
+      case 2: return "3.2"; break;
+      case 3: return "3.3"; break;
+    }
+  }
+  else if (nset == 3 and sets.ncards() == 10)
+  {
+    return "4.1";
+  }
+  else if (nrun == 1 && nset == 1) // 5
+  {
+    if( sets[0].contains(runs[0].suit()) ) // 5.2
+    {
+      return ( overlap == 0 ? "5.2.1" : "5.2.2" );
+    }
+    else // 5.1
+    {
+      if(overlap == 0) { return "5.1.1"; }
+    }
+  }
+  else if( nrun == 2 && nset == 1) // 6
+  {
+    if( runs[0].suit() == runs[1].suit() ) // 6.1 and 6.2
+    {
+      if( sets[0].contains(runs[0].suit()) ) { // 6.1
+        if( overlap == 0 ) { // 6.1.1
+          if( sets[0].ncards() == 4 ) { return "6.1.1.1"; }
+          else                       { return "6.1.1.2"; }
+        } else { // 6.1.2
+          if( sets[0].ncards() == 4 ) { return "6.1.2.1"; }
+          else if (runs[0].ncards() == 4 && runs[1].ncards() == 4 ) { return "6.1.2.2"; }
+          else { return "6.1.2.3"; }
+        }
       }
-      s <<  endl << "Total: " << total << endl << endl;
-    }
-
-    Scenario(const Runs &runs, const Sets &sets)
-    {
-      _id = __labels.size() - 1;
-      switch(runs.count())
+      else // 6.2
       {
-        case 0:
-          switch(sets.count()) 
+        return "6.2";
+      }
+    }
+    else // 6.3 and 6.4
+    {
+      if( sets[0].contains(runs[0].suit()) && sets[0].contains(runs[1].suit()) ) // 6.3
+      {
+        if(overlap == 0) { 
+          if( sets[0].ncards() == 4 ) { return "6.3.1.1"; }
+          else if ( sets[0].ncards() == 3 ) { return "6.3.1.2"; }
+          cout << "6.3.1.? " << runs.details() << " " << sets.details() << endl;
+          exit(1);
+
+        }
+        if(overlap == 1) { return "6.3.2"; }
+        if(overlap == 2) { 
+          if(sets[0].ncards() == 4)
           {
-            case 0: break;
-            case 1: break;
-            case 2: break;
-            case 3: break;
-          }
-          break;
-        case 1:
-          switch(sets.count()) 
-          {
-            case 0: _id = 0; break;
-            case 1:  
-              if( sets[0].ncards() == 4 )
-              {
-                _id = ( runs[0].contains(sets[0].rank()) ? 6 : 7 );
-              }
-              else // set contains 3 cards
-              {
-                _id = ( runs[0].contains(sets[0].rank() && sets[0].contains(runs[0].suit())) ? 7 : 6 );
-              }
-              break;
-            case 2: break;
-            case 3: break;
-          }
-          break;
-        case 2:
-          switch(sets.count()) 
-          {
-            case 0: _id = runs.nsuits(); break;
-            case 1: break;
-            case 2: break;
-            case 3: break;
-          }
-          break;
-        case 3:
-          if( runs.ncards() == 10 )
-          {
-            _id = 2+runs.nsuits();
+            if(runs[0].ncards() == 4 && runs[1].ncards() == 4 ) { return "6.3.3.1"; }
+            if(runs[0].ncards() == 5 && runs[1].ncards() == 3 ) { return "6.3.3.2"; }
+            if(runs[0].ncards() == 3 && runs[1].ncards() == 5 ) { return "6.3.3.2"; }
+            cout << "6.3.3.? " << runs.details() << " " << sets.details() << endl;
+            exit(1);
           }
           else
           {
-            switch(sets.count()) 
-            {
-              case 0: break;
-              case 1: break;
-              case 2: break;
-              case 3: break;
-            }
+            if(runs[0].ncards() == 5 && runs[1].ncards() == 4 ) { return "6.3.3.3"; }
+            if(runs[0].ncards() == 4 && runs[1].ncards() == 5 ) { return "6.3.3.3"; }
+            cout << "6.3.3.? " << runs.details() << " " << sets.details() << endl;
+            exit(1);
           }
-          break;
+        }
       }
-
-      if(trace) {
-        cout << "Scenario: " << _id << endl;
+      else // 6.4
+      {
+        return "6.4";
+      }
+    }
+  }
+  else if( nrun == 1 && nset == 2 ) // 7
+  {
+    int run_suit = runs[0].suit();
+    int run_suit_in_set[2] = { sets[0].contains(run_suit), sets[1].contains(run_suit) };
+    if( run_suit_in_set[0] && run_suit_in_set[1] ) // 7.3
+    {
+      if( overlap == 0 ) // 7.3.1
+      {
+        return "7.3.1";
+      }
+      else if(overlap == 1) // 7.3.2
+      {
+        return "7.3.2";
+      }
+      else if(overlap == 2) // 7.3.3
+      {
+        if( runs[0].ncards() == 4 ) { return "7.3.3.1"; }
+        if( runs[0].ncards() == 5 ) { return "7.3.3.2"; }
+        if( runs[0].ncards() == 6 ) { return "7.3.3.3"; }
+        cout << "7.3.3.? " << runs.details() << " " << sets.details() << endl;
         exit(1);
       }
-      __counts[_id] += 1;
+      cout << "7.3.? " << runs.details() << " " << sets.details() << endl;
+      exit(1);
     }
+    else if( run_suit_in_set[0] || run_suit_in_set[1] ) // 7.2
+    {
+      if(overlap == 0) // 7.2.1
+      {
+        if     ( runs[0].ncards() == 3 ) { return "7.2.1.1"; }
+        else if( runs[0].ncards() == 4 ) { return "7.2.1.2"; }
+        cout << "7.2.1.? " << runs.details() << " " << sets.details() << endl;
+        exit(1);
+      }
+      else if(overlap == 1) // 7.2.2
+      {
+        return "7.2.2";
+      }
+      cout << "7.2.? " << runs.details() << " " << sets.details() << endl;
+      exit(1);
+    }
+    else // 7.1
+    {
+      return "7.1";
+    }
+  }
 
-    void write(ostream &s) const { s << __labels[_id].first; }
-
-  private:
-    int _id;
-};
-
-vector<Label_t>  Scenario::__labels;
-vector<uint64_t> Scenario::__counts;
+  return "???";
+}
 
 
 int main(int argc,const char **argv)
@@ -366,9 +431,81 @@ int main(int argc,const char **argv)
     exit(1);
   }
 
-  Scenario::init();
+  // Scenarios
 
-  
+  map<string,string> scenarios;
+  scenarios["1"]     = "One Run / No Sets";
+  scenarios["2"]     = "Two Runs No Sets";
+  scenarios["2.1"]   = "all same suit";
+  scenarios["2.2"]   = "two suits";
+  scenarios["3"]     = "Three Runs";
+  scenarios["3.1"]   = "all same suit";
+  scenarios["3.2"]   = "two suits";
+  scenarios["3.3"]   = "three suits";
+  scenarios["4"]     = "Three Sets";
+  scenarios["5"]     = "One Run / One Set";
+  scenarios["5.1"]   = "set does not include run suit";
+  scenarios["5.1.1"] = "no overlap";
+  scenarios["5.2"]   = "Set does include run suit";
+  scenarios["5.2.1"] = "no overlap";
+  scenarios["5.2.2"] = "overlap";
+  scenarios["6"]     = "Two Runs / One Set";
+  scenarios["6.1"]   = "runs are same suit / suit in set";
+  scenarios["6.1.1"] = "no oerlap";
+  scenarios["6.1.1.1"] = "R3/R3/S4";
+  scenarios["6.1.1.2"] = "R4/R3/S3";
+  scenarios["6.1.2"] = "overlap";
+  scenarios["6.1.2.1"] = "R4/R3/S4";
+  scenarios["6.1.2.2"] = "R4/$4/S3";
+  scenarios["6.1.2.3"] = "R5/S3/S3";
+  scenarios["6.2"]   = "Runs are same suit / suit not in set";
+  scenarios["6.3"]   = "Runs are different suit / both in set";
+  scenarios["6.3.1"] = "no overlap";
+  scenarios["6.3.1.1"] = "R3/R3/S4";
+  scenarios["6.3.1.2"] = "R4/R3/S3";
+  scenarios["6.3.2"] = "one overlap";
+  scenarios["6.3.3"] = "two overlap";
+  scenarios["6.3.3.1"] = "R4/R4/S4";
+  scenarios["6.3.3.2"] = "R5/R3/S4";
+  scenarios["6.3.3.3"] = "R5/R4/S3";
+  scenarios["6.4"]   = "Runs are different suit / one in set";
+  scenarios["7"]     = "1 Run / 2 Sets";
+  scenarios["7.1"]   = "run suit in neither set";
+  scenarios["7.2"]   = "run suit in one set";
+  scenarios["7.2.1"] = "no overlap`";
+  scenarios["7.2.1.1"] = "R3/S4/S3";
+  scenarios["7.2.1.2"] = "R4/S3/S3";
+  scenarios["7.2.2"] = "one overlap";
+  scenarios["7.3"]   = "run suit in both sets";
+  scenarios["7.3.1"]   = "no overlap";
+  scenarios["7.3.2"]   = "one overlap";
+  scenarios["7.3.3"]   = "two overlap";
+  scenarios["7.3.3.1"] = "R4/S4/S4";
+  scenarios["7.3.3.2"] = "R5/S4/S3";
+  scenarios["7.3.3.3"] = "R6/S3/S3";
+  scenarios["???"]   = "missed case";
+
+
+  map<string,uint32_t> counts;
+  vector<string> keys;
+  int description_length = 0;
+  int key_length = 0;
+  for(map<string,string>::const_iterator x=scenarios.begin(); x!=scenarios.end(); ++x)
+  {
+    string scenario = x->first;
+    int len = x->second.length();
+    if(len > description_length) description_length = len;
+    len = x->first.length();
+    if(len > key_length) key_length = len;
+
+    counts[scenario] = 0;
+    keys.push_back(scenario);
+
+  }
+  sort(keys.begin(), keys.end());
+  counts["total"] = 0;
+
+
   string line;
   bitset<52> hand = 0;
   while(true)
@@ -389,11 +526,27 @@ int main(int argc,const char **argv)
     Runs runs(hand);
     Sets sets(hand);
 
-    Scenario scenario(runs,sets);
+    string scenario = evaluate_scenario(runs,sets);
 
     cout << hand << "  " << setw(5) << scenario << "   " << runs << " " << sets << endl;
+
+    counts["total"] += 1;
+    while(scenario.length() > 0)
+    {
+      counts[scenario] += 1;
+      size_t pos = scenario.find_last_of('.');
+      if( pos == string::npos) pos = 0;
+      scenario.erase(pos);
+    }
   }
 
-  Scenario::summary(cout);
-}
+  cout << endl;
 
+  for(vector<string>::const_iterator key=keys.begin(); key!=keys.end(); ++key)
+  {
+    cout << left << setw(key_length) << *key << " " 
+      << left << setw(description_length) << scenarios[*key] << ": " 
+      << setw(6) << counts[*key] << endl;
+  }
+  cout << endl << "Total: " << counts["total"] << endl << endl;
+}
