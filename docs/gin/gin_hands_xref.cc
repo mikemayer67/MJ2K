@@ -375,7 +375,10 @@ string evaluate_scenario(const Runs &runs, const Sets &sets)
     {
       if( overlap == 0 ) // 7.3.1
       {
-        return "7.3.1";
+        if(runs[0].ncards() == 3 ) return "7.3.1.1";
+        if(runs[0].ncards() == 4 ) return "7.3.1.2";
+        cout << "7.3.1.? " << runs.details() << " " << sets.details() << endl;
+        exit(1);
       }
       else if(overlap == 1) // 7.3.2
       {
@@ -478,6 +481,8 @@ int main(int argc,const char **argv)
   scenarios["7.2.2"] = "one overlap";
   scenarios["7.3"]   = "run suit in both sets";
   scenarios["7.3.1"]   = "no overlap";
+  scenarios["7.3.1.1"]   = "R3/S4/S3";
+  scenarios["7.3.1.2"]   = "R4/S3/S3";
   scenarios["7.3.2"]   = "one overlap";
   scenarios["7.3.3"]   = "two overlap";
   scenarios["7.3.3.1"] = "R4/S4/S4";
