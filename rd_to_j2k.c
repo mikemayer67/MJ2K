@@ -10,17 +10,17 @@
 
 void info_handler(const char *msg, void *user_data)
 {
-  printf("\nOBJ_INFO:: %s\n", msg);
+  printf("\nOPJ_INFO:: %s\n", msg);
 }
 
 void warning_handler(const char *msg, void *user_data)
 {
-  printf("\nOBJ_WARNING:: %s\n", msg);
+  printf("\nOPJ_WARNING:: %s\n", msg);
 }
 
 void error_handler(const char *msg, void *user_data)
 {
-  printf("\nOBJ_ERROR:: %s\n", msg);
+  printf("\nOPJ_ERROR:: %s\n", msg);
 }
 
 

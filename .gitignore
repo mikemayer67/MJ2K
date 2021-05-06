@@ -1,9 +1,10 @@
-
 *.d
 *.dylib
 *.ntf
 *.o
+*.so
 *~
+.*.swp
 .ipynb_checkpoints
 __pycache__
 a.out
@@ -17,3 +18,4 @@ read_j2k.dSYM
 ubuntu
 write_j2k
 write_j2k.dSYM
+openjpeg*/build

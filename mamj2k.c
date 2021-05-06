@@ -39,6 +39,7 @@ OPJ_SIZE_T read_from_buffer(void *p_into, OPJ_SIZE_T p_num_bytes, void *p_buffer
   }
 
   memcpy(p_into, db->pos, p_num_bytes);
+  printf(" - %ld bytes copied\n", p_num_bytes);
   db->pos += p_num_bytes;
 
   return p_num_bytes;
@@ -184,6 +185,7 @@ void show_decoder_parameters(opj_dparameters_t *dp)
   printf("      verbose = %s\n", (dp->m_verbose ? "TRUE" : "FALSE"));
   printf("   tile_index = %u\n", dp->tile_index);
   printf("   nb_tile_.. = %u\n", dp->nb_tile_to_decode);
+  printf("\n");
 }
 
 void show_image_header(opj_image_t *image)
@@ -290,7 +292,7 @@ void show_encoder_parameters(opj_cparameters_t *cp)
   }
   printf("]\n");
   printf("   cp_fixed_alloc = %d\n", cp->cp_fixed_alloc);
-  printf("       cp_matrice = 0x%x\n", (unsigned int)cp->cp_matrice);
+  printf("       cp_matrice = 0x%016lx\n", (unsigned long)cp->cp_matrice);
 
   printf("    numresolution = %d\n", cp->numresolution);
   printf("     cblockw_init = %d\n", cp->cblockw_init);
@@ -348,7 +350,7 @@ void show_encoder_parameters(opj_cparameters_t *cp)
   printf("          tp_flag = %d\n", cp->tp_flag);
   printf("          tcp_mct = %d\n", cp->tcp_mct);
   printf("          jpip_on = %s\n", (cp->jpip_on ? "YES" : "NO"));
-  printf("         mct_data = 0x%x\n", (unsigned int)cp->mct_data);
+  printf("         mct_data = 0x%016lx\n", (unsigned long)cp->mct_data);
   printf("      max_cs_size = %d\n", cp->max_cs_size);
   printf("             rsiz = %u\n", cp->rsiz);
 }
@@ -420,7 +422,7 @@ mj2k_image_t *mj2k_parse_j2k(const mj2k_bytes_t j2k_data, off_t length)
 
     if(s != NULL)
     {
-      printf(" STREAM CREATED\n");
+      printf(" STREAM CREATED(%d)\n",length);
 
       opj_stream_set_read_function(s, read_from_buffer);
       opj_stream_set_seek_function(s, buffer_set_pos);
