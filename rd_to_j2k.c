@@ -84,6 +84,10 @@ int main(int argc,const char **argv)
   }
 
   opj_image_t *image = opj_image_create( ncomp, cmptparm, clrspc );
+  image->x0 = 0;
+  image->y0 = 0;
+  image->x1 = ncol;
+  image->y1 = nrow;
 
   for(int i=0; i<ncomp; ++i)
   {
@@ -132,6 +136,9 @@ int main(int argc,const char **argv)
 
   opj_cparameters_t cp;
   opj_set_default_encoder_parameters(&cp);
+
+  cp.cp_rsiz = OPJ_PROFILE_1;
+  cp.rsiz = OPJ_PROFILE_1;
 
   printf("\nCPARAM\n");
 
@@ -277,6 +284,11 @@ int main(int argc,const char **argv)
   rc = opj_end_compress(codec, j2k_stream);
   printf("\nCompression complete:     rc=%s\n", (rc ? "TRUE" : "FALSE"));
 
+  opj_stream_destroy(j2k_stream);
+  opj_destroy_codec(codec);
+  opj_image_destroy(image);
+  free(cmptparm);
+  free(j2k_file);
 
   return 0;
 }
