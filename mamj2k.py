@@ -1,7 +1,7 @@
 import ctypes
 from ctypes import cdll
 from ctypes import Structure, POINTER, pointer
-from ctypes import c_char_p, c_uint8, c_uint32, c_int64, c_float
+from ctypes import c_char_p, c_uint8, c_uint16, c_uint32, c_int64, c_float
 
 import numpy as np
 from PIL import Image
@@ -121,4 +121,5 @@ class MJ2K_CPARAM_T (Structure):
         ('numresolution',   c_uint8),
         ('layer_qual_type', c_uint8),
         ('layer_qual_value', c_float * 100),
+        ('rsiz',            c_uint16),
     ]
