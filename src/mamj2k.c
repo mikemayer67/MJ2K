@@ -422,7 +422,7 @@ mj2k_image_t *mj2k_parse_j2k(const mj2k_bytes_t j2k_data, off_t length)
 
     if(s != NULL)
     {
-      printf(" STREAM CREATED(%d)\n",length);
+      printf(" STREAM CREATED(%lld)\n",length);
 
       opj_stream_set_read_function(s, read_from_buffer);
       opj_stream_set_seek_function(s, buffer_set_pos);

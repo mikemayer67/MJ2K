@@ -11,6 +11,8 @@ a.out
 gimp_j2k
 junk.c
 mamj2k
+j2k_parser
+j2k_parser.dSYM
 rd_to_j2k
 rd_to_j2k.dSYM
 read_j2k
