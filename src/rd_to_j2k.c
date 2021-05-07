@@ -23,35 +23,97 @@ void error_handler(const char *msg, void *user_data)
   printf("\nOPJ_ERROR:: %s\n", msg);
 }
 
+#define USAGE() \
+  printf("\nUsage:: %s [(--tilesize|-t) width height] rd_file [j2k_file]\n\n",argv[0]);\
+  exit(1);
+
+#define _USAGE_ERROR_FMT(FMT,...) { \
+  printf("Sorry:: " FMT "\n", __VA_ARGS__); \
+  USAGE(); \
+}
+#define _USAGE_ERROR(ERR) { \
+  printf("Sorry:: " ERR "\n"); \
+  USAGE(); \
+}
+#define _USAGE_SELECT(fmt,arg1,arg2,FUNC,...) FUNC
+#define USAGE_ERROR(...) _USAGE_SELECT(__VA_ARGS__,_USAGE_ERROR_FMT,_USAGE_ERROR_FMT,_USAGE_ERROR)(__VA_ARGS__)
+  
 
 int main(int argc,const char **argv)
 {
-  if( argc < 2 ) {
-    printf("\nSorry:: Missing rd_file\n\nUsage:: %s rd_file [j2k_file]\n\n", argv[0]);
-    exit(1);
+  char *rd_file  = NULL;
+  char *j2k_file = NULL;
+
+  int tdx=0;
+  int tdy=0;
+
+  for(int i=1; i<argc; ++i)
+  {
+    if( argv[i][0] == '-' )
+    {
+      if( strcmp(argv[i],"--help")==0 || strcmp(argv[i],"-h") == 0)
+      {
+        USAGE();
+      }
+      else if( strcmp(argv[i],"--tilesize")==0 || strcmp(argv[i],"-t") == 0)
+      {
+        if(tdx > 0)      USAGE_ERROR("Can only specify tilesize once");
+        if(i == argc-1 ) USAGE_ERROR("Missing tile size");
+        if(i == argc-2 ) USAGE_ERROR("Missing tile height");
+
+        char *end;
+        ++i;
+        tdx = strtol(argv[i], &end, 10);
+        if( *end != '\0' ) USAGE_ERROR("Invalid tile width (%s)", argv[i]);
+        if( tdx <= 0) USAGE_ERROR("Tile width must be postitive (not %d)", tdx);
+        ++i;
+        tdy = strtol(argv[i], &end, 10);
+        if( *end != '\0' ) USAGE_ERROR("Invalid tile height (%s)", argv[i]);
+        if( tdy <= 0) USAGE_ERROR("Tile height must be postitive (not %d)", tdy);
+      }
+      else
+      {
+        USAGE_ERROR("Unrecognized option (%s)",argv[i]);
+      }
+    }
+    else if(rd_file == NULL)
+    {
+      rd_file = (char *)malloc(1+strlen(argv[i]));
+      strcpy(rd_file,argv[i]);
+    }
+    else if(j2k_file == NULL)
+    {
+      rd_file = (char *)malloc(1+strlen(argv[i]));
+      strcpy(rd_file,argv[i]);
+    }
+    else
+    {
+      USAGE_ERROR("Too many arguments");
+    }
   }
-  if( argc > 3 ) {
-    printf("\nSorry:: Too many arguments\n\nUsage:: %s rd_file [j2k_file]\n\n", argv[0]);
-    exit(1);
+
+  if(rd_file == NULL)
+  {
+    USAGE_ERROR("Missing rd_file");
+  }
+
+  if(j2k_file == NULL) 
+  {
+    j2k_file = (char *)malloc(5+strlen(rd_file));
+    strcpy(j2k_file,rd_file);
+    strcat(j2k_file,".j2k");
   }
 
   const char *version = opj_version();
   printf("version = %s\n",version);
 
-  const char *rd_file = argv[1];
-  char *j2k_file = NULL;
-
-  if(argc==3) {
-    j2k_file = (char *)malloc(1 + strlen(argv[2]));
-    strcpy(j2k_file, argv[2]);
-  } else {
-    j2k_file = (char *)malloc(5 + strlen(rd_file));
-    strcpy(j2k_file, rd_file);
-    strcat(j2k_file, ".j2k");
-  }
-
   printf("rd_file: %s\n", rd_file);
   printf("j2k_file: %s\n", j2k_file);
+  if(tdx == 0) {
+    printf("single tile\n\n");
+  } else {
+    printf("tile size: %d x %d\n\n", tdx, tdy);
+  }
 
   int src = open(rd_file,O_RDONLY);
   if(src < 0) {
@@ -139,6 +201,13 @@ int main(int argc,const char **argv)
 
   cp.cp_rsiz = OPJ_PROFILE_1;
   cp.rsiz = OPJ_PROFILE_1;
+
+  if(tdx>0 && tdy>0)
+  {
+    cp.tile_size_on = OPJ_TRUE;
+    cp.cp_tdx = tdx;
+    cp.cp_tdy = tdy;
+  }
 
   printf("\nCPARAM\n");
 
