@@ -199,9 +199,6 @@ int main(int argc,const char **argv)
   opj_cparameters_t cp;
   opj_set_default_encoder_parameters(&cp);
 
-  cp.cp_rsiz = OPJ_PROFILE_1;
-  cp.rsiz = OPJ_PROFILE_1;
-
   if(tdx>0 && tdy>0)
   {
     cp.tile_size_on = OPJ_TRUE;
@@ -340,6 +337,9 @@ int main(int argc,const char **argv)
   opj_set_error_handler(codec, error_handler, NULL);
 
   opj_setup_encoder(codec, &cp, image);
+
+  const char *extra[] = {"PLT=YES", NULL};
+  opj_encoder_set_extra_options(codec, extra);
 
   opj_stream_t *j2k_stream = opj_stream_create_default_file_stream(j2k_file, OPJ_FALSE);
   printf("stream = 0x%016lx\n",(unsigned long)j2k_stream);
