@@ -64,7 +64,6 @@ int main(int argc, const char **argv)
   }
 
   char   *pos    = src_data;
-  char   *end    = pos + src_length;
   size_t to_read = src_length;
   while(to_read) {
     ssize_t nread = read(src, pos, to_read);
@@ -75,93 +74,6 @@ int main(int argc, const char **argv)
     to_read -= nread;
     pos     += nread;
   }
-
-  // validate the source data (valid hex_dump)
- 
-  size_t dst_length = 0;
-  
-  uint32_t line_no = 0;
-
-  pos = src_data;
-  while(pos < end)
-  {
-    line_no += 1;
-
-    // skip address
-
-    int isblank = 1;
-    for(; pos<end && *pos==' '    ; ++pos);             // skip whitespace
-    for(; pos<end && is_hex(*pos) ; ++pos) isblank = 0; // skip address
-    for(; pos<end && *pos==' '    ; ++pos);             // skip whitespace
-
-    if( pos == end || *pos == '\n' ) { // end of data or end of line
-      if ( !isblank ) { // has address, but not data
-        fprintf(stderr,"\nSorry:: invalid data on line %ld\n\n", line_no);
-        exit(1);
-      }
-      else // blank line
-      {
-        if(pos == end) break;    // end of data
-        else           continue; // go to next line
-      }
-    }
-
-    // get colon seperating address from data
-
-    if( *pos != ':') {
-      fprintf(stderr,"\nSorry invalid address on line %ld\n\n", line_no);
-      exit(1);
-    }
-    ++pos;
-
-    // read data
-
-    isblank = 1;
-    
-    while( pos<end )
-    {
-      for(; pos<end && *pos==' '    ; ++pos);             // skip whitespace
-
-      if(*pos == ':') { // end of data
-        if(isblank) {
-          fprintf(stderr,"\nSorry:: missing data on line %ld\n\n", line_no);
-          exit(1);
-        }
-        while(pos<end && *pos !='\n') ++pos;  // skip to end of line or end of data
-        if(pos == end) break;                 // end of data
-        else           continue;              // go to next line
-      }
-
-      for(int i=0; i<2; ++i)
-      {
-        if(!is_hex(*pos)) {
-          fprintf(stderr,"\nSorry:: invalid hex digit (%c) on line %ld\n\n", *pos, line_no);
-          exit(1);
-        }
-        ++pos;
-      }
-
-      if(!is_hex(*pos)) {
-        fprintf(stderr,"\nSorry:: invalid hex digit (%c) on line %ld\n\n", *pos, line_no);
-        exit(1);
-      }
-      ++pos;
-      ++dst_length;
-
-      if(is_hex(*pos)) {
-        fprintf(stderr,"\nSorry:: invalid (3 digit) hex data on line %ld\n\n", line_no);
-        exit(1);
-      }
-
-
-    }
-    `
-  }
-
-  
-
-
-
 
   // prepare the output file (which may be stdout)
 
@@ -174,4 +86,83 @@ int main(int argc, const char **argv)
       exit(1);
     }
   }
+  else
+  {
+    dst_file = "stdout";
+  }
+
+  // validate the source data (valid hex_dump)
+ 
+  int has_error = 0;
+  
+  uint32_t line_no = 0;
+
+  pos = src_data;
+  char *eof = pos + src_length;  // end of file
+  char *eol = pos;               // end of line
+  char *eod = NULL;              // end of data
+  char *eox = NULL;              // end of hex string
+  for(; pos<eof && !has_error; pos = eol+1)
+  {
+    line_no += 1;
+
+    // find end of line
+    for(eol=pos; eol<eof && *eol!='\n'; ++eol);
+    
+    // find start/end of data
+    for(;pos<eol && *pos != ':'; ++pos);
+    if(pos == eol)
+    {
+      eod = eol;
+    }
+    else
+    {
+      pos += 1; // move one past the colon
+      for(eod=pos; eod<eol && *eod != ':'; ++eod);
+    }
+
+    // parse data
+    while(pos < eod)
+    {
+      for(; pos<eod && *pos==' '; ++pos); // skip over white space
+      if(pos == eod) break;
+      for(eox=pos+1; eox<eod && *eox!=' '; ++eox); // find next white space
+      if(eox != pos + 2) {
+        has_error=1;
+        fprintf(stderr,"\nSorry:: All hex values must be 2 digits long (line %u)\n\n", line_no);
+        break;
+      } 
+      if( ! (is_hex(*pos) && is_hex(*(pos+1)) ) ) {
+        has_error=1;
+        fprintf(stderr,"\nSorry:: '%c%c' is not a valid hex value (line %u)\n\n", *pos, *(pos+1), line_no);
+        break;
+      }
+
+      uint8_t byte = 16*hex_value(*pos) + hex_value(*(pos+1));
+      if( fwrite( &byte, 1, 1, dst ) != 1 ) {
+        has_error=1;
+        fprintf(stderr,"\nSorry:: Failed to write data to %s: %s\n\n", dst_file, strerror(errno));
+        break;
+      }
+
+      pos = eox;
+    }
+  }
+
+  // if has error, remove the delete the output file
+
+  if(has_error && dst_file != NULL)
+  {
+    fclose(dst);
+    unlink(dst_file);
+  }
+
+  return 0;
+}
+
+  
+
+
+
+
 
