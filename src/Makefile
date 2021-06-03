@@ -19,7 +19,7 @@ J2KOBJ = $(J2KSRC:.cc=.o)
 
 LIBMAMJ2K = libmamj2k.$(EXT)
 
-TARGETS = read_j2k write_j2k rd_to_j2k rd_to_j2k_cs j2k_parser hex_dump hex_compile
+TARGETS = read_j2k write_j2k rd_to_j2k rd_to_j2k_cs j2k_parser
 
 target: $(TARGETS)
 
@@ -37,12 +37,6 @@ rd_to_j2k_cs: rd_to_j2k_cs.c
 
 j2k_parser: $(J2KOBJ)
 	g++ -g $(J2KOBJ) -o $@
-
-hex_dump: hex_dump.c
-	gcc -g -o $@ hex_dump.c
-
-hex_compile: hex_compile.c
-	gcc -g -o $@ hex_compile.c
 
 $(LIBMAMJ2K): mamj2k.o
 	gcc -g -shared -o $(LIBMAMJ2K) $(INC) $(LIB) mamj2k.o -lopenjp2
