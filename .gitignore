@@ -9,10 +9,12 @@
 __pycache__
 a.out
 gimp_j2k
-junk.c
-mamj2k
 j2k_parser
 j2k_parser.dSYM
+j2k_to_rd
+junk.c
+mamj2k
+openjpeg*/build
 rd_to_j2k
 rd_to_j2k.dSYM
 read_j2k
@@ -20,4 +22,3 @@ read_j2k.dSYM
 ubuntu
 write_j2k
 write_j2k.dSYM
-openjpeg*/build
