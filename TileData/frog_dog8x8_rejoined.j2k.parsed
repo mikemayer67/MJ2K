@@ -1,0 +1,1467 @@
+
+=========== Start of Header ===========
+
+SOC: [0x00000000]
+SIZ: [0x00000002]
+        Lsiz: ....002f            47  
+        Rsiz: ....0000             0  codestream capabilities
+        Xsiz: 00002580          9600  width of reference grid
+        Ysiz: 00001a18          6680  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000400          1024  width of one tile wrt ref. grid
+       YTsiz: 00000400          1024  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0003             3  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+      Ssiz.2: ......07        ---->   precision (0 - 127)
+     XRsiz.2: ......01             1  "
+     YRsiz.2: ......01             1  "
+      Ssiz.3: ......07        ---->   precision (0 - 127)
+     XRsiz.3: ......01             1  "
+     YRsiz.3: ......01             1  "
+COD: [0x00000033]
+        Lcod: ....000c            12  
+        Scod: ......00        ---->   Entry coder, precints=(15,15), SOP not used, EPH not used
+     SGcod-A: ......00          LRCP  progression order
+     SGcod-B: ....0001             1  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......05             5  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......01        5-3 NL  Wavelet
+QCD: [0x00000041]
+        Lqcd: ....0013            19  
+        Sqcd: ......40        ---->   no quantization  (2 guard bits)
+     SPqcd.1: ......40             8  Exponent (epsilon_b)
+     SPqcd.2: ......48             9  "
+     SPqcd.3: ......48             9  "
+     SPqcd.4: ......50            10  "
+     SPqcd.5: ......48             9  "
+     SPqcd.6: ......48             9  "
+     SPqcd.7: ......50            10  "
+     SPqcd.8: ......48             9  "
+     SPqcd.9: ......48             9  "
+    SPqcd.10: ......50            10  "
+    SPqcd.11: ......48             9  "
+    SPqcd.12: ......48             9  "
+    SPqcd.13: ......50            10  "
+    SPqcd.14: ......48             9  "
+    SPqcd.15: ......48             9  "
+    SPqcd.16: ......50            10  "
+COM: [0x00000056]
+        Lcom: ....0025            37  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Created by OpenJPEG version 2.4.0
+     ----------- 
+
+=========== File Part 1 ===========
+
+SOT: [0x0000007d]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 0015e5d5       1435093  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x00000089]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 4c 86 6a 86 58 90 3a   90 6e 90 71 bc 4f bc 7c   bd 4d 81 df 28 81 de 63   81 e4 47 86 a9 5a 86 a5
+     23 86 ba 32 94 b2 3d 94   9c 00 94 d3 18 
+     -----------
+SOD: [0x000000bb]
+----------- 
+1435093 bytes of tile-part data
+----------- 
+
+=========== File Part 2 ===========
+
+SOT: [0x0015e652]
+        Lsot: ....000a            10  
+        Isot: ....0001             1  tile index
+        Psot: 0010a933       1091891  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0015e65e]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 1f 86 36 86 28 8e 2d   8e 4d 8e 6b b3 3f b3 33   b4 56 81 b7 6f 81 b5 56   81 bd 42 84 fd 4a 84 f5
+     1c 85 90 61 8f 96 25 8e   f9 0a 8f b9 4c 
+     -----------
+SOD: [0x0015e690]
+----------- 
+1091891 bytes of tile-part data
+----------- 
+
+=========== File Part 3 ===========
+
+SOT: [0x00268f85]
+        Lsot: ....000a            10  
+        Isot: ....0002             2  tile index
+        Psot: 0013039c       1246108  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x00268f91]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 3a 86 46 86 48 8f 39   8f 47 8f 4b b7 23 b6 7d   b7 6d 81 c8 6e 81 c6 16   81 cc 38 85 c6 69 85 bf
+     2e 85 d5 44 91 cc 30 91   b1 10 91 e9 65 
+     -----------
+SOD: [0x00268fc3]
+----------- 
+1246108 bytes of tile-part data
+----------- 
+
+=========== File Part 4 ===========
+
+SOT: [0x00399321]
+        Lsot: ....000a            10  
+        Isot: ....0003             3  tile index
+        Psot: 00136893       1271955  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0039932d]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 2b 86 3d 86 34 8f 23   8f 4f 8f 5a b7 75 b7 6f   b8 5a 81 cc 7b 81 ca 53   81 d0 4c 85 d9 1d 85 d0
+     37 85 e6 48 91 f9 6f 91   de 14 92 95 74 
+     -----------
+SOD: [0x0039935f]
+----------- 
+1271955 bytes of tile-part data
+----------- 
+
+=========== File Part 5 ===========
+
+SOT: [0x004cfbb4]
+        Lsot: ....000a            10  
+        Isot: ....0004             4  tile index
+        Psot: 0014b4b2       1356978  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x004cfbc0]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 43 86 54 86 56 90 1c   90 36 90 35 ba 32 ba 39   bb 24 81 d6 05 81 d4 2d   81 da 46 86 80 50 85 fa
+     49 86 8f 7c 93 9f 1b 93   87 45 93 bd 02 
+     -----------
+SOD: [0x004cfbf2]
+----------- 
+1356978 bytes of tile-part data
+----------- 
+
+=========== File Part 6 ===========
+
+SOT: [0x0061b066]
+        Lsot: ....000a            10  
+        Isot: ....0005             5  tile index
+        Psot: 00157f0f       1408783  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0061b072]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 4d 86 6f 86 57 90 48   90 6d 90 75 bc 24 bc 3e   bd 23 81 dd 1f 81 dc 41   81 e1 5c 86 9c 5d 86 97
+     74 86 ac 4b 94 80 0e 93   e8 43 94 9b 64 
+     -----------
+SOD: [0x0061b0a4]
+----------- 
+1408783 bytes of tile-part data
+----------- 
+
+=========== File Part 7 ===========
+
+SOT: [0x00772f75]
+        Lsot: ....000a            10  
+        Isot: ....0006             6  tile index
+        Psot: 0015931a       1413914  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x00772f81]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 3f 86 5d 86 67 90 56   91 02 90 79 bc 11 bc 2b   bd 13 81 dd 11 81 dc 30   81 e1 63 86 9f 02 86 99
+     68 86 ae 5a 94 8b 1c 93   f3 32 94 a8 01 
+     -----------
+SOD: [0x00772fb3]
+----------- 
+1413914 bytes of tile-part data
+----------- 
+
+=========== File Part 8 ===========
+
+SOT: [0x008cc28f]
+        Lsot: ....000a            10  
+        Isot: ....0007             7  tile index
+        Psot: 00152cfa       1387770  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x008cc29b]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 47 86 60 86 53 90 19   90 50 90 55 bb 25 bb 5f   bc 31 81 da 27 81 d9 2c   81 df 36 86 91 33 86 8c
+     73 86 a3 0d 93 d6 04 93   bf 15 93 f6 78 
+     -----------
+SOD: [0x008cc2cd]
+----------- 
+1387770 bytes of tile-part data
+----------- 
+
+=========== File Part 9 ===========
+
+SOT: [0x00a1ef89]
+        Lsot: ....000a            10  
+        Isot: ....0008             8  tile index
+        Psot: 0010513c       1069372  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x00a1ef95]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 20 86 34 86 27 8e 2e   8e 4d 8e 69 b2 7c b2 71   b4 17 81 b5 1d 81 b2 50   81 ba 30 84 f2 36 84 e9
+     04 85 84 78 8e eb 0e 8e   cd 37 8f 8e 05 
+     -----------
+SOD: [0x00a1efc7]
+----------- 
+1069372 bytes of tile-part data
+----------- 
+
+=========== File Part 10 ===========
+
+SOT: [0x00b240c5]
+        Lsot: ....000a            10  
+        Isot: ....0009             9  tile index
+        Psot: 0009a87e        632958  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x00b240d1]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     82 4f 82 4d 82 54 86 74   86 6e 86 65 98 79 98 6a   98 7b de 1b dd 64 de 24   82 dd 21 82 db 46 82 de
+     4f 89 94 12 89 8c 05 89   97 3c 
+     -----------
+SOD: [0x00b24100]
+----------- 
+632958 bytes of tile-part data
+----------- 
+
+=========== File Part 11 ===========
+
+SOT: [0x00bbe943]
+        Lsot: ....000a            10  
+        Isot: ....000a            10  tile index
+        Psot: 00188934       1607988  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x00bbe94f]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 66 86 78 86 7b 91 6d   92 18 92 0b c1 79 c2 40   c2 63 81 f4 1b 81 f4 5d   81 f8 60 87 80 46 86 fc
+     7a 87 8e 5c 97 83 75 96   ec 59 97 a1 2d 
+     -----------
+SOD: [0x00bbe981]
+----------- 
+1607988 bytes of tile-part data
+----------- 
+
+=========== File Part 12 ===========
+
+SOT: [0x00d47277]
+        Lsot: ....000a            10  
+        Isot: ....000b            11  tile index
+        Psot: 0013806d       1278061  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x00d47283]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 3a 86 44 86 49 8f 7c   90 1e 90 14 b9 5b b9 5f   ba 4e 81 ce 3f 81 cd 50   81 d3 71 85 dc 6e 85 d5
+     1e 85 eb 73 91 ff 65 91   e1 41 92 9f 0b 
+     -----------
+SOD: [0x00d472b5]
+----------- 
+1278061 bytes of tile-part data
+----------- 
+
+=========== File Part 13 ===========
+
+SOT: [0x00e7f2e4]
+        Lsot: ....000a            10  
+        Isot: ....000c            12  tile index
+        Psot: 0015f4bf       1438911  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x00e7f2f0]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 50 86 59 86 61 90 75   90 74 90 78 bd 30 bd 31   bd 70 81 e0 19 81 de 5b   81 e3 2f 86 a9 23 86 a2
+     71 86 b4 41 94 c3 3e 94   a7 71 94 db 1c 
+     -----------
+SOD: [0x00e7f322]
+----------- 
+1438911 bytes of tile-part data
+----------- 
+
+=========== File Part 14 ===========
+
+SOT: [0x00fde7a3]
+        Lsot: ....000a            10  
+        Isot: ....000d            13  tile index
+        Psot: 0015d0f7       1429751  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x00fde7af]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 3e 86 53 86 52 90 4e   90 67 90 67 bd 2c bd 37   bd 5f 81 e0 67 81 df 1e   81 e3 4e 86 aa 7f 86 a1
+     7c 86 b3 63 94 ab 30 94   8e 11 94 c5 04 
+     -----------
+SOD: [0x00fde7e1]
+----------- 
+1429751 bytes of tile-part data
+----------- 
+
+=========== File Part 15 ===========
+
+SOT: [0x0113b89a]
+        Lsot: ....000a            10  
+        Isot: ....000e            14  tile index
+        Psot: 0017465c       1525340  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0113b8a6]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 5b 86 62 86 68 91 37   91 41 91 31 bf 6e bf 7b   c0 2c 81 ea 03 81 e9 18   81 ed 63 86 d4 0c 86 cf
+     1f 86 e0 5e 95 e9 4e 95   d1 0c 96 83 58 
+     -----------
+SOD: [0x0113b8d8]
+----------- 
+1525340 bytes of tile-part data
+----------- 
+
+=========== File Part 16 ===========
+
+SOT: [0x012afef6]
+        Lsot: ....000a            10  
+        Isot: ....000f            15  tile index
+        Psot: 00182f7a       1585018  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x012aff02]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 6e 87 02 86 7a 91 7f   92 21 92 07 c1 74 c2 28   c2 40 81 f2 12 81 f2 2a   81 f6 0d 86 f4 67 86 f1
+     5e 87 81 49 96 d8 30 96   bf 38 96 f2 0e 
+     -----------
+SOD: [0x012aff34]
+----------- 
+1585018 bytes of tile-part data
+----------- 
+
+=========== File Part 17 ===========
+
+SOT: [0x01432e70]
+        Lsot: ....000a            10  
+        Isot: ....0010            16  tile index
+        Psot: 0017e68f       1566351  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x01432e7c]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 5a 86 71 86 76 91 66   92 07 92 06 c1 0e c1 3e   c1 66 81 ef 23 81 ef 48   81 f3 3f 86 eb 04 86 e7
+     69 86 f8 0d 96 b5 4c 96   9c 30 96 ce 49 
+     -----------
+SOD: [0x01432eae]
+----------- 
+1566351 bytes of tile-part data
+----------- 
+
+=========== File Part 18 ===========
+
+SOT: [0x015b14ff]
+        Lsot: ....000a            10  
+        Isot: ....0011            17  tile index
+        Psot: 0017ad1b       1551643  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x015b150b]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 5d 86 6d 86 6e 91 4b   91 6f 91 66 c0 44 c1 14   c1 43 81 ee 19 81 ee 32   81 f2 7b 86 e4 2c 86 e0
+     42 86 f2 2d 96 95 2c 95   fc 66 96 b3 75 
+     -----------
+SOD: [0x015b153d]
+----------- 
+1551643 bytes of tile-part data
+----------- 
+
+=========== File Part 19 ===========
+
+SOT: [0x0172c21a]
+        Lsot: ....000a            10  
+        Isot: ....0012            18  tile index
+        Psot: 00135389       1266569  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0172c226]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 3b 86 43 86 44 90 06   90 1c 90 17 b9 49 b9 44   ba 3b 81 cd 25 81 cc 15   81 d2 38 85 d6 5e 85 cf
+     07 85 e5 56 91 e9 2e 91   cb 3e 92 88 6d 
+     -----------
+SOD: [0x0172c258]
+----------- 
+1266569 bytes of tile-part data
+----------- 
+
+=========== File Part 20 ===========
+
+SOT: [0x018615a3]
+        Lsot: ....000a            10  
+        Isot: ....0013            19  tile index
+        Psot: 000a4de9        675305  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x018615af]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     82 51 82 56 82 5c 87 08   87 04 86 7c 9a 1c 9a 13   9a 0c e2 72 e2 4c e2 52   82 f1 77 82 f0 17 82 f2
+     35 89 e7 7f 89 e0 1c 89   ea 78 
+     -----------
+SOD: [0x018615de]
+----------- 
+675305 bytes of tile-part data
+----------- 
+
+=========== File Part 21 ===========
+
+SOT: [0x0190638c]
+        Lsot: ....000a            10  
+        Isot: ....0014            20  tile index
+        Psot: 001876fb       1603323  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x01906398]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 62 86 7f 86 77 91 5e   91 79 92 05 c1 3e c2 05   c2 65 81 f3 53 81 f4 45   81 f8 2d 86 fe 1c 86 fb
+     21 87 8c 28 96 fb 2d 96   e3 15 97 97 73 
+     -----------
+SOD: [0x019063ca]
+----------- 
+1603323 bytes of tile-part data
+----------- 
+
+=========== File Part 22 ===========
+
+SOT: [0x01a8da87]
+        Lsot: ....000a            10  
+        Isot: ....0015            21  tile index
+        Psot: 00133843       1259587  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x01a8da93]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 3c 86 4a 86 49 8f 6a   8f 7b 90 13 b8 75 b8 72   ba 28 81 cd 05 81 cc 63   81 d2 73 85 d4 6b 85 ce
+     01 85 e4 17 91 d9 5d 91   ba 32 91 f8 40 
+     -----------
+SOD: [0x01a8dac5]
+----------- 
+1259587 bytes of tile-part data
+----------- 
+
+=========== File Part 23 ===========
+
+SOT: [0x01bc12ca]
+        Lsot: ....000a            10  
+        Isot: ....0016            22  tile index
+        Psot: 0016025b       1442395  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x01bc12d6]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 4b 86 5e 86 60 90 6b   90 60 90 74 bc 7e bc 5c   bd 4c 81 e0 69 81 df 57   81 e4 28 86 aa 7d 86 a5
+     36 86 b6 16 94 c9 6b 94   ae 1d 94 e2 74 
+     -----------
+SOD: [0x01bc1308]
+----------- 
+1442395 bytes of tile-part data
+----------- 
+
+=========== File Part 24 ===========
+
+SOT: [0x01d21525]
+        Lsot: ....000a            10  
+        Isot: ....0017            23  tile index
+        Psot: 00159933       1415475  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x01d21531]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 39 86 51 86 53 90 27   90 46 90 45 bc 06 bb 7b   bc 6c 81 dd 50 81 dc 40   81 e0 7a 86 a1 2b 86 99
+     15 86 aa 62 94 92 7f 93   f7 00 94 ad 4c 
+     -----------
+SOD: [0x01d21563]
+----------- 
+1415475 bytes of tile-part data
+----------- 
+
+=========== File Part 25 ===========
+
+SOT: [0x01e7ae58]
+        Lsot: ....000a            10  
+        Isot: ....0018            24  tile index
+        Psot: 00169bf3       1481715  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x01e7ae64]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 54 86 66 86 6c 91 00   91 0c 91 0c be 11 be 02   be 66 81 e4 5f 81 e4 27   81 e8 60 86 be 7b 86 ba
+     16 86 cb 12 95 94 02 94   fb 53 95 af 1e 
+     -----------
+SOD: [0x01e7ae96]
+----------- 
+1481715 bytes of tile-part data
+----------- 
+
+=========== File Part 26 ===========
+
+SOT: [0x01fe4a4b]
+        Lsot: ....000a            10  
+        Isot: ....0019            25  tile index
+        Psot: 001780d8       1540312  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x01fe4a57]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 67 87 02 86 75 91 3b   91 4f 91 64 c0 06 c0 21   c1 16 81 ec 6c 81 ed 0c   81 f1 32 86 de 16 86 da
+     6d 86 eb 29 96 82 30 95   e8 38 96 9b 51 
+     -----------
+SOD: [0x01fe4a89]
+----------- 
+1540312 bytes of tile-part data
+----------- 
+
+=========== File Part 27 ===========
+
+SOT: [0x0215cb23]
+        Lsot: ....000a            10  
+        Isot: ....001a            26  tile index
+        Psot: 00184548       1590600  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0215cb2f]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 5c 86 7a 86 7e 91 6e   92 0b 92 0a c1 3f c1 59   c2 30 81 f2 45 81 f3 13   81 f7 08 86 f7 1b 86 f5
+     04 87 84 1c 96 e5 4d 96   cb 2a 96 fb 57 
+     -----------
+SOD: [0x0215cb61]
+----------- 
+1590600 bytes of tile-part data
+----------- 
+
+=========== File Part 28 ===========
+
+SOT: [0x022e106b]
+        Lsot: ....000a            10  
+        Isot: ....001b            27  tile index
+        Psot: 0017875c       1541980  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x022e1077]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 58 86 74 86 70 91 38   91 52 91 62 bf 77 c0 35   c1 29 81 ed 00 81 ed 4a   81 f1 71 86 df 6b 86 dc
+     2e 86 ee 40 96 82 2b 95   e9 3e 96 a0 22 
+     -----------
+SOD: [0x022e10a9]
+----------- 
+1541980 bytes of tile-part data
+----------- 
+
+=========== File Part 29 ===========
+
+SOT: [0x024597c7]
+        Lsot: ....000a            10  
+        Isot: ....001c            28  tile index
+        Psot: 0013209d       1253533  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x024597d3]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 37 86 44 86 49 8f 76   8f 7b 90 1a b8 5d b8 63   b9 7f 81 cc 33 81 cb 2b   81 d1 70 85 d2 11 85 ca
+     38 85 e0 38 91 ce 5f 91   ae 7c 91 ed 25 
+     -----------
+SOD: [0x02459805]
+----------- 
+1253533 bytes of tile-part data
+----------- 
+
+=========== File Part 30 ===========
+
+SOT: [0x0258b864]
+        Lsot: ....000a            10  
+        Isot: ....001d            29  tile index
+        Psot: 000a2306        664326  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0258b870]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     82 4c 82 4d 82 51 86 6c   86 6f 86 65 99 32 99 2c   99 19 e0 5c e0 35 e0 68   82 ea 5e 82 e8 7b 82 ea
+     7b 89 d5 05 89 ce 28 89   d9 2e 
+     -----------
+SOD: [0x0258b89f]
+----------- 
+664326 bytes of tile-part data
+----------- 
+
+=========== File Part 31 ===========
+
+SOT: [0x0262db6a]
+        Lsot: ....000a            10  
+        Isot: ....001e            30  tile index
+        Psot: 0017d6de       1562334  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0262db76]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 5a 86 6d 86 6c 91 20   91 37 91 46 bf 65 bf 79   c0 5f 81 ec 67 81 ec 29   81 f0 76 86 e5 24 86 e0
+     72 86 f2 23 96 b5 79 96   9a 20 96 d1 39 
+     -----------
+SOD: [0x0262dba8]
+----------- 
+1562334 bytes of tile-part data
+----------- 
+
+=========== File Part 32 ===========
+
+SOT: [0x027ab248]
+        Lsot: ....000a            10  
+        Isot: ....001f            31  tile index
+        Psot: 00126bfd       1207293  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x027ab254]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 28 86 34 86 31 8f 14   8f 12 8f 2c b6 67 b6 4e   b7 79 81 c4 4c 81 c2 53   81 c9 28 85 b5 72 85 ad
+     6a 85 c5 24 90 ff 0b 90   dd 04 91 9b 5a 
+     -----------
+SOD: [0x027ab286]
+----------- 
+1207293 bytes of tile-part data
+----------- 
+
+=========== File Part 33 ===========
+
+SOT: [0x028d1e45]
+        Lsot: ....000a            10  
+        Isot: ....0020            32  tile index
+        Psot: 0014d326       1364774  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x028d1e51]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 41 86 4f 86 4e 90 01   8f 7d 90 0f ba 4d b9 78   bb 04 81 d5 79 81 d3 65   81 d8 5b 86 80 19 85 f9
+     7d 86 8b 40 93 ba 79 93   9b 7b 93 d3 2f 
+     -----------
+SOD: [0x028d1e83]
+----------- 
+1364774 bytes of tile-part data
+----------- 
+
+=========== File Part 34 ===========
+
+SOT: [0x02a1f16b]
+        Lsot: ....000a            10  
+        Isot: ....0021            33  tile index
+        Psot: 0014be46       1359430  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x02a1f177]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 31 86 44 86 42 8f 69   8f 6a 8f 71 ba 0d b9 58   ba 5b 81 d5 30 81 d3 16   81 d8 08 86 81 04 85 f9
+     52 86 8b 05 93 ae 76 93   8e 31 93 c6 7b 
+     -----------
+SOD: [0x02a1f1a9]
+----------- 
+1359430 bytes of tile-part data
+----------- 
+
+=========== File Part 35 ===========
+
+SOT: [0x02b6afb1]
+        Lsot: ....000a            10  
+        Isot: ....0022            34  tile index
+        Psot: 00166f99       1470361  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x02b6afbd]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 4a 86 5b 86 5b 90 5e   90 65 90 6d bd 32 bd 09   bd 7d 81 e1 68 81 e0 13   81 e5 0b 86 b5 79 86 b0
+     35 86 c1 78 95 86 23 94   eb 01 95 9f 21 
+     -----------
+SOD: [0x02b6afef]
+----------- 
+1470361 bytes of tile-part data
+----------- 
+
+=========== File Part 36 ===========
+
+SOT: [0x02cd1f4a]
+        Lsot: ....000a            10  
+        Isot: ....0023            35  tile index
+        Psot: 00177f56       1539926  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x02cd1f56]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 62 86 7a 86 6f 91 3a   91 45 91 49 bf 7e bf 6e   c0 3b 81 eb 1c 81 ea 6a   81 ee 66 86 d9 3b 86 d6
+     74 86 e7 17 96 87 22 95   ed 4c 96 a3 3c 
+     -----------
+SOD: [0x02cd1f88]
+----------- 
+1539926 bytes of tile-part data
+----------- 
+
+=========== File Part 37 ===========
+
+SOT: [0x02e49ea0]
+        Lsot: ....000a            10  
+        Isot: ....0024            36  tile index
+        Psot: 00179f52       1548114  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x02e49eac]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 59 86 69 86 6f 91 34   91 36 91 4a bf 56 bf 78   c0 3e 81 eb 4a 81 eb 3a   81 ef 40 86 de 17 86 da
+     7b 86 ea 29 96 9a 75 96   80 14 96 b0 19 
+     -----------
+SOD: [0x02e49ede]
+----------- 
+1548114 bytes of tile-part data
+----------- 
+
+=========== File Part 38 ===========
+
+SOT: [0x02fc3df2]
+        Lsot: ....000a            10  
+        Isot: ....0025            37  tile index
+        Psot: 0016e863       1501283  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x02fc3dfe]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 50 86 64 86 66 90 79   91 06 91 1a be 39 be 34   bf 30 81 e6 2d 81 e5 35   81 ea 3e 86 c6 37 86 c2
+     0c 86 d4 48 95 be 38 95   a1 09 95 d9 67 
+     -----------
+SOD: [0x02fc3e30]
+----------- 
+1501283 bytes of tile-part data
+----------- 
+
+=========== File Part 39 ===========
+
+SOT: [0x03132655]
+        Lsot: ....000a            10  
+        Isot: ....0026            38  tile index
+        Psot: 00124eab       1199787  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x03132661]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 27 86 33 86 33 8f 1c   8f 14 8f 29 b6 65 b6 2f   b7 51 81 c3 70 81 c1 6f   81 c8 2e 85 b2 2a 85 aa
+     0e 85 c1 1d 90 f0 1f 90   ce 0a 91 8d 15 
+     -----------
+SOD: [0x03132693]
+----------- 
+1199787 bytes of tile-part data
+----------- 
+
+=========== File Part 40 ===========
+
+SOT: [0x03257500]
+        Lsot: ....000a            10  
+        Isot: ....0027            39  tile index
+        Psot: 000a2b53        666451  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0325750c]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     82 51 82 50 82 54 86 77   86 74 86 76 99 3a 99 4b   99 35 e0 56 e0 69 e0 65   82 eb 16 82 ea 71 82 ec
+     49 89 d7 6c 89 d2 41 89   dd 65 
+     -----------
+SOD: [0x0325753b]
+----------- 
+666451 bytes of tile-part data
+----------- 
+
+=========== File Part 41 ===========
+
+SOT: [0x032fa053]
+        Lsot: ....000a            10  
+        Isot: ....0028            40  tile index
+        Psot: 00167551       1471825  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x032fa05f]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 48 86 61 86 5c 90 3c   90 59 90 72 bd 2e bd 33   be 2f 81 e4 10 81 e3 2b   81 e8 3a 86 ba 4e 86 b5
+     07 86 c7 66 95 80 4b 94   e5 56 95 9d 24 
+     -----------
+SOD: [0x032fa091]
+----------- 
+1471825 bytes of tile-part data
+----------- 
+
+=========== File Part 42 ===========
+
+SOT: [0x034615a4]
+        Lsot: ....000a            10  
+        Isot: ....0029            41  tile index
+        Psot: 00112b0d       1125133  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x034615b0]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 19 86 2c 86 2c 8e 2b   8e 3d 8e 61 b4 18 b4 0b   b5 3a 81 bc 4e 81 ba 5f   81 c2 07 85 8e 0e 85 84
+     65 85 9c 47 8f dc 4a 8f   b9 7b 8f fa 03 
+     -----------
+SOD: [0x034615e2]
+----------- 
+1125133 bytes of tile-part data
+----------- 
+
+=========== File Part 43 ===========
+
+SOT: [0x035740b1]
+        Lsot: ....000a            10  
+        Isot: ....002a            42  tile index
+        Psot: 00135de3       1269219  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x035740bd]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 2f 86 3f 86 42 8f 25   8f 3c 8f 44 b7 67 b7 17   b8 1f 81 cc 0c 81 c9 4c   81 cf 50 85 d2 73 85 ca
+     13 85 dd 06 91 fd 07 91   de 1b 92 97 5b 
+     -----------
+SOD: [0x035740ef]
+----------- 
+1269219 bytes of tile-part data
+----------- 
+
+=========== File Part 44 ===========
+
+SOT: [0x036a9e94]
+        Lsot: ....000a            10  
+        Isot: ....002b            43  tile index
+        Psot: 00142809       1320969  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x036a9ea0]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 2c 86 49 86 46 8f 43   8f 51 8f 62 b9 1b b8 6a   b9 79 81 d3 32 81 d1 13   81 d6 1e 85 f0 63 85 e8
+     2e 85 fa 4f 92 dd 78 92   be 3d 92 f6 22 
+     -----------
+SOD: [0x036a9ed2]
+----------- 
+1320969 bytes of tile-part data
+----------- 
+
+=========== File Part 45 ===========
+
+SOT: [0x037ec69d]
+        Lsot: ....000a            10  
+        Isot: ....002c            44  tile index
+        Psot: 00154f2a       1396522  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x037ec6a9]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 43 86 4c 86 55 90 12   90 2c 90 3d bb 37 bb 1a   bc 11 81 db 0b 81 d9 55   81 df 1c 86 93 21 86 8c
+     50 86 9e 6a 93 f3 0e 93   d5 7a 94 8a 4a 
+     -----------
+SOD: [0x037ec6db]
+----------- 
+1396522 bytes of tile-part data
+----------- 
+
+=========== File Part 46 ===========
+
+SOT: [0x039415c7]
+        Lsot: ....000a            10  
+        Isot: ....002d            45  tile index
+        Psot: 00160dbd       1445309  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x039415d3]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 52 86 6e 86 57 90 4d   90 66 90 70 bd 16 bd 15   bd 7a 81 e2 10 81 e1 37   81 e6 2d 86 ae 22 86 a8
+     7d 86 ba 33 94 ca 4d 94   af 56 94 e6 35 
+     -----------
+SOD: [0x03941605]
+----------- 
+1445309 bytes of tile-part data
+----------- 
+
+=========== File Part 47 ===========
+
+SOT: [0x03aa2384]
+        Lsot: ....000a            10  
+        Isot: ....002e            46  tile index
+        Psot: 00162a36       1452598  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x03aa2390]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 3d 86 58 86 61 90 50   90 6e 90 73 bc 79 bd 14   bd 73 81 e2 03 81 e1 52   81 e6 21 86 b0 7b 86 ab
+     6b 86 bd 34 94 db 25 94   c0 35 94 f5 65 
+     -----------
+SOD: [0x03aa23c2]
+----------- 
+1452598 bytes of tile-part data
+----------- 
+
+=========== File Part 48 ===========
+
+SOT: [0x03c04dba]
+        Lsot: ....000a            10  
+        Isot: ....002f            47  tile index
+        Psot: 0015a82c       1419308  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x03c04dc6]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 41 86 56 86 52 90 20   90 3c 90 56 bc 06 bc 19   bd 1f 81 de 57 81 dd 55   81 e3 22 86 a0 23 86 9a
+     3c 86 ac 7e 94 99 63 93   fd 69 94 b6 1c 
+     -----------
+SOD: [0x03c04df8]
+----------- 
+1419308 bytes of tile-part data
+----------- 
+
+=========== File Part 49 ===========
+
+SOT: [0x03d5f5e6]
+        Lsot: ....000a            10  
+        Isot: ....0030            48  tile index
+        Psot: 0010e799       1107865  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x03d5f5f2]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 1a 86 2a 86 2a 8e 39   8e 43 8e 5c b3 76 b3 53   b5 0c 81 ba 5b 81 b8 4b   81 bf 5d 85 85 12 84 fb
+     7a 85 94 04 8f ba 42 8f   98 1c 8f d8 4d 
+     -----------
+SOD: [0x03d5f624]
+----------- 
+1107865 bytes of tile-part data
+----------- 
+
+=========== File Part 50 ===========
+
+SOT: [0x03e6dd7f]
+        Lsot: ....000a            10  
+        Isot: ....0031            49  tile index
+        Psot: 0009eb31        650033  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x03e6dd8b]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     82 4a 82 52 82 4f 86 67   86 73 86 70 99 35 99 28   99 20 e0 1d df 63 e0 22   82 e5 03 82 e3 5e 82 e6
+     0e 89 b5 56 89 ae 32 89   ba 29 
+     -----------
+SOD: [0x03e6ddba]
+----------- 
+650033 bytes of tile-part data
+----------- 
+
+=========== File Part 51 ===========
+
+SOT: [0x03f0c8b0]
+        Lsot: ....000a            10  
+        Isot: ....0032            50  tile index
+        Psot: 0018394f       1587535  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x03f0c8bc]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 5c 86 71 86 63 91 27   91 61 91 63 c0 0d c0 20   c1 0e 81 ee 2d 81 ee 36   81 f2 7c 86 ef 4a 86 e9
+     54 86 fb 4f 96 ef 0c 96   cd 6a 97 85 77 
+     -----------
+SOD: [0x03f0c8ee]
+----------- 
+1587535 bytes of tile-part data
+----------- 
+
+=========== File Part 52 ===========
+
+SOT: [0x040901ff]
+        Lsot: ....000a            10  
+        Isot: ....0033            51  tile index
+        Psot: 00131488       1250440  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0409020b]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 31 86 41 86 3c 8f 39   8f 52 8f 52 b7 58 b7 2e   b8 48 81 c8 19 81 c6 4a   81 cd 55 85 c9 14 85 c0
+     3b 85 d7 37 91 da 3c 91   b2 35 91 f4 40 
+     -----------
+SOD: [0x0409023d]
+----------- 
+1250440 bytes of tile-part data
+----------- 
+
+=========== File Part 53 ===========
+
+SOT: [0x041c1687]
+        Lsot: ....000a            10  
+        Isot: ....0034            52  tile index
+        Psot: 00156ddb       1404379  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x041c1693]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 46 86 59 86 50 90 32   90 3f 90 3e bb 40 ba 6e   bb 67 81 d9 1c 81 d7 39   81 dc 59 86 92 46 86 8a
+     10 86 9c 02 94 8e 43 93   ea 7d 94 a4 22 
+     -----------
+SOD: [0x041c16c5]
+----------- 
+1404379 bytes of tile-part data
+----------- 
+
+=========== File Part 54 ===========
+
+SOT: [0x04318462]
+        Lsot: ....000a            10  
+        Isot: ....0035            53  tile index
+        Psot: 0015675e       1402718  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0431846e]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 38 86 4a 86 40 90 03   90 2e 90 20 bb 30 bb 0d   bc 1f 81 da 3f 81 d8 52   81 dd 70 86 97 2c 86 8d
+     49 86 a0 66 94 85 6d 93   df 4c 94 9b 1a 
+     -----------
+SOD: [0x043184a0]
+----------- 
+1402718 bytes of tile-part data
+----------- 
+
+=========== File Part 55 ===========
+
+SOT: [0x0446ebc0]
+        Lsot: ....000a            10  
+        Isot: ....0036            54  tile index
+        Psot: 0016f794       1505172  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0446ebcc]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 54 86 5e 86 5e 90 75   91 0e 91 08 be 14 be 0a   be 63 81 e4 5f 81 e3 67   81 e8 74 86 c4 7e 86 be
+     5a 86 d0 57 95 cf 77 95   af 6d 95 e6 6b 
+     -----------
+SOD: [0x0446ebfe]
+----------- 
+1505172 bytes of tile-part data
+----------- 
+
+=========== File Part 56 ===========
+
+SOT: [0x045de354]
+        Lsot: ....000a            10  
+        Isot: ....0037            55  tile index
+        Psot: 0017f322       1569570  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x045de360]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 65 86 7a 86 64 91 48   91 75 91 6d c0 2a c0 2f   c0 79 81 ed 0f 81 ec 7b   81 f1 4f 86 e5 76 86 e1
+     6e 86 f2 5e 96 c9 05 96   aa 09 96 e0 7a 
+     -----------
+SOD: [0x045de392]
+----------- 
+1569570 bytes of tile-part data
+----------- 
+
+=========== File Part 57 ===========
+
+SOT: [0x0475d676]
+        Lsot: ....000a            10  
+        Isot: ....0038            56  tile index
+        Psot: 0017acaf       1551535  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0475d682]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 50 86 69 86 75 91 2b   91 4a 91 46 bf 32 bf 41   c0 1b 81 ea 2f 81 ea 14   81 ee 72 86 dd 34 86 d7
+     2d 86 e8 47 96 aa 06 96   88 42 96 bd 53 
+     -----------
+SOD: [0x0475d6b4]
+----------- 
+1551535 bytes of tile-part data
+----------- 
+
+=========== File Part 58 ===========
+
+SOT: [0x048d8325]
+        Lsot: ....000a            10  
+        Isot: ....0039            57  tile index
+        Psot: 00176eab       1535659  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x048d8331]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 54 86 68 86 58 91 0a   91 3f 91 40 be 73 be 72   bf 76 81 e8 52 81 e8 39   81 ed 3a 86 d5 2e 86 cf
+     67 86 e2 03 96 88 3e 95   e7 4b 96 a1 0d 
+     -----------
+SOD: [0x048d8363]
+----------- 
+1535659 bytes of tile-part data
+----------- 
+
+=========== File Part 59 ===========
+
+SOT: [0x04a4f1d0]
+        Lsot: ....000a            10  
+        Isot: ....003a            58  tile index
+        Psot: 0012d4e2       1234146  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x04a4f1dc]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     86 31 86 39 86 3b 8f 3e   8f 4b 8f 4d b7 34 b7 06   b8 32 81 c6 37 81 c4 4a   81 cb 52 85 c1 05 85 b7
+     22 85 cf 06 91 ba 38 91   92 69 91 d5 1a 
+     -----------
+SOD: [0x04a4f20e]
+----------- 
+1234146 bytes of tile-part data
+----------- 
+
+=========== File Part 60 ===========
+
+SOT: [0x04b7c6b2]
+        Lsot: ....000a            10  
+        Isot: ....003b            59  tile index
+        Psot: 000a4124        672036  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x04b7c6be]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     82 4a 82 50 82 52 86 7d   87 02 86 74 99 70 99 5e   99 63 e1 69 e1 35 e2 0d   82 ee 26 82 ec 6b 82 ef
+     5d 89 e3 38 89 db 1d 89   e8 69 
+     -----------
+SOD: [0x04b7c6ed]
+----------- 
+672036 bytes of tile-part data
+----------- 
+
+=========== File Part 61 ===========
+
+SOT: [0x04c207d6]
+        Lsot: ....000a            10  
+        Isot: ....003c            60  tile index
+        Psot: 000da49f        894111  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x04c207e2]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     83 52 83 59 83 63 89 6c   89 75 89 78 a3 6a a3 60   a4 17 81 85 6e 81 85 7e   81 87 63 83 ed 78 83 ec
+     05 83 f3 03 8c f1 4f 8c   e3 76 8c fe 03 
+     -----------
+SOD: [0x04c20814]
+----------- 
+894111 bytes of tile-part data
+----------- 
+
+=========== File Part 62 ===========
+
+SOT: [0x04cfac75]
+        Lsot: ....000a            10  
+        Isot: ....003d            61  tile index
+        Psot: 000ac6c4        706244  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x04cfac81]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     83 43 83 45 83 4b 88 66   88 61 88 6e 9f 41 9f 10   9f 6b f1 28 f0 6b f4 12   83 92 0d 83 8e 23 83 98
+     54 89 ff 5d 89 ed 5e 8a   8c 5f 
+     -----------
+SOD: [0x04cfacb0]
+----------- 
+706244 bytes of tile-part data
+----------- 
+
+=========== File Part 63 ===========
+
+SOT: [0x04da7339]
+        Lsot: ....000a            10  
+        Isot: ....003e            62  tile index
+        Psot: 000c3b84        801668  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x04da7345]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     83 49 83 51 83 57 89 25   89 12 89 19 a1 3a a1 09   a1 3d fa 7a fa 59 fc 51   83 bf 38 83 bb 4d 83 c2
+     7f 8b bf 58 8b b0 52 8b   cb 34 
+     -----------
+SOD: [0x04da7374]
+----------- 
+801668 bytes of tile-part data
+----------- 
+
+=========== File Part 64 ===========
+
+SOT: [0x04e6aebd]
+        Lsot: ....000a            10  
+        Isot: ....003f            63  tile index
+        Psot: 000bf98b        784779  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x04e6aec9]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     83 45 83 42 83 4c 88 7b   88 70 88 78 a0 54 a0 36   a0 62 f8 68 f8 15 fa 2e   83 b7 45 83 b3 2e 83 bb
+     0e 8b 9f 06 8b 90 10 8b   aa 6a 
+     -----------
+SOD: [0x04e6aef8]
+----------- 
+784779 bytes of tile-part data
+----------- 
+
+=========== File Part 65 ===========
+
+SOT: [0x04f2a848]
+        Lsot: ....000a            10  
+        Isot: ....0040            64  tile index
+        Psot: 000c9c66        826470  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x04f2a854]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     83 4e 83 4d 83 51 89 26   89 21 89 1d a1 6a a1 4d   a1 7b fd 28 fd 00 ff 18   83 ca 4b 83 c8 17 83 cf
+     0d 8b f0 7f 8b e3 05 8b   fc 74 
+     -----------
+SOD: [0x04f2a883]
+----------- 
+826470 bytes of tile-part data
+----------- 
+
+=========== File Part 66 ===========
+
+SOT: [0x04ff44ae]
+        Lsot: ....000a            10  
+        Isot: ....0041            65  tile index
+        Psot: 000d12d2        856786  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x04ff44ba]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     83 59 83 5b 83 65 89 5c   89 4d 89 56 a2 7b a2 71   a3 0f 81 81 54 81 82 02   81 83 7e 83 da 69 83 d8
+     52 83 e0 15 8c a8 04 8c   9a 27 8c b6 30 
+     -----------
+SOD: [0x04ff44ec]
+----------- 
+856786 bytes of tile-part data
+----------- 
+
+=========== File Part 67 ===========
+
+SOT: [0x050c5780]
+        Lsot: ....000a            10  
+        Isot: ....0042            66  tile index
+        Psot: 000da403        893955  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x050c578c]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     83 54 83 61 83 67 89 7c   8a 02 89 7c a3 79 a4 00   a4 26 81 85 5f 81 86 2a   81 87 4e 83 ed 72 83 ec
+     3f 83 f1 5f 8c f2 3d 8c   e4 59 8c fb 11 
+     -----------
+SOD: [0x050c57be]
+----------- 
+893955 bytes of tile-part data
+----------- 
+
+=========== File Part 68 ===========
+
+SOT: [0x0519fb83]
+        Lsot: ....000a            10  
+        Isot: ....0043            67  tile index
+        Psot: 000d078e        853902  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0519fb8f]
+        Lplt: ....0030            48  
+        Zplt: ......00             0  PLT index
+     -----------
+     83 4f 83 59 83 5e 89 51   89 58 89 5e a2 7a a2 68   a3 28 81 81 51 81 81 53   81 83 48 83 d9 7b 83 d8
+     10 83 df 4d 8c a2 3d 8c   93 23 8c af 13 
+     -----------
+SOD: [0x0519fbc1]
+----------- 
+853902 bytes of tile-part data
+----------- 
+
+=========== File Part 69 ===========
+
+SOT: [0x05270311]
+        Lsot: ....000a            10  
+        Isot: ....0044            68  tile index
+        Psot: 000ada3c        711228  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0527031d]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     83 45 83 45 83 4d 88 6c   88 63 88 72 9f 45 9f 23   9f 79 f1 6e f1 41 f4 44   83 95 0b 83 90 46 83 9b
+     54 8a 88 72 89 f7 31 8a   96 4b 
+     -----------
+SOD: [0x0527034c]
+----------- 
+711228 bytes of tile-part data
+----------- 
+
+=========== File Part 70 ===========
+
+SOT: [0x0531dd4d]
+        Lsot: ....000a            10  
+        Isot: ....0045            69  tile index
+        Psot: 000591b5        364981  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT: [0x0531dd59]
+        Lplt: ....002d            45  
+        Zplt: ......00             0  PLT index
+     -----------
+     81 30 81 30 81 36 83 5a   83 53 83 4c 8d 53 8d 57   8d 41 b3 6c b4 03 b3 75   81 c5 06 81 c4 46 81 c5
+     04 85 aa 5f 85 a8 1a 85   ad 51 
+     -----------
+SOD: [0x0531dd88]
+----------- 
+364981 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC: [0x05376f02]
+
+
