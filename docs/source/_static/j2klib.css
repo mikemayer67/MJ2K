@@ -1,0 +1,14 @@
+body > div.related {
+  position: fixed;
+}
+
+div.body {
+  padding-top:30px;
+}
+
+div.section,
+section
+{
+  padding-top:20px;
+  margin-top:-20px;
+}
