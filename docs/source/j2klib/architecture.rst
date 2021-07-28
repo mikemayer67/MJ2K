@@ -7,8 +7,8 @@ CPA packages which are exclusivly Python.  This manifests itself most notably
 in its internal interfaces and in the need to explicitly perform memory management
 of any data allocated within the C code.
 
-Interfaces
-----------
+Primary Interfaces
+------------------
 
 In addition to the external interace exposed to clients of the library, there are a 
 number of internal interfaces of interest as shown in Figure 1 below.
@@ -26,9 +26,9 @@ These are all invoked by an external app.
 The first of the internal interfaces is a wrapper (*libj2k.so*) around 
 the OpenJPEG library (*libopenjp2.so*).  OpenJPEG is, strictly speaking, 
 not a part of J2KLib.  It must, however, be available as a dynamically linked
-library on whatever system J2KLib is to be used.  There are two primary
-functions of the libj2k.so library: memory management and simplicification
-of the OpenJPEG API.
+library on whatever system J2KLib is to be used.  Like OpenJPEG, libj2k.so
+is written in C and compiled as a dynamically linked library. It serves to
+main functions: memory management and simplicification of the OpenJPEG API.
 
 - Isolation of the J2KLib's python code from the issues of memory managment.
 
@@ -59,14 +59,68 @@ the use of :py:mod:`ctypes` to a single module.  This
 Memory Management
 -----------------
 
+The OpenJPEG interface relies heavily on the passing of pointers to dynamically allocated
+memory.  This includes both imagery and compression/decompression configuration parameters.
+Some of this memory must be allocted and managed outside of OpenJPEG and passed to it. 
+Some of this memory is allocted by OpenJPEG and must be subsequently freed by passing
+it back to OpenJPEG for deallocation. Simply using `free` may lead to memory leaks as
+the allocated block of memory may contain pointers to other blocks of memory allocated
+by OpenJPEG.
+
+As python's memory management model relies on garbage collection and not on direct
+access to pointers to memory, the management of pointers to dynamically allocated 
+memory is handled by libj2k.so.  To avoid inadvertent corruption of the memory these
+pointers are never exposed through the public interface.  Instead, libj2k.so maps
+each pointer to a data ID---an integer value that will be unique throughout the
+entire lifespan of the process linked to libj2k.so.   When the memory associated
+with a given data ID is no longer needed, the appropriate libj2k.so *free* 
+function is called to either free the memory directly or invoke the necessary
+OpenJPEG function to free it.  Attempting to free a given data ID more than once
+is not an issue.  Only the first call will release memory.  All subsequent
+calls to free the given data ID will simply do nothing.
+
+The final layer of J2K memory management uses python's garbage collection.
+Within :py:mod:`cpaj2k.j2klib.clibj2k`, any data ID returned from libj2k.so
+is converted to an instance of :py:mod:`cpaj2k.j2klib.XXX?.DataId`.  This class
+implements the :py:meth:`__del__` method, which invokes the appropriate libj2k.so *free*
+function with the data ID associated with a *DataId* when it is no longer referenced 
+within the j2klib python code.
+
+.. figure:: /images/j2klib_memory.png
+   :align: center
+.. centered:: Figure 2. J2KLib DataId Lifecycle
 
 
 Modules
 -------
 
+The figures and discussion above showed only the j2klib packages and modules
+involved with the primary external interfaces and memory management.  Figure 3 below shows
+all of the modules in cpaj2k.j2klib.  It also shows some additional modules in the
+public API that were not discussed above:
+
+- :py:mod:`cpaj2k.j2klib.spark.j2k_rdd_codestream` provides convenience function for converting 
+  an RDD of J2K codestreams into a single python bytes object.
+
+- :py:mod:`cpaj2k.j2klib.spark.s3` provides convenience functions for preparing or writing an 
+  RDD of J2K codestreams to an S3 file.
+
+- :py:mod:`cpaj2k.j2klib.error` defines the `J2KError` class used when a J2KLib function
+  raises an exception.
+
+- :py:mod:`cpaj2k.j2klib.j2k_version` provides a function for querying the version
+  of OpenJPEG to which the J2KLib is currently linked.
+
 .. figure:: /images/j2klib_modules.png
     :align: center
-.. centered:: Figure 2. J2KLib Python Modules
+.. centered:: Figure 3. J2KLib Python Modules
+
+Links to the documentation for these modules follow:
+
+.. toctree::
+   :maxdepth: 2
+
+   /modules.rst
 
 
 After figure
