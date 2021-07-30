@@ -118,9 +118,9 @@ public API that were not discussed above:
 Links to the documentation for these modules follow:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 6
 
-   /modules.rst
+   /cpaj2k/cpaj2k.j2klib.rst
 
 
 After figure

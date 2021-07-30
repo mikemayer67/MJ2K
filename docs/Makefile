@@ -10,6 +10,7 @@ SOURCEDIR     = source
 BUILDDIR      = build
 PKG_NAME = cpaj2k
 PY_SRC_PATH     = ../$(PKG_NAME)
+API_EXCLUDE = $(PY_SRC_PATH)/j2klib/libj2k.so
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -22,7 +23,7 @@ clean:
 .PHONY: help Makefile
 
 html: clean
-	-$(SPHINXAPIDOC) -f -o $(SOURCEDIR)/$(PKG_NAME) $(PY_SRC_PATH)
+	-$(SPHINXAPIDOC) -f -o $(SOURCEDIR)/$(PKG_NAME) $(PY_SRC_PATH) $(API_EXCLUDE)
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 # Catch-all target: route all unknown targets to Sphinx using the new

@@ -11,7 +11,7 @@ This function is one of two methods for performing JPEG 2000 compression of imag
 Compression (*Spark*)
 ---------------------
 
-Full documentation: :py:class:`cpaj2k.j2klib.spark.compress_j2k_rdd:J2kCompressRdd`
+Full documentation: :py:mod:`cpaj2k.j2klib.spark.compress_j2k_rdd`
 
 Decompression
 -------------
@@ -22,7 +22,7 @@ RDD Convenience Functions
 -------------------------
 
 Full documentation: :py:mod:`cpaj2k.j2klib.spark.j2k_rdd_codestream`
-and :py:mod:`cpaj2k.j2klib.spark.s3.py`
+and :py:mod:`cpaj2k.j2klib.spark.s3`
 
 OpenJPEG Version
 ----------------
@@ -32,6 +32,6 @@ Full documentation: :py:mod:`cpaj2k.j2klib.j2k_version`
 J2KError
 --------
 
-Full documentation: :py:class:`cpaj2k.j2klib.error.J2KError`
+Full documentation: :py:class:`cpaj2k.j2klib.j2k_error.J2KError`
 
 
