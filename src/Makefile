@@ -3,7 +3,7 @@ ifeq ($(shell uname),Linux)
   OPJ  = $(MJ2K)/openjpeg-2.4.0
   EXT  = so
 else
-  MJ2K = /Users/mike/MJ2K
+  MJ2K = /Users/mike/workbench/MJ2K
   OPJ  = $(MJ2K)/openjpeg-2.4.0
   EXT  = dylib
 endif
@@ -22,7 +22,6 @@ LIBMAMJ2K = libmamj2k.$(EXT)
 TARGETS = read_j2k write_j2k rd_to_j2k j2k_to_rd rd_to_j2k_cs j2k_parser
 
 target: $(TARGETS)
-
 read_j2k: $(LIBMAMJ2K) read_j2k.c
 	gcc -g -o $@ $(INC) $(LIB) read_j2k.c -lmamj2k
 
@@ -68,3 +67,11 @@ uninstall:
 
 clobber: clean uninstall
 
+vars:
+	@echo "MJ2K = $(MJ2K)"
+	@echo "OPJ = $(OPJ)"
+	@echo "EXT = $(EXT)"
+	@echo "INC = $(INC)"
+	@echo "LIB = $(LIB)"
+	@echo "J2KSRC = $(J2KSRC)"
+	@echo "J2KOBJ = $(J2KOBJ)"

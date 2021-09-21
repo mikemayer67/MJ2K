@@ -120,6 +120,7 @@ int main(int argc,const char **argv)
     printf("\nSorry:: Could not open %s: %s\n\n", rd_file, strerror(errno));
     exit(1);
   }
+  printf("Open %s (%d)\n",rd_file,src);
 
   int nrow = 0;
   int ncol = 0;
@@ -127,6 +128,10 @@ int main(int argc,const char **argv)
   read(src, &nrow, 2);
   read(src, &ncol, 2);
   read(src, &ncomp, 2);
+
+  printf("Nrow = %d\n",nrow);
+  printf("Ncol = %d\n",ncol);
+  printf("Ncmp = %d\n",ncomp);
 
   OPJ_COLOR_SPACE clrspc = (ncomp==3 ? OPJ_CLRSPC_SRGB : OPJ_CLRSPC_GRAY);
 
@@ -205,6 +210,19 @@ int main(int argc,const char **argv)
     cp.cp_tdx = tdx;
     cp.cp_tdy = tdy;
   }
+
+  cp.cp_disto_alloc = 1;
+  cp.tcp_numlayers = 0;
+  cp.tcp_rates[cp.tcp_numlayers++] = 256;
+  cp.tcp_rates[cp.tcp_numlayers++] = 128;
+  cp.tcp_rates[cp.tcp_numlayers++] =  64;
+  cp.tcp_rates[cp.tcp_numlayers++] =  16;
+  cp.tcp_rates[cp.tcp_numlayers++] =   8;
+  cp.tcp_rates[cp.tcp_numlayers++] =   4;
+  cp.tcp_rates[cp.tcp_numlayers++] =   2.1;
+  cp.prog_order = 1;
+  cp.tp_on = 1;
+  cp.tp_flag = 'R';
 
   printf("\nCPARAM\n");
 
