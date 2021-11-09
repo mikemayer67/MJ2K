@@ -1,0 +1,198 @@
+
+=========== Start of Header ===========
+
+SOC(0xff4f) at [0x00000000]
+SIZ(0xff51) at [0x00000002]
+        Lsiz: ....0029            41  
+        Rsiz: ....0000             0  codestream capabilities
+        Xsiz: 00000400          1024  width of reference grid
+        Ysiz: 00000400          1024  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000400          1024  width of one tile wrt ref. grid
+       YTsiz: 00000400          1024  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0001             1  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+COD(0xff52) at [0x0000002d]
+        Lcod: ....000c            12  
+        Scod: ......00        ---->   Entry coder, precints=(15,15), SOP not used, EPH not used
+     SGcod-A: ......00          LRCP  progression order
+     SGcod-B: ....0014            20  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......05             5  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......01        5-3 NL  Wavelet
+QCD(0xff5c) at [0x0000003b]
+        Lqcd: ....0013            19  
+        Sqcd: ......40        ---->   no quantization  (2 guard bits)
+     SPqcd.1: ......40             8  Exponent (epsilon_b)
+     SPqcd.2: ......48             9  "
+     SPqcd.3: ......48             9  "
+     SPqcd.4: ......50            10  "
+     SPqcd.5: ......48             9  "
+     SPqcd.6: ......48             9  "
+     SPqcd.7: ......50            10  "
+     SPqcd.8: ......48             9  "
+     SPqcd.9: ......48             9  "
+    SPqcd.10: ......50            10  "
+    SPqcd.11: ......48             9  "
+    SPqcd.12: ......48             9  "
+    SPqcd.13: ......50            10  "
+    SPqcd.14: ......48             9  "
+    SPqcd.15: ......48             9  "
+    SPqcd.16: ......50            10  "
+COM(0xff64) at [0x00000050]
+        Lcom: ....0025            37  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Created by OpenJPEG version 2.4.0
+     ----------- 
+
+=========== File Part 1 ===========
+
+SOT(0xff90) at [0x00000077]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 0001480b         83979  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT(0xff58) at [0x00000083]
+        Lplt: ....0096           150  
+        Zplt: ......00             0  PLT index
+      Iplt.1: 000002ac           684  packet length
+      Iplt.2: 000000ed           237  "
+      Iplt.3: 0000017b           379  "
+      Iplt.4: 0000025a           602  "
+      Iplt.5: 000002fc           764  "
+      Iplt.6: 00000518          1304  "
+      Iplt.7: 00000088           136  "
+      Iplt.8: 000001a4           420  "
+      Iplt.9: 0000012b           299  "
+     Iplt.10: 0000019a           410  "
+     Iplt.11: 000003c4           964  "
+     Iplt.12: 0000074a          1866  "
+     Iplt.13: 00000001             1  "
+     Iplt.14: 00000104           260  "
+     Iplt.15: 000006af          1711  "
+     Iplt.16: 00000dd5          3541  "
+     Iplt.17: 0000068e          1678  "
+     Iplt.18: 000002d6           726  "
+     Iplt.19: 00000001             1  "
+     Iplt.20: 00000001             1  "
+     Iplt.21: 000000ba           186  "
+     Iplt.22: 00000a58          2648  "
+     Iplt.23: 00002d1e         11550  "
+     Iplt.24: 0000086a          2154  "
+     Iplt.25: 00000001             1  "
+     Iplt.26: 00000001             1  "
+     Iplt.27: 00000001             1  "
+     Iplt.28: 000002c6           710  "
+     Iplt.29: 00001911          6417  "
+     Iplt.30: 0000643a         25658  "
+     Iplt.31: 00000001             1  "
+     Iplt.32: 00000001             1  "
+     Iplt.33: 00000001             1  "
+     Iplt.34: 00000002             2  "
+     Iplt.35: 00000007             7  "
+     Iplt.36: 00003377         13175  "
+     Iplt.37: 00000001             1  "
+     Iplt.38: 00000001             1  "
+     Iplt.39: 00000001             1  "
+     Iplt.40: 00000002             2  "
+     Iplt.41: 00000007             7  "
+     Iplt.42: 000012d6          4822  "
+     Iplt.43: 00000001             1  "
+     Iplt.44: 00000001             1  "
+     Iplt.45: 00000001             1  "
+     Iplt.46: 00000002             2  "
+     Iplt.47: 00000007             7  "
+     Iplt.48: 00000019            25  "
+     Iplt.49: 00000001             1  "
+     Iplt.50: 00000001             1  "
+     Iplt.51: 00000001             1  "
+     Iplt.52: 00000002             2  "
+     Iplt.53: 00000007             7  "
+     Iplt.54: 00000019            25  "
+     Iplt.55: 00000001             1  "
+     Iplt.56: 00000001             1  "
+     Iplt.57: 00000001             1  "
+     Iplt.58: 00000002             2  "
+     Iplt.59: 00000007             7  "
+     Iplt.60: 00000019            25  "
+     Iplt.61: 00000001             1  "
+     Iplt.62: 00000001             1  "
+     Iplt.63: 00000001             1  "
+     Iplt.64: 00000002             2  "
+     Iplt.65: 00000007             7  "
+     Iplt.66: 00000019            25  "
+     Iplt.67: 00000001             1  "
+     Iplt.68: 00000001             1  "
+     Iplt.69: 00000001             1  "
+     Iplt.70: 00000002             2  "
+     Iplt.71: 00000007             7  "
+     Iplt.72: 00000019            25  "
+     Iplt.73: 00000001             1  "
+     Iplt.74: 00000001             1  "
+     Iplt.75: 00000001             1  "
+     Iplt.76: 00000002             2  "
+     Iplt.77: 00000007             7  "
+     Iplt.78: 00000019            25  "
+     Iplt.79: 00000001             1  "
+     Iplt.80: 00000001             1  "
+     Iplt.81: 00000001             1  "
+     Iplt.82: 00000002             2  "
+     Iplt.83: 00000007             7  "
+     Iplt.84: 00000019            25  "
+     Iplt.85: 00000001             1  "
+     Iplt.86: 00000001             1  "
+     Iplt.87: 00000001             1  "
+     Iplt.88: 00000002             2  "
+     Iplt.89: 00000007             7  "
+     Iplt.90: 00000019            25  "
+     Iplt.91: 00000001             1  "
+     Iplt.92: 00000001             1  "
+     Iplt.93: 00000001             1  "
+     Iplt.94: 00000002             2  "
+     Iplt.95: 00000007             7  "
+     Iplt.96: 00000019            25  "
+     Iplt.97: 00000001             1  "
+     Iplt.98: 00000001             1  "
+     Iplt.99: 00000001             1  "
+    Iplt.100: 00000002             2  "
+    Iplt.101: 00000007             7  "
+    Iplt.102: 00000019            25  "
+    Iplt.103: 00000001             1  "
+    Iplt.104: 00000001             1  "
+    Iplt.105: 00000001             1  "
+    Iplt.106: 00000002             2  "
+    Iplt.107: 00000007             7  "
+    Iplt.108: 00000019            25  "
+    Iplt.109: 00000001             1  "
+    Iplt.110: 00000001             1  "
+    Iplt.111: 00000001             1  "
+    Iplt.112: 00000002             2  "
+    Iplt.113: 00000007             7  "
+    Iplt.114: 00000019            25  "
+    Iplt.115: 00000002             2  "
+    Iplt.116: 00000001             1  "
+    Iplt.117: 00000001             1  "
+    Iplt.118: 00000002             2  "
+    Iplt.119: 00000007             7  "
+    Iplt.120: 00000019            25  "
+       Total: 00014765         83813  sum of all packet lengths
+SOD(0xff93) at [0x0000011b]
+----------- 
+83979 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC(0xffd9) at [0x00014882]
+
+

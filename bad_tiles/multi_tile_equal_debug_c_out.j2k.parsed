@@ -1,0 +1,617 @@
+
+=========== Start of Header ===========
+
+SOC(0xff4f) at [0x00000000]
+SIZ(0xff51) at [0x00000002]
+        Lsiz: ....0029            41  
+        Rsiz: ....0000             0  codestream capabilities
+        Xsiz: 00000100           256  width of reference grid
+        Ysiz: 000000c0           192  height of reference grid
+       XOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of image
+       YOsiz: 00000000             0  vertical offset from ref. grid origin to top of image
+       XTsiz: 00000080           128  width of one tile wrt ref. grid
+       YTsiz: 00000060            96  height of one tile wrt ref. grid
+      XTOsiz: 00000000             0  horizontal offset from ref. grid origin to left side of first tile
+      YTOsiz: 00000000             0  vertical offset from ref. grid origin to top of first tile
+        Csiz: ....0001             1  number of components in the field
+      Ssiz.1: ......07        ---->   precision (0 - 127)
+     XRsiz.1: ......01             1  horiz. sample separation in ith comp wrt the ref.grid
+     YRsiz.1: ......01             1  vert. sample separation in ith comp wrt the ref.grid
+COD(0xff52) at [0x0000002d]
+        Lcod: ....000c            12  
+        Scod: ......00        ---->   Entry coder, precints=(15,15), SOP not used, EPH not used
+     SGcod-A: ......00          LRCP  progression order
+     SGcod-B: ....0014            20  number of layers
+     SGcod-C: ......00        ---->   no multi component transform
+     SPcod-D: ......05             5  number of decomp levels
+     SPcod-E: ......04            64  code block width
+     SPcod-F: ......04            64  code block height
+     SPcod-G: ......00        ---->   no sel arthm/no cntxt prob reset/no coding pass term/no term vert csl/no pred term/no seg sym
+     SPcod-H: ......01        5-3 NL  Wavelet
+QCD(0xff5c) at [0x0000003b]
+        Lqcd: ....0013            19  
+        Sqcd: ......40        ---->   no quantization  (2 guard bits)
+     SPqcd.1: ......40             8  Exponent (epsilon_b)
+     SPqcd.2: ......48             9  "
+     SPqcd.3: ......48             9  "
+     SPqcd.4: ......50            10  "
+     SPqcd.5: ......48             9  "
+     SPqcd.6: ......48             9  "
+     SPqcd.7: ......50            10  "
+     SPqcd.8: ......48             9  "
+     SPqcd.9: ......48             9  "
+    SPqcd.10: ......50            10  "
+    SPqcd.11: ......48             9  "
+    SPqcd.12: ......48             9  "
+    SPqcd.13: ......50            10  "
+    SPqcd.14: ......48             9  "
+    SPqcd.15: ......48             9  "
+    SPqcd.16: ......50            10  "
+TLM(0xff55) at [0x00000050]
+        Ltlm: ....0014            20  
+        Ztlm: ......00             0  TLM index
+        Stlm: ......40        ---->   ST=0 No Ttlm / SP=1 Ptlm is 32 bits
+      Ptlm.1: 000021e1          8673  offset from start of SOT to tile-part
+      Ptlm.2: 000021e1          8673  "
+      Ptlm.3: 000021e1          8673  "
+      Ptlm.4: 000021e1          8673  "
+COM(0xff64) at [0x00000066]
+        Lcom: ....0053            83  
+        Rcom: ....0001         latin  Comment content
+     ----------- 
+     Created by OpenJPEG version 2.4.0 | Wrapped by the cpaj2k library version 1.0.0
+     ----------- 
+
+=========== File Part 1 ===========
+
+SOT(0xff90) at [0x000000bb]
+        Lsot: ....000a            10  
+        Isot: ....0000             0  tile index
+        Psot: 000021e1          8673  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT(0xff58) at [0x000000c7]
+        Lplt: ....0087           135  
+        Zplt: ......00             0  PLT index
+      Iplt.1: 00000008             8  packet length
+      Iplt.2: 00000010            16  "
+      Iplt.3: 00000001             1  "
+      Iplt.4: 00000001             1  "
+      Iplt.5: 00000001             1  "
+      Iplt.6: 00000001             1  "
+      Iplt.7: 00000002             2  "
+      Iplt.8: 00000001             1  "
+      Iplt.9: 0000000f            15  "
+     Iplt.10: 00000001             1  "
+     Iplt.11: 00000001             1  "
+     Iplt.12: 00000001             1  "
+     Iplt.13: 00000001             1  "
+     Iplt.14: 00000001             1  "
+     Iplt.15: 00000004             4  "
+     Iplt.16: 00000001             1  "
+     Iplt.17: 00000001             1  "
+     Iplt.18: 00000001             1  "
+     Iplt.19: 00000006             6  "
+     Iplt.20: 00000012            18  "
+     Iplt.21: 00000023            35  "
+     Iplt.22: 0000004c            76  "
+     Iplt.23: 00000041            65  "
+     Iplt.24: 00000001             1  "
+     Iplt.25: 00000004             4  "
+     Iplt.26: 00000007             7  "
+     Iplt.27: 00000024            36  "
+     Iplt.28: 00000057            87  "
+     Iplt.29: 00000092           146  "
+     Iplt.30: 00000063            99  "
+     Iplt.31: 00000001             1  "
+     Iplt.32: 00000007             7  "
+     Iplt.33: 00000008             8  "
+     Iplt.34: 00000011            17  "
+     Iplt.35: 0000001f            31  "
+     Iplt.36: 00000062            98  "
+     Iplt.37: 00000001             1  "
+     Iplt.38: 00000001             1  "
+     Iplt.39: 00000001             1  "
+     Iplt.40: 00000001             1  "
+     Iplt.41: 0000001f            31  "
+     Iplt.42: 0000005c            92  "
+     Iplt.43: 00000003             3  "
+     Iplt.44: 00000003             3  "
+     Iplt.45: 00000004             4  "
+     Iplt.46: 00000030            48  "
+     Iplt.47: 0000007b           123  "
+     Iplt.48: 00000001             1  "
+     Iplt.49: 00000001             1  "
+     Iplt.50: 00000003             3  "
+     Iplt.51: 00000005             5  "
+     Iplt.52: 0000002a            42  "
+     Iplt.53: 00000039            57  "
+     Iplt.54: 00000001             1  "
+     Iplt.55: 00000001             1  "
+     Iplt.56: 00000003             3  "
+     Iplt.57: 00000007             7  "
+     Iplt.58: 00000001             1  "
+     Iplt.59: 00000015            21  "
+     Iplt.60: 00000074           116  "
+     Iplt.61: 00000001             1  "
+     Iplt.62: 00000005             5  "
+     Iplt.63: 00000007             7  "
+     Iplt.64: 00000001             1  "
+     Iplt.65: 00000001             1  "
+     Iplt.66: 000000b0           176  "
+     Iplt.67: 00000001             1  "
+     Iplt.68: 00000003             3  "
+     Iplt.69: 00000009             9  "
+     Iplt.70: 00000015            21  "
+     Iplt.71: 0000003c            60  "
+     Iplt.72: 00000033            51  "
+     Iplt.73: 00000001             1  "
+     Iplt.74: 00000001             1  "
+     Iplt.75: 00000001             1  "
+     Iplt.76: 00000001             1  "
+     Iplt.77: 00000011            17  "
+     Iplt.78: 00000069           105  "
+     Iplt.79: 00000001             1  "
+     Iplt.80: 00000005             5  "
+     Iplt.81: 00000003             3  "
+     Iplt.82: 0000002f            47  "
+     Iplt.83: 00000091           145  "
+     Iplt.84: 00000083           131  "
+     Iplt.85: 00000001             1  "
+     Iplt.86: 00000001             1  "
+     Iplt.87: 0000000f            15  "
+     Iplt.88: 00000020            32  "
+     Iplt.89: 00000050            80  "
+     Iplt.90: 000000af           175  "
+     Iplt.91: 00000001             1  "
+     Iplt.92: 00000001             1  "
+     Iplt.93: 00000008             8  "
+     Iplt.94: 0000000c            12  "
+     Iplt.95: 00000074           116  "
+     Iplt.96: 00000156           342  "
+     Iplt.97: 00000001             1  "
+     Iplt.98: 00000001             1  "
+     Iplt.99: 0000000f            15  "
+    Iplt.100: 00000013            19  "
+    Iplt.101: 00000061            97  "
+    Iplt.102: 0000013f           319  "
+    Iplt.103: 00000001             1  "
+    Iplt.104: 00000001             1  "
+    Iplt.105: 00000009             9  "
+    Iplt.106: 0000003e            62  "
+    Iplt.107: 0000006c           108  "
+    Iplt.108: 00000244           580  "
+    Iplt.109: 00000001             1  "
+    Iplt.110: 00000001             1  "
+    Iplt.111: 00000008             8  "
+    Iplt.112: 00000052            82  "
+    Iplt.113: 00000158           344  "
+    Iplt.114: 000003c1           961  "
+    Iplt.115: 00000001             1  "
+    Iplt.116: 00000003             3  "
+    Iplt.117: 00000003             3  "
+    Iplt.118: 0000001e            30  "
+    Iplt.119: 000001ca           458  "
+    Iplt.120: 000009a8          2472  "
+       Total: 0000214a          8522  sum of all packet lengths
+SOD(0xff93) at [0x00000150]
+----------- 
+8673 bytes of tile-part data
+----------- 
+
+=========== File Part 2 ===========
+
+SOT(0xff90) at [0x0000229c]
+        Lsot: ....000a            10  
+        Isot: ....0001             1  tile index
+        Psot: 000021e1          8673  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT(0xff58) at [0x000022a8]
+        Lplt: ....0087           135  
+        Zplt: ......00             0  PLT index
+      Iplt.1: 00000008             8  packet length
+      Iplt.2: 00000010            16  "
+      Iplt.3: 00000001             1  "
+      Iplt.4: 00000001             1  "
+      Iplt.5: 00000001             1  "
+      Iplt.6: 00000001             1  "
+      Iplt.7: 00000002             2  "
+      Iplt.8: 00000001             1  "
+      Iplt.9: 0000000f            15  "
+     Iplt.10: 00000001             1  "
+     Iplt.11: 00000001             1  "
+     Iplt.12: 00000001             1  "
+     Iplt.13: 00000001             1  "
+     Iplt.14: 00000001             1  "
+     Iplt.15: 00000004             4  "
+     Iplt.16: 00000001             1  "
+     Iplt.17: 00000001             1  "
+     Iplt.18: 00000001             1  "
+     Iplt.19: 00000006             6  "
+     Iplt.20: 00000012            18  "
+     Iplt.21: 00000023            35  "
+     Iplt.22: 0000004c            76  "
+     Iplt.23: 00000041            65  "
+     Iplt.24: 00000001             1  "
+     Iplt.25: 00000004             4  "
+     Iplt.26: 00000007             7  "
+     Iplt.27: 00000024            36  "
+     Iplt.28: 00000057            87  "
+     Iplt.29: 00000092           146  "
+     Iplt.30: 00000063            99  "
+     Iplt.31: 00000001             1  "
+     Iplt.32: 00000007             7  "
+     Iplt.33: 00000008             8  "
+     Iplt.34: 00000011            17  "
+     Iplt.35: 0000001f            31  "
+     Iplt.36: 00000062            98  "
+     Iplt.37: 00000001             1  "
+     Iplt.38: 00000001             1  "
+     Iplt.39: 00000001             1  "
+     Iplt.40: 00000001             1  "
+     Iplt.41: 0000001f            31  "
+     Iplt.42: 0000005c            92  "
+     Iplt.43: 00000003             3  "
+     Iplt.44: 00000003             3  "
+     Iplt.45: 00000004             4  "
+     Iplt.46: 00000030            48  "
+     Iplt.47: 0000007b           123  "
+     Iplt.48: 00000001             1  "
+     Iplt.49: 00000001             1  "
+     Iplt.50: 00000003             3  "
+     Iplt.51: 00000005             5  "
+     Iplt.52: 0000002a            42  "
+     Iplt.53: 00000039            57  "
+     Iplt.54: 00000001             1  "
+     Iplt.55: 00000001             1  "
+     Iplt.56: 00000003             3  "
+     Iplt.57: 00000007             7  "
+     Iplt.58: 00000001             1  "
+     Iplt.59: 00000015            21  "
+     Iplt.60: 00000074           116  "
+     Iplt.61: 00000001             1  "
+     Iplt.62: 00000005             5  "
+     Iplt.63: 00000007             7  "
+     Iplt.64: 00000001             1  "
+     Iplt.65: 00000001             1  "
+     Iplt.66: 000000b0           176  "
+     Iplt.67: 00000001             1  "
+     Iplt.68: 00000003             3  "
+     Iplt.69: 00000009             9  "
+     Iplt.70: 00000015            21  "
+     Iplt.71: 0000003c            60  "
+     Iplt.72: 00000033            51  "
+     Iplt.73: 00000001             1  "
+     Iplt.74: 00000001             1  "
+     Iplt.75: 00000001             1  "
+     Iplt.76: 00000001             1  "
+     Iplt.77: 00000011            17  "
+     Iplt.78: 00000069           105  "
+     Iplt.79: 00000001             1  "
+     Iplt.80: 00000005             5  "
+     Iplt.81: 00000003             3  "
+     Iplt.82: 0000002f            47  "
+     Iplt.83: 00000091           145  "
+     Iplt.84: 00000083           131  "
+     Iplt.85: 00000001             1  "
+     Iplt.86: 00000001             1  "
+     Iplt.87: 0000000f            15  "
+     Iplt.88: 00000020            32  "
+     Iplt.89: 00000050            80  "
+     Iplt.90: 000000af           175  "
+     Iplt.91: 00000001             1  "
+     Iplt.92: 00000001             1  "
+     Iplt.93: 00000008             8  "
+     Iplt.94: 0000000c            12  "
+     Iplt.95: 00000074           116  "
+     Iplt.96: 00000156           342  "
+     Iplt.97: 00000001             1  "
+     Iplt.98: 00000001             1  "
+     Iplt.99: 0000000f            15  "
+    Iplt.100: 00000013            19  "
+    Iplt.101: 00000061            97  "
+    Iplt.102: 0000013f           319  "
+    Iplt.103: 00000001             1  "
+    Iplt.104: 00000001             1  "
+    Iplt.105: 00000009             9  "
+    Iplt.106: 0000003e            62  "
+    Iplt.107: 0000006c           108  "
+    Iplt.108: 00000244           580  "
+    Iplt.109: 00000001             1  "
+    Iplt.110: 00000001             1  "
+    Iplt.111: 00000008             8  "
+    Iplt.112: 00000052            82  "
+    Iplt.113: 00000158           344  "
+    Iplt.114: 000003c1           961  "
+    Iplt.115: 00000001             1  "
+    Iplt.116: 00000003             3  "
+    Iplt.117: 00000003             3  "
+    Iplt.118: 0000001e            30  "
+    Iplt.119: 000001ca           458  "
+    Iplt.120: 000009a8          2472  "
+       Total: 0000214a          8522  sum of all packet lengths
+SOD(0xff93) at [0x00002331]
+----------- 
+8673 bytes of tile-part data
+----------- 
+
+=========== File Part 3 ===========
+
+SOT(0xff90) at [0x0000447d]
+        Lsot: ....000a            10  
+        Isot: ....0002             2  tile index
+        Psot: 000021e1          8673  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT(0xff58) at [0x00004489]
+        Lplt: ....0087           135  
+        Zplt: ......00             0  PLT index
+      Iplt.1: 00000008             8  packet length
+      Iplt.2: 00000010            16  "
+      Iplt.3: 00000001             1  "
+      Iplt.4: 00000001             1  "
+      Iplt.5: 00000001             1  "
+      Iplt.6: 00000001             1  "
+      Iplt.7: 00000002             2  "
+      Iplt.8: 00000001             1  "
+      Iplt.9: 0000000f            15  "
+     Iplt.10: 00000001             1  "
+     Iplt.11: 00000001             1  "
+     Iplt.12: 00000001             1  "
+     Iplt.13: 00000001             1  "
+     Iplt.14: 00000001             1  "
+     Iplt.15: 00000004             4  "
+     Iplt.16: 00000001             1  "
+     Iplt.17: 00000001             1  "
+     Iplt.18: 00000001             1  "
+     Iplt.19: 00000006             6  "
+     Iplt.20: 00000012            18  "
+     Iplt.21: 00000023            35  "
+     Iplt.22: 0000004c            76  "
+     Iplt.23: 00000041            65  "
+     Iplt.24: 00000001             1  "
+     Iplt.25: 00000004             4  "
+     Iplt.26: 00000007             7  "
+     Iplt.27: 00000024            36  "
+     Iplt.28: 00000057            87  "
+     Iplt.29: 00000092           146  "
+     Iplt.30: 00000063            99  "
+     Iplt.31: 00000001             1  "
+     Iplt.32: 00000007             7  "
+     Iplt.33: 00000008             8  "
+     Iplt.34: 00000011            17  "
+     Iplt.35: 0000001f            31  "
+     Iplt.36: 00000062            98  "
+     Iplt.37: 00000001             1  "
+     Iplt.38: 00000001             1  "
+     Iplt.39: 00000001             1  "
+     Iplt.40: 00000001             1  "
+     Iplt.41: 0000001f            31  "
+     Iplt.42: 0000005c            92  "
+     Iplt.43: 00000003             3  "
+     Iplt.44: 00000003             3  "
+     Iplt.45: 00000004             4  "
+     Iplt.46: 00000030            48  "
+     Iplt.47: 0000007b           123  "
+     Iplt.48: 00000001             1  "
+     Iplt.49: 00000001             1  "
+     Iplt.50: 00000003             3  "
+     Iplt.51: 00000005             5  "
+     Iplt.52: 0000002a            42  "
+     Iplt.53: 00000039            57  "
+     Iplt.54: 00000001             1  "
+     Iplt.55: 00000001             1  "
+     Iplt.56: 00000003             3  "
+     Iplt.57: 00000007             7  "
+     Iplt.58: 00000001             1  "
+     Iplt.59: 00000015            21  "
+     Iplt.60: 00000074           116  "
+     Iplt.61: 00000001             1  "
+     Iplt.62: 00000005             5  "
+     Iplt.63: 00000007             7  "
+     Iplt.64: 00000001             1  "
+     Iplt.65: 00000001             1  "
+     Iplt.66: 000000b0           176  "
+     Iplt.67: 00000001             1  "
+     Iplt.68: 00000003             3  "
+     Iplt.69: 00000009             9  "
+     Iplt.70: 00000015            21  "
+     Iplt.71: 0000003c            60  "
+     Iplt.72: 00000033            51  "
+     Iplt.73: 00000001             1  "
+     Iplt.74: 00000001             1  "
+     Iplt.75: 00000001             1  "
+     Iplt.76: 00000001             1  "
+     Iplt.77: 00000011            17  "
+     Iplt.78: 00000069           105  "
+     Iplt.79: 00000001             1  "
+     Iplt.80: 00000005             5  "
+     Iplt.81: 00000003             3  "
+     Iplt.82: 0000002f            47  "
+     Iplt.83: 00000091           145  "
+     Iplt.84: 00000083           131  "
+     Iplt.85: 00000001             1  "
+     Iplt.86: 00000001             1  "
+     Iplt.87: 0000000f            15  "
+     Iplt.88: 00000020            32  "
+     Iplt.89: 00000050            80  "
+     Iplt.90: 000000af           175  "
+     Iplt.91: 00000001             1  "
+     Iplt.92: 00000001             1  "
+     Iplt.93: 00000008             8  "
+     Iplt.94: 0000000c            12  "
+     Iplt.95: 00000074           116  "
+     Iplt.96: 00000156           342  "
+     Iplt.97: 00000001             1  "
+     Iplt.98: 00000001             1  "
+     Iplt.99: 0000000f            15  "
+    Iplt.100: 00000013            19  "
+    Iplt.101: 00000061            97  "
+    Iplt.102: 0000013f           319  "
+    Iplt.103: 00000001             1  "
+    Iplt.104: 00000001             1  "
+    Iplt.105: 00000009             9  "
+    Iplt.106: 0000003e            62  "
+    Iplt.107: 0000006c           108  "
+    Iplt.108: 00000244           580  "
+    Iplt.109: 00000001             1  "
+    Iplt.110: 00000001             1  "
+    Iplt.111: 00000008             8  "
+    Iplt.112: 00000052            82  "
+    Iplt.113: 00000158           344  "
+    Iplt.114: 000003c1           961  "
+    Iplt.115: 00000001             1  "
+    Iplt.116: 00000003             3  "
+    Iplt.117: 00000003             3  "
+    Iplt.118: 0000001e            30  "
+    Iplt.119: 000001ca           458  "
+    Iplt.120: 000009a8          2472  "
+       Total: 0000214a          8522  sum of all packet lengths
+SOD(0xff93) at [0x00004512]
+----------- 
+8673 bytes of tile-part data
+----------- 
+
+=========== File Part 4 ===========
+
+SOT(0xff90) at [0x0000665e]
+        Lsot: ....000a            10  
+        Isot: ....0003             3  tile index
+        Psot: 000021e1          8673  length of tile-part
+       TPsot: ......00             0  tile part index
+       TNsot: ......01             1  number of tile parts (0=not specified)
+PLT(0xff58) at [0x0000666a]
+        Lplt: ....0087           135  
+        Zplt: ......00             0  PLT index
+      Iplt.1: 00000008             8  packet length
+      Iplt.2: 00000010            16  "
+      Iplt.3: 00000001             1  "
+      Iplt.4: 00000001             1  "
+      Iplt.5: 00000001             1  "
+      Iplt.6: 00000001             1  "
+      Iplt.7: 00000002             2  "
+      Iplt.8: 00000001             1  "
+      Iplt.9: 0000000f            15  "
+     Iplt.10: 00000001             1  "
+     Iplt.11: 00000001             1  "
+     Iplt.12: 00000001             1  "
+     Iplt.13: 00000001             1  "
+     Iplt.14: 00000001             1  "
+     Iplt.15: 00000004             4  "
+     Iplt.16: 00000001             1  "
+     Iplt.17: 00000001             1  "
+     Iplt.18: 00000001             1  "
+     Iplt.19: 00000006             6  "
+     Iplt.20: 00000012            18  "
+     Iplt.21: 00000023            35  "
+     Iplt.22: 0000004c            76  "
+     Iplt.23: 00000041            65  "
+     Iplt.24: 00000001             1  "
+     Iplt.25: 00000004             4  "
+     Iplt.26: 00000007             7  "
+     Iplt.27: 00000024            36  "
+     Iplt.28: 00000057            87  "
+     Iplt.29: 00000092           146  "
+     Iplt.30: 00000063            99  "
+     Iplt.31: 00000001             1  "
+     Iplt.32: 00000007             7  "
+     Iplt.33: 00000008             8  "
+     Iplt.34: 00000011            17  "
+     Iplt.35: 0000001f            31  "
+     Iplt.36: 00000062            98  "
+     Iplt.37: 00000001             1  "
+     Iplt.38: 00000001             1  "
+     Iplt.39: 00000001             1  "
+     Iplt.40: 00000001             1  "
+     Iplt.41: 0000001f            31  "
+     Iplt.42: 0000005c            92  "
+     Iplt.43: 00000003             3  "
+     Iplt.44: 00000003             3  "
+     Iplt.45: 00000004             4  "
+     Iplt.46: 00000030            48  "
+     Iplt.47: 0000007b           123  "
+     Iplt.48: 00000001             1  "
+     Iplt.49: 00000001             1  "
+     Iplt.50: 00000003             3  "
+     Iplt.51: 00000005             5  "
+     Iplt.52: 0000002a            42  "
+     Iplt.53: 00000039            57  "
+     Iplt.54: 00000001             1  "
+     Iplt.55: 00000001             1  "
+     Iplt.56: 00000003             3  "
+     Iplt.57: 00000007             7  "
+     Iplt.58: 00000001             1  "
+     Iplt.59: 00000015            21  "
+     Iplt.60: 00000074           116  "
+     Iplt.61: 00000001             1  "
+     Iplt.62: 00000005             5  "
+     Iplt.63: 00000007             7  "
+     Iplt.64: 00000001             1  "
+     Iplt.65: 00000001             1  "
+     Iplt.66: 000000b0           176  "
+     Iplt.67: 00000001             1  "
+     Iplt.68: 00000003             3  "
+     Iplt.69: 00000009             9  "
+     Iplt.70: 00000015            21  "
+     Iplt.71: 0000003c            60  "
+     Iplt.72: 00000033            51  "
+     Iplt.73: 00000001             1  "
+     Iplt.74: 00000001             1  "
+     Iplt.75: 00000001             1  "
+     Iplt.76: 00000001             1  "
+     Iplt.77: 00000011            17  "
+     Iplt.78: 00000069           105  "
+     Iplt.79: 00000001             1  "
+     Iplt.80: 00000005             5  "
+     Iplt.81: 00000003             3  "
+     Iplt.82: 0000002f            47  "
+     Iplt.83: 00000091           145  "
+     Iplt.84: 00000083           131  "
+     Iplt.85: 00000001             1  "
+     Iplt.86: 00000001             1  "
+     Iplt.87: 0000000f            15  "
+     Iplt.88: 00000020            32  "
+     Iplt.89: 00000050            80  "
+     Iplt.90: 000000af           175  "
+     Iplt.91: 00000001             1  "
+     Iplt.92: 00000001             1  "
+     Iplt.93: 00000008             8  "
+     Iplt.94: 0000000c            12  "
+     Iplt.95: 00000074           116  "
+     Iplt.96: 00000156           342  "
+     Iplt.97: 00000001             1  "
+     Iplt.98: 00000001             1  "
+     Iplt.99: 0000000f            15  "
+    Iplt.100: 00000013            19  "
+    Iplt.101: 00000061            97  "
+    Iplt.102: 0000013f           319  "
+    Iplt.103: 00000001             1  "
+    Iplt.104: 00000001             1  "
+    Iplt.105: 00000009             9  "
+    Iplt.106: 0000003e            62  "
+    Iplt.107: 0000006c           108  "
+    Iplt.108: 00000244           580  "
+    Iplt.109: 00000001             1  "
+    Iplt.110: 00000001             1  "
+    Iplt.111: 00000008             8  "
+    Iplt.112: 00000052            82  "
+    Iplt.113: 00000158           344  "
+    Iplt.114: 000003c1           961  "
+    Iplt.115: 00000001             1  "
+    Iplt.116: 00000003             3  "
+    Iplt.117: 00000003             3  "
+    Iplt.118: 0000001e            30  "
+    Iplt.119: 000001ca           458  "
+    Iplt.120: 000009a8          2472  "
+       Total: 0000214a          8522  sum of all packet lengths
+SOD(0xff93) at [0x000066f3]
+----------- 
+8673 bytes of tile-part data
+----------- 
+
+=========== End of File ===========
+
+EOC(0xffd9) at [0x0000883f]
+
+
