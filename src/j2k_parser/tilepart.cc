@@ -126,9 +126,9 @@ void J2KTilePart::display(std::ostream &s) const
     s << *(_segments.at(i));
   }
 
-  uint32_t tile_header_length = 2 + _sod.offset() - _sot.offset();
-  uint32_t tile_length = _sot.Psot();
-  uint32_t data_length = tile_length - tile_header_length;
+  uint64_t tile_header_length = 2 + _sod.offset() - _sot.offset();
+  uint64_t tile_length = _sot.Psot();
+  uint64_t data_length = tile_length - tile_header_length;
 
   s << _sod
     << "----------- " << std::endl

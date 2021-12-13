@@ -15,7 +15,7 @@
 
 #include "segment.h"
 
-#include <endian.h>
+#include "endian.h"
 #include <sstream>
 #include <iomanip>
 #include <algorithm>

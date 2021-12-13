@@ -14,8 +14,8 @@
  *******************************************************************************/
 
 #include "marker.h"
+#include "endian.h"
 
-#include <endian.h>
 #include <iostream>
 #include <iomanip>
 #include <sstream>

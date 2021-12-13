@@ -36,7 +36,7 @@ class MarkerSegment
     virtual void display(std::ostream &s) const {}
 
     const Marker &code(void) const { return _marker; }
-    uint16_t    offset(void) const { return _marker.offset(); }
+    uint64_t    offset(void) const { return _marker.offset(); }
     uint16_t      size(void) const { return _size; }
 
     void head(std::ostream &s) const;
