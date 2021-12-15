@@ -1,6 +1,6 @@
 ifeq ($(shell uname),Linux)
   MJ2K = /home/mamayer/workbench/MJ2K
-  OPJ  = $(MJ2K)/openjpeg-2.4.0
+  OPJ  = /home/shared/openjpeg-2.4.0
   EXT  = so
 else
   MJ2K = /Users/mike/workbench/MJ2K
