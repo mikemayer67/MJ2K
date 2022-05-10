@@ -1,0 +1,46 @@
+single_target:
+  targets:
+  - X: 80
+    color: cyan
+ 
+two_targets:
+  targets:
+  - X: 80
+    color: cyan
+  - X: 100
+    rcs: 0.75
+    color: orange
+ 
+overlap_targets:
+  targets:
+  - X: 80
+    color: cyan
+  - X: 81.75
+    rcs: 0.85
+    color: teal
+  - X: 100
+    rcs: 1.2
+    color: orange
+
+overlap_complex:
+  targets:
+  - X: 80
+    color: cyan
+  - X: 82.75
+    rcs: 0.85
+    color: teal
+  - X: 85.12
+    rcs: 1.1
+    color: green
+  - X: 87.31
+    rcs: 0.25
+    color: red
+  - X: 95.23
+    rcs: 0.72
+    color: orange
+  - X: 97.82
+    color: purple
+  - X: 103.1
+    rcs: 0.58
+    color: wheat
+
